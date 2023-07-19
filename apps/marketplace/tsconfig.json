@@ -1,0 +1,7 @@
+{
+	"extends": "tsconfig/node.json",
+	"compilerOptions": { "baseUrl": ".", "moduleResolution": "Bundler" },
+	"references": [{ "path": "./tsconfig.web.json" }],
+	"include": ["."],
+	"exclude": ["client"]
+}

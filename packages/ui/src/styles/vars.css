@@ -1,0 +1,49 @@
+:root {
+	/* Color palette by system settings */
+
+	--color-primary: #161618;
+	--color-secondary: #6d6d72;
+	--color-tertiary: #bfbfc1;
+	--color-accent: #454ce1;
+	--color-on-accent: #dfdfd7;
+	--color-surface: #f9f9f9;
+	--color-container: #fff;
+	--color-outline: #f0f0f0;
+
+	@media (prefers-color-scheme: dark) {
+		--color-primary: #dfdfd7;
+		--color-secondary: #9999a0;
+		--color-tertiary: #6c6c71;
+		--color-accent: #646cff;
+	  --color-on-accent: #dfdfd7;
+		--color-surface: #17181c;
+		--color-container: #1e1f23;
+		--color-outline: #2d2e33;
+	}
+}
+
+body {
+	/* Override system settings by classname */
+
+	&.light {
+	--color-primary: #161618;
+	--color-secondary: #6d6d72;
+	--color-tertiary: #bfbfc1;
+	--color-accent: #454ce1;
+	--color-on-accent: #dfdfd7;
+	--color-surface: #f9f9f9;
+	--color-container: #fff;
+	--color-outline: #f0f0f0;
+	}
+
+	&.dark {
+	--color-primary: #dfdfd7;
+		--color-secondary: #9999a0;
+		--color-tertiary: #6c6c71;
+		--color-accent: #646cff;
+	  --color-on-accent: #dfdfd7;
+		--color-surface: #17181c;
+		--color-container: #1e1f23;
+		--color-outline: #2d2e33;
+	}
+}

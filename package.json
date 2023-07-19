@@ -1,0 +1,27 @@
+{
+	"name": "acme-boilerplate",
+	"private": true,
+	"packageManager": "pnpm@8.6.0",
+	"engines": {
+		"node": ">=18.0.0",
+		"pnpm": ">=8.6.0"
+	},
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"codegen": "turbo run codegen",
+		"lint": "turbo run lint",
+		"sb": "turbo run sb",
+		"sb.build": "turbo run sb.build",
+		"format": "prettier --write **/*.{*js,ts*,json} && turbo run format",
+		"prepare": "husky install"
+	},
+	"devDependencies": {
+		"eslint": "8.45.0",
+		"husky": "8.0.3",
+		"npm-check-updates": "16.10.16",
+		"prettier": "3.0.0",
+		"turbo": "1.10.8",
+		"typescript": "5.1.6"
+	}
+}

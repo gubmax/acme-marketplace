@@ -1,0 +1,5 @@
+{
+	"extends": "tsconfig/node.json",
+	"compilerOptions": { "baseUrl": ".", "outDir": "dist", "moduleResolution": "Bundler" },
+	"include": ["server"]
+}

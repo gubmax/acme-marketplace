@@ -1,0 +1,5 @@
+# Ignore artifacts:
+dist
+dist-dev
+coverage
+storybook-static

@@ -1,0 +1,34 @@
+{
+	"name": "storage",
+	"type": "module",
+	"version": "0.0.0",
+	"scripts": {
+		"dev": "FORCE_COLOR=1 tsx watch --clear-screen=false src/main.ts",
+		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+		"codegen": "prisma generate",
+		"prisma": "tsx scripts/prisma",
+		"lint": "pnpm run /^lint./",
+		"lint.es": "eslint **/*.ts",
+		"lint.types": "tsc --noEmit",
+		"format": "prisma format"
+	},
+	"dependencies": {
+		"@prisma/client": "5.0.0",
+		"awilix": "8.0.1",
+		"dotenv": "16.3.1",
+		"envalid": "7.3.1",
+		"fastify": "4.20.0",
+		"hyperid": "3.1.1",
+		"prisma": "5.0.0",
+		"shared": "workspace:*"
+	},
+	"devDependencies": {
+		"@types/node": "18.11.9",
+		"dotenv-cli": "7.2.1",
+		"eslint-config-custom": "workspace:*",
+		"tsc-alias": "1.8.7",
+		"tsconfig": "workspace:*",
+		"tsx": "3.12.7",
+		"typescript": "5.1.6"
+	}
+}

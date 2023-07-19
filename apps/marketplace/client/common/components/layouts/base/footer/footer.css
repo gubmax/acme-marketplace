@@ -1,0 +1,9 @@
+.m-footer {
+	border-top: 1px solid var(--color-outline);
+  background: var(--color-container);
+}
+
+.m-footer__wrapper {
+	min-width: 768px;
+	max-width: 1024px;
+}

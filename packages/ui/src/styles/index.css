@@ -1,0 +1,58 @@
+@import url("@unocss/reset/eric-meyer.css");
+@import url("@unocss/reset/sanitize/sanitize.css");
+@import url("@unocss/reset/sanitize/assets.css");
+@import url("@unocss/reset/sanitize/forms.css");
+@import url("@unocss/reset/sanitize/reduce-motion.css");
+@import url("@unocss/reset/sanitize/system-ui.css");
+@import url("@unocss/reset/sanitize/typography.css");
+@import url("./vars.css");
+
+/* Common */
+
+html {
+	font-size: 16px;
+	overflow-y: scroll;
+	text-size-adjust: 100%;
+}
+
+:root,
+body {
+	width: 100%;
+	min-height: 100vh;
+}
+
+body {
+	background: var(--color-surface);
+	color: var(--color-primary);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	overscroll-behavior: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+a {
+	color: currentcolor;
+	text-decoration: none;
+}
+
+hr {
+	all: unset;
+	display: block;
+}
+
+:focus {
+	outline: 0;
+}
+
+:focus-visible {
+	outline: 3px solid var(--color-accent);
+	outline-offset: 3px;
+}
+
+/* Elements */
+
+.link {
+	border-radius: 6px;
+	color: var(--color-accent);
+	text-decoration: underline dotted;
+}
