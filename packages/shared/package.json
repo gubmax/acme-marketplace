@@ -2,12 +2,18 @@
 	"name": "shared",
 	"type": "module",
 	"version": "0.0.0",
+	"exports": {
+		"./*": "./src/*"
+	},
 	"scripts": {
 		"build": "tsc",
 		"lint": "eslint **/*.ts"
 	},
 	"dependencies": {
-		"dotenv": "16.3.1"
+		"dotenv": "16.3.1",
+		"picocolors": "1.0.0",
+		"pino": "8.14.1",
+		"pino-pretty": "10.0.1"
 	},
 	"devDependencies": {
 		"eslint": "8.45.0",

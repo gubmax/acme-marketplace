@@ -1,5 +1,5 @@
 {
 	"extends": "tsconfig/node.json",
-	"compilerOptions": { "baseUrl": "." },
+	"compilerOptions": { "baseUrl": ".", "moduleResolution": "Bundler" },
 	"include": ["."]
 }

@@ -1,6 +1,6 @@
 import { cleanEnv, num, str } from 'envalid'
 
-import 'shared/scripts/load-env'
+import 'shared/load-env.js'
 
 const env = cleanEnv(process.env, {
 	NODE_ENV: str({

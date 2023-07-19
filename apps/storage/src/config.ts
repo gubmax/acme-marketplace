@@ -1,9 +1,6 @@
-import * as dotenv from 'dotenv'
 import { cleanEnv, num, str } from 'envalid'
 
-const scope = process.env.NODE_ENV ?? 'development'
-dotenv.config({ path: `.env.${scope}`, override: true })
-dotenv.config({ path: `.env.${scope}.local`, override: true })
+import 'shared/load-env.js'
 
 const env = cleanEnv(process.env, {
 	NODE_ENV: str({

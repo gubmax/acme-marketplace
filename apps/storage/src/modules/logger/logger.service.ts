@@ -8,6 +8,6 @@ export default class LoggerService {
 
 	constructor(private configService: ConfigService) {
 		const { env } = configService.app
-		this.logger = customLogger({ enabled: !env.isPrerendering, pretty: env.isDev })
+		this.logger = customLogger({ pretty: env.isDev })
 	}
 }
