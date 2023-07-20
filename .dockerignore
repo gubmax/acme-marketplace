@@ -1,0 +1,12 @@
+**/.next
+**/.turbo
+**/coverage
+**/dist
+**/node_modules
+**/storybook-static
+**/*.timestamp
+**/*.tsbuildinfo
+.vscode
+.husky
+README.md
+compose.yml

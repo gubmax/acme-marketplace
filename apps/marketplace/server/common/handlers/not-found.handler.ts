@@ -15,7 +15,7 @@ export default function notFoundHandler(
 
 	server.setNotFoundHandler(async (req, res) => {
 		if (env.isProd && !env.isPrerendering) {
-			const stream = createReadStream(resolvePath('dist/client/not-found.html'), 'utf-8')
+			const stream = createReadStream(resolvePath('client/pages/not-found.html'), 'utf-8')
 			return res.status(404).type('text/html').send(stream)
 		}
 

@@ -53,6 +53,12 @@ Via [npm-check-updates](https://www.npmjs.com/package/npm-check-updates)
 npx npm-check-updates --deep --upgrade
 ```
 
+## Docker Local Build
+Example for `frontend` package:
+```sh
+docker build . -f apps/marketplace/Dockerfile -t acme-marketplace
+```
+
 ## Recommended settings
 
 ### [Visual Studio Code](https://code.visualstudio.com/docs/getstarted/settings#_workspace-settingsjson-location)

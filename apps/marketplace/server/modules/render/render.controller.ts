@@ -16,7 +16,8 @@ export default (
 
 	async function sendHtml(req: FastifyRequest, res: FastifyReply, route: Route) {
 		if (route.static && env.isProd && !env.isPrerendering) {
-			const stream = createReadStream(resolvePath(`dist/client/pages${route.path}.html`), 'utf-8')
+			const path = route.path.endsWith('/') ? route.path + 'index' : route.path
+			const stream = createReadStream(resolvePath(`client/pages${path}.html`), 'utf-8')
 			return res.status(200).type('text/html').send(stream)
 		}
 

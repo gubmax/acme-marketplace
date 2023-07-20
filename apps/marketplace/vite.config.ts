@@ -32,7 +32,7 @@ export default defineConfig(({ ssrBuild }) => {
 		plugins,
 		publicDir: './client/public',
 		build: {
-			manifest: true,
+			manifest: 'assets.manifest.json',
 			outDir: './dist/client',
 			rollupOptions: {
 				input: ['./client/entries/app.client', './client/entries/error.client'],

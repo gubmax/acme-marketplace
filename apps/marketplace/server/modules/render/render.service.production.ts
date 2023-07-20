@@ -12,6 +12,7 @@ import type { Manifest } from 'vite'
 import type { Route } from 'plugins/vite-plugin-routes-manifest.js'
 import { resolvePath } from 'server/common/helpers/paths.js'
 import type AssetCollectorService from 'server/modules/asset-collector/asset-collector.service.js'
+import type ConfigService from '../config/config.service'
 
 const ABORT_RENDER_DELAY = 5000
 
@@ -43,7 +44,10 @@ export class RenderService {
 	#manifest?: Manifest
 	routesManifest: Route[] = []
 
-	constructor(protected readonly assetCollectorService: AssetCollectorService) {}
+	constructor(
+		protected readonly configService: ConfigService,
+		protected readonly assetCollectorService: AssetCollectorService,
+	) {}
 
 	protected loadModule<T>(path: string): Promise<T> {
 		return import(resolvePath(path)) as Promise<T>
@@ -97,12 +101,14 @@ export class RenderService {
 
 	async init(server?: FastifyInstance): Promise<void>
 	async init(): Promise<void> {
+		const distPath = this.configService.app.env.isPrerendering ? 'dist/' : ''
+
 		this.#manifest = JSON.parse(
-			await readFile(resolvePath('dist/client/manifest.json'), 'utf-8'),
+			await readFile(resolvePath(`${distPath}client/assets.manifest.json`), 'utf-8'),
 		) as Manifest
 
 		this.routesManifest = JSON.parse(
-			await readFile(resolvePath('dist/server/routes.manifest.json'), 'utf-8'),
+			await readFile(resolvePath(`${distPath}server/routes.manifest.json`), 'utf-8'),
 		) as Route[]
 	}
 

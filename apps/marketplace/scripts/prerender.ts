@@ -13,8 +13,6 @@ import { resolvePath } from 'server/common/helpers/paths.js'
 
 process.env.BUILD_ENV = 'prerendering'
 
-const PATH_ROUTES_MANIFEST = 'dist/server/routes.manifest.json'
-
 console.log(
 	`${pc.cyan('pre-render script')} ${pc.green('creating HTML files for static routes...')}`,
 )
@@ -45,7 +43,7 @@ async function prerenderPages(routes: Route[]) {
 }
 
 const routesManifest = JSON.parse(
-	fs.readFileSync(resolvePath(PATH_ROUTES_MANIFEST), 'utf-8'),
+	fs.readFileSync(resolvePath('dist/server/routes.manifest.json'), 'utf-8'),
 ) as Route[]
 await prerenderPages(routesManifest)
 

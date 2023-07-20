@@ -9,6 +9,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import type { Route } from 'plugins/vite-plugin-routes-manifest.js'
 import { resolvePath } from 'server/common/helpers/paths.js'
 import type AssetCollectorService from 'server/modules/asset-collector/asset-collector.service.js'
+import type ConfigService from '../config/config.service.js'
 import {
 	type EntryModule,
 	type RenderContextType,
@@ -27,8 +28,11 @@ export const VITE_DEV_SERVER_CONFIG: InlineConfig = {
 export class DevelopmentRenderService extends RenderService {
 	viteDevServer?: ViteDevServer
 
-	constructor(protected readonly assetCollectorService: AssetCollectorService) {
-		super(assetCollectorService)
+	constructor(
+		protected readonly configService: ConfigService,
+		protected readonly assetCollectorService: AssetCollectorService,
+	) {
+		super(configService, assetCollectorService)
 	}
 
 	protected loadModule<T>(path: string): Promise<T> {

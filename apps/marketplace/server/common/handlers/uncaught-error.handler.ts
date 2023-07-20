@@ -20,7 +20,7 @@ export function uncaughtErrorHandler(
 		logger.error(error, 'Uncaught error')
 
 		if (env.isProd && !env.isPrerendering) {
-			const stream = createReadStream(resolvePath('dist/client/error.html'), 'utf-8')
+			const stream = createReadStream(resolvePath('client/pages/error.html'), 'utf-8')
 			return res.status(500).type('text/html').send(stream)
 		}
 
