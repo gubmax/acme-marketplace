@@ -11,7 +11,7 @@ export default function notFoundHandler(
 	configService: ConfigService,
 	renderService: RenderService,
 ) {
-	const { env } = configService.app
+	const { env } = configService
 
 	server.setNotFoundHandler(async (req, res) => {
 		if (env.isProd && !env.isPrerendering) {

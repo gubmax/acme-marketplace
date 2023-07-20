@@ -1,5 +1,5 @@
-import { appConfig } from 'server/config.js'
+import { env } from 'server/config.js'
 
 export default class ConfigService {
-	app = appConfig
+	env = env
 }

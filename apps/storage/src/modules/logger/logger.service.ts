@@ -7,7 +7,7 @@ export default class LoggerService {
 	readonly logger: FastifyBaseLogger
 
 	constructor(private configService: ConfigService) {
-		const { env } = configService.app
+		const { env } = configService
 		this.logger = customLogger({ pretty: env.isDev })
 	}
 }

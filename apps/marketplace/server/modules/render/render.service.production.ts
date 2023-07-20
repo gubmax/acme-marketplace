@@ -101,7 +101,7 @@ export class RenderService {
 
 	async init(server?: FastifyInstance): Promise<void>
 	async init(): Promise<void> {
-		const distPath = this.configService.app.env.isPrerendering ? 'dist/' : ''
+		const distPath = this.configService.env.isPrerendering ? 'dist/' : ''
 
 		this.#manifest = JSON.parse(
 			await readFile(resolvePath(`${distPath}client/assets.manifest.json`), 'utf-8'),

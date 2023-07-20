@@ -1,7 +1,5 @@
 import { bootstrap } from './bootstrap.js'
-import { appConfig } from './config.js'
-
-const { env } = appConfig
+import { env } from './config.js'
 
 // Bootstrap
 if (!env.isTest) {

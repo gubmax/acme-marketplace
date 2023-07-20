@@ -35,7 +35,7 @@ export async function bootstrap(): Promise<BootstrapResult> {
 		genReqId: () => uuid(),
 	})
 
-	const { env } = configService.app
+	const { env } = configService
 	if (env.isProd) await server.register(import('@fastify/static'), { root: resolvePath('client') })
 	else await server.register(import('@fastify/middie'))
 

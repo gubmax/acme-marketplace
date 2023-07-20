@@ -13,7 +13,7 @@ export function uncaughtErrorHandler(
 	loggerService: LoggerService,
 	renderService: RenderService,
 ): void {
-	const { env } = configService.app
+	const { env } = configService
 	const { logger } = loggerService
 
 	server.setErrorHandler(async (error, req, res) => {

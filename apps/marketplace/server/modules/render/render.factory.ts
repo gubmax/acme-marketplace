@@ -7,7 +7,7 @@ export default async (
 	assetCollectorService: AssetCollectorService,
 ): Promise<RenderService> => {
 	return new (
-		configService.app.env.isDev && !configService.app.env.isPrerendering
+		configService.env.isDev && !configService.env.isPrerendering
 			? (await import('./render.service.development.js')).DevelopmentRenderService
 			: (await import('./render.service.production.js')).RenderService
 	)(configService, assetCollectorService)

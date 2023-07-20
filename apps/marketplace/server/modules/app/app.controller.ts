@@ -8,7 +8,7 @@ export default (
 	configService: ConfigService,
 	renderService: RenderService,
 ): void => {
-	const { env } = configService.app
+	const { env } = configService
 
 	server.get('/health', async (req, res) => res.status(200).send())
 

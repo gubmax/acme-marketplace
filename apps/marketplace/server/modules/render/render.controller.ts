@@ -12,7 +12,7 @@ export default (
 	configService: ConfigService,
 	renderService: RenderService,
 ): void => {
-	const { env } = configService.app
+	const { env } = configService
 
 	async function sendHtml(req: FastifyRequest, res: FastifyReply, route: Route) {
 		if (route.static && env.isProd && !env.isPrerendering) {
