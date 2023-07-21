@@ -3,5 +3,5 @@ dist
 dist-dev
 coverage
 storybook-static
-*.timestamp
+*.timestamp-*
 *.tsbuildinfo

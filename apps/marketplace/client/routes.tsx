@@ -2,9 +2,9 @@ import type { ReactNode } from 'react'
 import type { RouteObject } from 'react-router-dom'
 import { routes as routesManifest } from 'virtual:routes-manifest'
 
+import NotFoundPage from './404.js'
 import BaseLayout from './common/components/layouts/base/base-layout.js'
 import { dynamic, type DynamicComponentType, type DynamicModule } from './core/dynamic.js'
-import NotFoundPage from './not-found.js'
 
 // Pages by folder structure
 

@@ -5,11 +5,12 @@
 import fs from 'node:fs'
 import { dirname } from 'node:path'
 
+import fastify from 'fastify'
 import pc from 'picocolors'
 
-import { type Route } from 'plugins/vite-plugin-routes-manifest.js'
-import { bootstrap } from 'server/bootstrap.js'
+import type { Route } from 'plugins/vite-plugin-routes-manifest.js'
 import { resolvePath } from 'server/common/helpers/paths.js'
+import type { Renderer } from 'server/core/prod/renderer.js'
 
 process.env.BUILD_ENV = 'prerendering'
 
@@ -17,7 +18,12 @@ console.log(
 	`${pc.cyan('pre-render script')} ${pc.green('creating HTML files for static routes...')}`,
 )
 
-const { server } = await bootstrap()
+// @ts-expect-error: Production js without declaration file
+const { renderer } = (await import('dist/server/core/prod/renderer')) as { renderer: Renderer }
+
+const server = await fastify()
+server.get('/error', async (req, res) => renderer.render(req, res, 'error'))
+server.get('*', async (req, res) => renderer.render(req, res, 'app'))
 
 function writePageFile(path: string, html: string) {
 	const pathWithFilename = `${path.endsWith('/') ? path + 'index' : path}.html`
@@ -36,23 +42,24 @@ async function prerenderPages(routes: Route[]) {
 		if (!route.static) continue
 
 		const res = await server.inject(route.path)
+		if (res.statusCode >= 500) throw res.body
+
 		writePageFile(`pages${route.path}`, res.body)
 
 		if (route.children.length) await prerenderPages(route.children)
 	}
 }
 
-const routesManifest = JSON.parse(
-	fs.readFileSync(resolvePath('dist/server/routes.manifest.json'), 'utf-8'),
-) as Route[]
-await prerenderPages(routesManifest)
+await prerenderPages(renderer.routesManifest)
 
 // Pre-render Not Found page
 
-const notFoundRes = await server.inject('/not-found')
-writePageFile('not-found', notFoundRes.body)
+const notFoundRes = await server.inject('/404')
+if (notFoundRes.statusCode >= 500) throw notFoundRes.body
+writePageFile('404', notFoundRes.body)
 
 // Pre-render Error page
 
 const errorRes = await server.inject('/error')
+if (errorRes.statusCode >= 500) throw notFoundRes.body
 writePageFile('error', errorRes.body)

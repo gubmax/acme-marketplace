@@ -3,23 +3,23 @@ import { createReadStream } from 'node:fs'
 import type { FastifyInstance } from 'fastify'
 
 import { resolvePath } from 'server/common/helpers/paths.js'
+import type { Renderer } from 'server/core/prod/renderer.js'
 import type ConfigService from 'server/modules/config/config.service.js'
-import type { RenderService } from 'server/modules/render/render.service.production.js'
 
 export default function notFoundHandler(
 	server: FastifyInstance,
+	renderer: Renderer,
 	configService: ConfigService,
-	renderService: RenderService,
 ) {
 	const { env } = configService
 
 	server.setNotFoundHandler(async (req, res) => {
-		if (env.isProd && !env.isPrerendering) {
-			const stream = createReadStream(resolvePath('client/pages/not-found.html'), 'utf-8')
-			return res.status(404).type('text/html').send(stream)
+		if (env.isDev) {
+			res.statusCode = 404
+			return renderer.render(req, res, 'app')
 		}
 
-		res.statusCode = 404
-		return renderService.renderApp(req, res)
+		const stream = createReadStream(resolvePath('client/pages/404.html'), 'utf-8')
+		return res.status(404).type('text/html').send(stream)
 	})
 }

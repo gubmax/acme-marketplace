@@ -9,7 +9,7 @@ export const cleanedEnv = customCleanEnv(
 			choices: ['development', 'test', 'production', 'staging'],
 			default: 'development',
 		}),
-		HOST: str(),
+		HOST: str({ default: '0.0.0.0' }),
 		PORT: num(),
 		DATABASE_URL: str(),
 	},

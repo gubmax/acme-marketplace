@@ -5,11 +5,11 @@ import { createContainer, Lifetime } from 'awilix'
 import type { LoadModulesOptions } from 'awilix/lib/load-modules.js'
 import type { FastifyInstance } from 'fastify'
 
-import type { RenderService } from './modules/render/render.service.production'
+import type { Renderer } from './core/prod/renderer.js'
 
 export interface Container {
 	server: FastifyInstance
-	renderService: RenderService
+	renderer: Renderer
 }
 
 /**

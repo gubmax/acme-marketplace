@@ -13,7 +13,7 @@ const cleanedEnv = customCleanEnv(
 			choices: ['prerendering', 'production'],
 			default: 'production',
 		}),
-		HOST: str(),
+		HOST: str({ default: '0.0.0.0' }),
 		PORT: num(),
 	},
 	(cleaned) => cleaned,
@@ -24,5 +24,4 @@ export const env = {
 	isDev: cleanedEnv.NODE_ENV === 'development',
 	isTest: cleanedEnv.NODE_ENV === 'test',
 	isProd: cleanedEnv.NODE_ENV === 'production',
-	isPrerendering: cleanedEnv.BUILD_ENV === 'prerendering',
 }
