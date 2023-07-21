@@ -4,7 +4,7 @@ import './header.css'
 
 function Header() {
 	return (
-		<header className="m-header fixed" id="header" data-turbo-permanent>
+		<header className="m-header fixed" id="header">
 			<nav className="m-header__navigation flex items-center mx-auto px-5 gap-5">
 				<a className="link" href="/">
 					Home

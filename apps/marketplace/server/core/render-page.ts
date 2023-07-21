@@ -22,7 +22,7 @@ export interface RenderOptions {
 export type RenderFn = (options: RenderOptions) => ReactNode
 
 export interface EntryModule {
-	render: RenderFn
+	handleRequest: RenderFn
 }
 
 export interface RenderPageOptions {
@@ -49,7 +49,7 @@ export function renderPage(
 		}),
 	})
 
-	const node = entryModule.render({ url: req.url, renderContext })
+	const node = entryModule.handleRequest({ url: req.url, renderContext })
 
 	const ua = typeof req.headers === 'object' ? req.headers['user-agent'] : null
 	const callbackName = !ua || isbot(ua) ? 'onAllReady' : 'onShellReady'

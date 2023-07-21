@@ -25,6 +25,6 @@ export function useRenderContext(): RenderContextType {
 	return context
 }
 
-export function RenderProvider({ value, children }: { value: RenderContextType } & ChildrenProp) {
-	return <RenderContext.Provider value={value}>{children}</RenderContext.Provider>
+export function RenderProvider({ value, children }: { value?: RenderContextType } & ChildrenProp) {
+	return <RenderContext.Provider value={value ?? null}>{children}</RenderContext.Provider>
 }

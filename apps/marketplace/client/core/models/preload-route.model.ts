@@ -10,9 +10,9 @@ import type {
 	DynamicModule,
 	DynamicProps,
 } from 'client/core/dynamic.js'
-import { QueryModel } from 'client/core/query.model.js'
+import { QueryModel } from 'client/core/models/query.model.js'
 import { type CustomRouteObject, routes } from 'client/routes.js'
-import type { HtmlMetaDescriptor, MetaFunction } from './modules'
+import type { HtmlMetaDescriptor, MetaFunction } from '../components/modules'
 
 interface RouteModuleExports {
 	meta?: MetaFunction

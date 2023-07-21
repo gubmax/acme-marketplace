@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history'
 import { useEffectOnce } from 'client/common/hooks/use-effect-once.js'
 import { useEnhancedEffect } from 'client/common/hooks/use-enhanced-effect.js'
 import type { ChildrenProp } from 'client/common/typings/children-prop.js'
-import { preloadRouteModel } from './preload-route.model.js'
+import { preloadRouteModel } from '../models/preload-route.model.js'
 
 function BrowserRouter({ children }: ChildrenProp) {
 	const { current: history } = useRef(createBrowserHistory({ window }))

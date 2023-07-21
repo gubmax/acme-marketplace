@@ -1,4 +1,4 @@
-import { useRenderContext } from 'client/core/entry-route-context.js'
+import { useRenderContext } from 'client/core/render-context.js'
 
 function Styles() {
 	const { styles } = useRenderContext()
