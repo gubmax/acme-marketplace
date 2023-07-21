@@ -8,7 +8,7 @@ This repo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `marketplace`: a [React](https://react.dev/) MPA
+- `marketplace`: a [React](https://react.dev/) SPA + SSR
 - `cms`: a [React](https://react.dev/) SPA
 - `storage`: a [Fastify](https://fastify.dev/) API for marketplace
 - `ui`: a stub React component library shared by both `marketplace` and `cms` applications
