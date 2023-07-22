@@ -1,3 +1,5 @@
+$loading_transition_delay: 500ms;
+
 .wrapper {
   position: fixed;
   z-index: 2;
@@ -16,7 +18,7 @@
   animation-duration: 8s;
   animation-fill-mode: forwards;
   animation-name: loading-animation;
-  transition: width 500ms ease-in;
+  transition: width $loading_transition_delay ease-in;
 }
 
 @keyframes loading-end-animation {
@@ -26,8 +28,8 @@
 
 .loading-end {
   width: 100%;
-  animation-duration: 500ms;
+  animation-duration: $loading_transition_delay;
   animation-fill-mode: forwards;
   animation-name: loading-end-animation;
-  transition: width 500ms ease-in, opacity 500ms ease-in;
+  transition: width $loading_transition_delay ease-in, opacity $loading_transition_delay ease-in;
 }

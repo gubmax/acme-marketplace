@@ -1,4 +1,4 @@
 export default {
-	extends: ['ui/stylelint.config.mjs'],
+	extends: ['ui/stylelint.config'],
 	ignoreFiles: ['dist/**'],
 }

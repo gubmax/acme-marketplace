@@ -5,8 +5,9 @@
 	"exports": {
 		"./*": "./src/*",
 		"./client": "./src/client.d.ts",
-		"./stylelint.config.mjs": "./stylelint.config.mjs",
-		"./uno.config.ts": "./uno.config.ts"
+		"./postcss.config": "./postcss.config.cjs",
+		"./stylelint.config": "./stylelint.config.mjs",
+		"./uno.config": "./uno.config.ts"
 	},
 	"scripts": {
 		"sb": "FORCE_COLOR=1 sb dev -p 6006",
@@ -31,18 +32,24 @@
 		"@storybook/theming": "7.1.0",
 		"@types/react": "18.2.15",
 		"@types/react-dom": "18.2.7",
-		"@unocss/preset-mini": "0.53.5",
-		"@unocss/reset": "0.53.5",
+		"@unocss/preset-mini": "0.53.6",
+		"@unocss/reset": "0.53.6",
+		"autoprefixer": "10.4.14",
 		"eslint": "8.45.0",
 		"eslint-config-custom": "workspace:*",
 		"eslint-define-config": "1.21.0",
+		"postcss": "8.4.27",
+		"postcss-import": "15.1.0",
+		"postcss-mixins": "9.0.4",
+		"postcss-nested": "6.0.1",
+		"postcss-simple-vars": "7.0.1",
 		"storybook-dark-mode": "3.0.0",
 		"stylelint": "15.10.2",
 		"stylelint-config-idiomatic-order": "9.0.0",
 		"stylelint-config-standard": "34.0.0",
 		"tsconfig": "workspace:*",
 		"typescript": "5.1.6",
-		"unocss": "0.53.5",
+		"unocss": "0.53.6",
 		"vite": "4.4.6",
 		"vite-tsconfig-paths": "4.2.0"
 	}
