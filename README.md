@@ -1,6 +1,13 @@
-# Acme Marketplace
+# 🛒 Acme Marketplace
 
-This monorepository is a fullstack application containing a modern [React](https://react.dev/) web app, server-side rendering, tooling, and APIs.
+This monorepository is a fullstack [Node.js](https://nodejs.org/about) application containing a modern [React](https://react.dev/) web app, server-side rendering, tooling, and APIs.
+
+The frontend is developed without the use of meta frameworks like Next.js, Remix and Astro.
+
+Implemented:
+- Streaming Server-Side Rendering (SSR). This allows you to incrementally render parts of your UI to the client.
+- File-system Routing. Every component in the "pages" directory becomes a route.
+- Client router that preloads the page before displaying it.
 
 ## What's inside?
 
@@ -14,14 +21,6 @@ This repo includes the following packages/apps:
 - `ui`: a stub React component library shared by both `marketplace` and `cms` applications
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-### Utilities
-
-This repo has some additional tools:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
 
 ## Setup
 
@@ -37,9 +36,9 @@ pnpm --filter=storage prisma migrate dev
 pnpm dev
 ```
 
-## [Migrations](https://www.prisma.io/docs/reference/api-reference/command-reference#prisma-migrate)
+## Migrations
 
-Example:
+[Prisma CLI reference](https://www.prisma.io/docs/reference/api-reference/command-reference#prisma-migrate). Example:
 
 ```sh
 pnpm --filter=storage prisma migrate status
@@ -61,9 +60,9 @@ docker build . -f apps/marketplace/Dockerfile -t acme-marketplace
 
 ## Recommended settings
 
-### [Visual Studio Code](https://code.visualstudio.com/docs/getstarted/settings#_workspace-settingsjson-location)
+### Visual Studio Code
 
-`.vscode/settings.json`
+`vscode/settings.json`
 
 ```json
 {
