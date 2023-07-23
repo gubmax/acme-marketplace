@@ -3,7 +3,7 @@
 	--color-secondary: #6d6d72;
 	--color-tertiary: #bfbfc1;
 	--color-accent: #454ce1;
-	--color-on-accent: #dfdfd7;
+	--color-on-accent: #fdfeff;
 	--color-surface: #f9f9f9;
 	--color-container: #fff;
 	--color-outline: #f0f0f0;
@@ -11,11 +11,11 @@
 }
 
 @define-mixin dark {
-	--color-primary: #dfdfd7;
+	--color-primary: #fdfeff;
 	--color-secondary: #9999a0;
 	--color-tertiary: #6c6c71;
 	--color-accent: #646cff;
-	--color-on-accent: #dfdfd7;
+	--color-on-accent: #fdfeff;
 	--color-surface: #17181c;
 	--color-container: #1e1f23;
 	--color-outline: #2d2e33;

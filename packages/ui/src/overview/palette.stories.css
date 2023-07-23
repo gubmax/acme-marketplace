@@ -1,0 +1,12 @@
+.ui-color-btn {
+	border: none;
+}
+
+.ui-on-color-btn {
+	border: none;
+	transition: background-color 0.1s;
+
+	&:hover {
+		background-color: currentcolor;
+	}
+}

@@ -1,0 +1,9 @@
+.ui-link {
+	border-radius: 6px;
+	color: var(--color-accent);
+	text-decoration: underline dotted;
+}
+
+.ui-inner-shadow {
+	box-shadow: var(--inner-shadow);
+}

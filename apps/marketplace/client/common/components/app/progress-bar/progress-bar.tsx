@@ -1,8 +1,8 @@
 import { memo, useState } from 'react'
 import { delay, filter, tap } from 'rxjs'
 import { cn } from 'ui/helpers/class-names.js'
+import { useEffectOnce } from 'ui/hooks/use-effect-once.js'
 
-import { useEffectOnce } from 'client/common/hooks/use-effect-once.js'
 import { useEnhancedEffect } from 'client/common/hooks/use-enhanced-effect.js'
 import { useSubscription } from 'client/common/hooks/use-subscription.js'
 import { preloadRouteModel } from 'client/core/models/preload-route.model.js'

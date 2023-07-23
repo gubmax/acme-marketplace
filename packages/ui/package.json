@@ -19,7 +19,8 @@
 	},
 	"dependencies": {
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"react-hot-toast": "2.4.1"
 	},
 	"devDependencies": {
 		"@storybook/addon-essentials": "7.1.0",
@@ -35,6 +36,7 @@
 		"@unocss/preset-mini": "0.53.6",
 		"@unocss/reset": "0.53.6",
 		"autoprefixer": "10.4.14",
+		"csstype": "3.1.2",
 		"eslint": "8.45.0",
 		"eslint-config-custom": "workspace:*",
 		"eslint-define-config": "1.21.0",
@@ -42,7 +44,6 @@
 		"postcss-import": "15.1.0",
 		"postcss-mixins": "9.0.4",
 		"postcss-nested": "6.0.1",
-		"postcss-simple-vars": "7.0.1",
 		"storybook-dark-mode": "3.0.0",
 		"stylelint": "15.10.2",
 		"stylelint-config-idiomatic-order": "9.0.0",

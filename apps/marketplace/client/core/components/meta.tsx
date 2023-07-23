@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import { useEffectOnce } from 'ui/hooks/use-effect-once.js'
 
-import { useEffectOnce } from 'client/common/hooks/use-effect-once.js'
 import { preloadRouteModel } from 'client/core/models/preload-route.model.js'
 import { useRenderContext } from 'client/core/render-context.js'
 import type { HtmlMetaDescriptor } from './modules.js'

@@ -6,8 +6,7 @@
 @import url("@unocss/reset/sanitize/system-ui.css");
 @import url("@unocss/reset/sanitize/typography.css");
 @import url("./vars.css");
-
-/* Common */
+@import url("./elements.css");
 
 html {
 	font-size: 16px;
@@ -47,16 +46,4 @@ hr {
 :focus-visible {
 	outline: 3px solid var(--color-accent);
 	outline-offset: 3px;
-}
-
-/* Elements */
-
-.link {
-	border-radius: 6px;
-	color: var(--color-accent);
-	text-decoration: underline dotted;
-}
-
-.inner-shadow {
-	box-shadow: var(--inner-shadow);
 }

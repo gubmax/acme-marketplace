@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import { Router } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
+import { useEffectOnce } from 'ui/hooks/use-effect-once.js'
 
-import { useEffectOnce } from 'client/common/hooks/use-effect-once.js'
 import { useEnhancedEffect } from 'client/common/hooks/use-enhanced-effect.js'
 import type { ChildrenProp } from 'client/common/typings/children-prop.js'
 import { preloadRouteModel } from '../models/preload-route.model.js'
