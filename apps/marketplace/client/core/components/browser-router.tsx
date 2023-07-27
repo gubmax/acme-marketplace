@@ -2,10 +2,11 @@ import { useRef, useState } from 'react'
 import { Router } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import { useEffectOnce } from 'ui/hooks/use-effect-once.js'
+import type { ChildrenProp } from 'ui/typings/children-prop.js'
 
 import { useEnhancedEffect } from 'client/common/hooks/use-enhanced-effect.js'
-import type { ChildrenProp } from 'client/common/typings/children-prop.js'
 import { preloadRouteModel } from '../models/preload-route.model.js'
+import { setPageTitle } from 'client/common/stores/page-store.js'
 
 function BrowserRouter({ children }: ChildrenProp) {
 	const { current: history } = useRef(createBrowserHistory({ window }))
@@ -24,8 +25,9 @@ function BrowserRouter({ children }: ChildrenProp) {
 	}, [history, location.pathname])
 
 	useEffectOnce(() => {
-		const subscription = preloadRouteModel.preloadObs.subscribe(({ update }) => {
+		const subscription = preloadRouteModel.preloadObs.subscribe(({ update, payload }) => {
 			setHistory(update)
+			if (payload?.pageTitle) setPageTitle(payload.pageTitle)
 			window.scrollTo(0, 0)
 		})
 

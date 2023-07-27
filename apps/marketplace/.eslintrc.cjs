@@ -1,6 +1,5 @@
 module.exports = {
 	root: true,
-	env: { node: true },
 	extends: ['custom'],
 	parserOptions: {
 		project: ['./tsconfig.json'],
@@ -9,7 +8,6 @@ module.exports = {
 	overrides: [
 		{
 			files: 'client/**/*',
-			env: { browser: true },
 			extends: ['custom/web'],
 			parserOptions: {
 				project: ['./tsconfig.web.json'],

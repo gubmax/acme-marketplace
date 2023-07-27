@@ -13,7 +13,7 @@ function Scripts() {
 
 	return isHydrated ? null : (
 		<>
-			{scripts.map(({ content, ...rest }, index) => {
+			{scripts?.map(({ content, ...rest }, index) => {
 				return rest.type === 'application/json' ? (
 					<script
 						key={index}

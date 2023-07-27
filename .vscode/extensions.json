@@ -8,6 +8,7 @@
 		"editorconfig.editorconfig",
 		"esbenp.prettier-vscode",
 		"prisma.prisma",
-		"stylelint.vscode-stylelint"
+		"stylelint.vscode-stylelint",
+		"vunguyentuan.vscode-css-variables"
 	]
 }

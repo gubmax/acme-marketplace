@@ -5,7 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import type { Route } from 'plugins/vite-plugin-routes-manifest.js'
 import type { Renderer } from '../prod/renderer.js'
 import { type EntryModule, type RenderContext, renderPage } from '../render-page.js'
-import { collectRouteMeta } from './collect-route-meta.js'
+import { collectRouteContext } from './collect-route-context.js'
 import { collectRouteStyles } from './collect-route-styles.js'
 
 // Init
@@ -31,7 +31,7 @@ async function createRenderContext(
 	serverEntry: string,
 	url: string,
 ): Promise<RenderContext> {
-	const renderContext: RenderContext = { links: [], styles: [], scripts: [], meta: {} }
+	const renderContext: RenderContext = { links: [], meta: {}, payload: {}, scripts: [], styles: [] }
 
 	// Scripts
 	renderContext.scripts.push(
@@ -44,7 +44,7 @@ async function createRenderContext(
 
 	// Meta
 	const matches = matchRoutes<Route>(routesManifest, url) ?? []
-	await collectRouteMeta(viteServer, renderContext, matches)
+	await collectRouteContext(viteServer, renderContext, matches)
 
 	return renderContext
 }

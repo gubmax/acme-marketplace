@@ -5,7 +5,7 @@ function Styles() {
 
 	return (
 		<>
-			{styles.map(({ content, ...rest }, index) => {
+			{styles?.map(({ content, ...rest }, index) => {
 				if (content)
 					return <style key={index} {...rest} dangerouslySetInnerHTML={{ __html: content }} />
 				return <style key={index} {...rest} />

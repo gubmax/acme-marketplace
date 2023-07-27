@@ -7,3 +7,9 @@ export type HtmlMetaDescriptor =
 	| Record<string, string>
 
 export type MetaFunction = () => HtmlMetaDescriptor
+
+export interface PayloadDescriptor {
+	pageTitle?: string
+}
+
+export type PayloadFunction = () => PayloadDescriptor

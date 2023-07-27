@@ -1,5 +1,15 @@
-.m-main {
+.m-base-layout {
+	display: grid;
 	min-width: 768px;
-	max-width: 1024px;
-  min-height: 100vh;
+	grid-gap: 0;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar main"
+    "sidebar footer";
+	grid-template-columns: auto 1fr;
+}
+
+.m-base-layout__main {
+	min-height: 100vh;
+	grid-area: main;
 }

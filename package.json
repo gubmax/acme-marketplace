@@ -19,9 +19,9 @@
 	"devDependencies": {
 		"eslint": "8.45.0",
 		"husky": "8.0.3",
-		"npm-check-updates": "16.10.16",
+		"npm-check-updates": "16.10.17",
 		"prettier": "3.0.0",
-		"turbo": "1.10.9",
+		"turbo": "1.10.12",
 		"typescript": "5.1.6"
 	}
 }

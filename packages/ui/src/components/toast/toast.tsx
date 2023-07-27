@@ -6,8 +6,8 @@ import {
 	type ToastPosition,
 	useToasterStore,
 } from 'react-hot-toast'
-import { cn } from 'src/helpers/class-names'
-import { useEffectOnce } from 'src/hooks/use-effect-once'
+import { cn } from 'src/helpers/class-names.js'
+import { useEffectOnce } from 'src/hooks/use-effect-once.js'
 
 import './toast.css'
 

@@ -1,14 +1,14 @@
-import type { MetaFunction } from 'client/core/components/modules'
+import type { MetaFunction, PayloadFunction } from 'client/core/components/page.js'
 
-const PAGE_TITLE = 'About'
+export const meta: MetaFunction = () => ({ title: 'About · Acme' })
 
-export const meta: MetaFunction = () => ({ title: PAGE_TITLE })
+export const payload: PayloadFunction = () => ({ pageTitle: 'About' })
 
 export default function AboutPage() {
 	return (
-		<div>
-			<h1 className="text-display-md">{PAGE_TITLE}</h1>
-			<p>The quick brown fox jumps over the lazy dog.</p>
-		</div>
+		<>
+			<div className="bg-outline rounded-lg h-40 mb-5" />
+			<div className="bg-outline rounded-lg h-60 mb-5" />
+		</>
 	)
 }

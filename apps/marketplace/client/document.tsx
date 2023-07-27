@@ -1,4 +1,5 @@
-import type { ChildrenProp } from './common/typings/children-prop.js'
+import type { ChildrenProp } from 'ui/typings/children-prop.js'
+
 import Links from './core/components/links.js'
 import LiveReload from './core/components/live-reload.js'
 import Meta from './core/components/meta.js'

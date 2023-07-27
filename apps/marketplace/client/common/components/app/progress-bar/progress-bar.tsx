@@ -30,9 +30,9 @@ function ProgressBar() {
 	useEffectOnce(() => setPrehydrationLoading(false))
 
 	return (
-		<div
+		<hr
 			className={cn(
-				'wrapper',
+				'm-progress-bar',
 				(prehydrationLoading || status === QueryStatuses.LOADING) && 'loading',
 				((!prehydrationLoading && status === QueryStatuses.IDLE) ||
 					status === QueryStatuses.SUCCESS) &&

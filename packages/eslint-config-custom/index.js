@@ -1,4 +1,5 @@
 module.exports = {
+	env: { node: true },
 	parser: '@typescript-eslint/parser',
 	plugins: ['turbo', 'prettier', 'simple-import-sort'],
 	extends: [

@@ -11,6 +11,7 @@
 html {
 	font-size: 16px;
 	overflow-y: scroll;
+	overscroll-behavior: none;
 	text-size-adjust: 100%;
 }
 
@@ -25,7 +26,6 @@ body {
 	color: var(--color-primary);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	overscroll-behavior: none;
 	-webkit-tap-highlight-color: transparent;
 }
 

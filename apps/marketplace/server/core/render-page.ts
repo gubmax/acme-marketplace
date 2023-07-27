@@ -8,6 +8,7 @@ import isbot from 'isbot'
 const ABORT_RENDER_DELAY = 5000
 
 export interface RenderContext {
+	payload: { pageTitle?: string }
 	links: Array<Record<string, unknown>>
 	styles: Array<Record<string, unknown>>
 	meta: Record<string, string>
@@ -42,10 +43,8 @@ export function renderPage(
 		id: '__RENDER_CONTEXT__',
 		type: 'application/json',
 		content: JSON.stringify({
-			links: [],
-			styles: [],
+			payload: renderContext.payload,
 			meta: renderContext.meta,
-			scripts: [],
 		}),
 	})
 

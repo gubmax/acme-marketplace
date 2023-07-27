@@ -17,13 +17,15 @@
 	},
 	"dependencies": {
 		"@fastify/static": "6.10.2",
+		"@nanostores/react": "0.7.1",
 		"awilix": "8.0.1",
 		"envalid": "7.3.1",
-		"esbuild": "0.18.15",
+		"esbuild": "0.18.17",
 		"fastify": "4.20.0",
 		"history": "5.3.0",
 		"hyperid": "3.1.1",
 		"isbot": "3.6.13",
+		"nanostores": "0.9.3",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-router-dom": "6.14.2",
@@ -35,7 +37,7 @@
 	"devDependencies": {
 		"@fastify/middie": "8.3.0",
 		"@types/node": "18.11.9",
-		"@types/react": "18.2.15",
+		"@types/react": "18.2.17",
 		"@types/react-dom": "18.2.7",
 		"@unocss/preset-mini": "0.53.6",
 		"@unocss/reset": "0.53.6",
@@ -47,7 +49,7 @@
 		"tsconfig": "workspace:*",
 		"tsx": "3.12.7",
 		"unocss": "0.53.6",
-		"vite": "4.4.6",
+		"vite": "4.4.7",
 		"vite-tsconfig-paths": "4.2.0"
 	}
 }

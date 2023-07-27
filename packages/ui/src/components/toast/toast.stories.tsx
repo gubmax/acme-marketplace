@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useCallback } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { useEffectOnce } from 'src/hooks/use-effect-once'
+import { useEffectOnce } from 'src/hooks/use-effect-once.js'
 
-import Button from '../buttons/button/button'
-import { toast, ToastContainer } from './toast'
+import Button from '../buttons/button/button.js'
+import { toast, ToastContainer } from './toast.js'
 
 const meta: Meta<typeof ToastContainer> = {
 	title: 'Components/toast',

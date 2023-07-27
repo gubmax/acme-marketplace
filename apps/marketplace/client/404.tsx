@@ -1,4 +1,4 @@
-import type { MetaFunction } from './core/components/modules'
+import type { MetaFunction } from './core/components/page.js'
 
 export const meta: MetaFunction = () => ({ title: 'Page not found' })
 

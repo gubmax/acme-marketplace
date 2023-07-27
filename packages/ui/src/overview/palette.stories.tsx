@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { toast, ToastContainer } from 'src/components/toast/toast'
+import { toast, ToastContainer } from 'src/components/toast/toast.js'
 
-import { cn } from '../helpers/class-names'
+import { cn } from '../helpers/class-names.js'
 import './palette.stories.css'
 
 const meta: Meta = {

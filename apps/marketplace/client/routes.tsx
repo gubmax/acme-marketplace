@@ -1,31 +1,15 @@
-import type { ReactNode } from 'react'
-import type { RouteObject } from 'react-router-dom'
 import { routes as routesManifest } from 'virtual:routes-manifest'
 
 import NotFoundPage from './404.js'
 import BaseLayout from './common/components/layouts/base/base-layout.js'
-import { dynamic, type DynamicComponentType, type DynamicModule } from './core/dynamic.js'
+import type { DynamicModule } from './core/dynamic.js'
+import { type CustomRouteObject, enhanceRoutes } from './core/enhance-routes.js'
 
 // Pages by folder structure
 
 const modules = import.meta.glob<DynamicModule>('/client/pages/**/*.tsx')
 
-export type CustomRouteObject = RouteObject & {
-	element?: ReactNode | DynamicComponentType
-	children?: CustomRouteObject[]
-}
-
-function enhanceRoutes(arr: RouteObject[]): void {
-	for (const route of arr) {
-		if (route.id) {
-			const DynamicPage = dynamic(modules[`/${route.id}`])
-			route.element = <DynamicPage />
-		}
-		if (route.children) enhanceRoutes(route.children)
-	}
-}
-
-enhanceRoutes(routesManifest)
+enhanceRoutes(modules, routesManifest)
 
 // All routes
 
