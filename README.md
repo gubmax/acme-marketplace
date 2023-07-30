@@ -67,6 +67,7 @@ docker build . -f apps/marketplace/Dockerfile -t acme-marketplace
 ```json
 {
 	"typescript.tsdk": "node_modules/typescript/lib",
+	"files.associations": { "*.css": "css" },
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true,
 		"source.fixAll.stylelint": true

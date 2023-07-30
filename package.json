@@ -1,5 +1,5 @@
 {
-	"name": "acme-boilerplate",
+	"name": "acme-marketplace",
 	"private": true,
 	"packageManager": "pnpm@8.6.0",
 	"engines": {

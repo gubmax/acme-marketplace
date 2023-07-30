@@ -1,0 +1,8 @@
+{
+	"name": "Acme Marketplace",
+	"service": "workspace",
+	"dockerComposeFile": ["../compose.yml", "compose.extend.yml"],
+	"workspaceFolder": "/workspace",
+	"postCreateCommand": { "dependencies": "pnpm i", "codegen": "pnpm codegen" },
+	"shutdownAction": "stopCompose"
+}

@@ -1,0 +1,12 @@
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker-host.sock
+      - ./:/workspace:cached
+      - ./.pnpm-store:/workspace/.pnpm-store
+    user: node
+    networks:
+      - app-net

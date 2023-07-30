@@ -12,7 +12,7 @@ export default function HomePage() {
 				<div className="bg-outline rounded-lg" />
 				<div className="bg-outline rounded-lg" />
 			</div>
-			<div className="mb-5 grid grid-cols-4 gap-5">
+			<div className="grid grid-cols-4 gap-5">
 				{Array.from({ length: 8 }).map((_, index) => (
 					<div key={index} className="bg-outline h-60 rounded-lg" />
 				))}
