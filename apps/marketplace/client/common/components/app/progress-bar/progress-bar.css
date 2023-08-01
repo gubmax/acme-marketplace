@@ -1,22 +1,30 @@
 @keyframes m-loading {
-  10% { width: 50%; }
-  100% { width: 90%; }
+	10% {
+		width: 50%;
+	}
+
+	100% {
+		width: 90%;
+	}
 }
 
-
 @keyframes m-loading-end {
-  from { opacity: 1; }
-  to { opacity: 0; }
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
 }
 
 .m-progress-bar {
-  position: fixed;
-  z-index: 2;
-  width: 0;
-  height: 2px;
-  background: var(--color-accent);
-  user-select: none;
-
+	position: fixed;
+	z-index: 2;
+	width: 0;
+	height: 2px;
+	background: var(--color-accent);
+	user-select: none;
 
 	&.loading {
 		animation-duration: 8s;
@@ -30,6 +38,8 @@
 		animation-duration: 500ms;
 		animation-fill-mode: forwards;
 		animation-name: m-loading-end;
-		transition: width 500ms ease-in, opacity 500ms ease-in;
+		transition:
+			width 500ms ease-in,
+			opacity 500ms ease-in;
 	}
 }

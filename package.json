@@ -13,7 +13,7 @@
 		"lint": "turbo run lint",
 		"sb": "turbo run sb",
 		"sb.build": "turbo run sb.build",
-		"format": "prettier --write **/*.{*js,ts*,json} && turbo run format",
+		"format": "prettier --write **/*.{*js,ts*,json,css} && turbo run format",
 		"prepare": "husky install"
 	},
 	"devDependencies": {

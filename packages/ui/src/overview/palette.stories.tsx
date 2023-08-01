@@ -5,7 +5,7 @@ import { cn } from '../helpers/class-names.js'
 import './palette.stories.css'
 
 const meta: Meta = {
-	title: 'Overview/Palette',
+	title: 'overview/palette',
 }
 
 export default meta

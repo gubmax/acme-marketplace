@@ -1,0 +1,13 @@
+.ui-button-base {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	line-height: 1;
+}
+
+/* States */
+
+.ui-button-base[disabled] {
+	cursor: not-allowed;
+}

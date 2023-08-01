@@ -1,0 +1,25 @@
+@keyframes ui-loader-rotate {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.ui-loader {
+	animation: ui-loader-rotate 650ms linear infinite;
+}
+
+/* Sizes */
+
+.ui-loader.ui-size--sm {
+	width: 12px;
+	height: 12px;
+}
+
+.ui-loader.ui-size--md {
+	width: 24px;
+	height: 24px;
+}

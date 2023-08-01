@@ -7,7 +7,7 @@ import Button from '../buttons/button/button.js'
 import { toast, ToastContainer } from './toast.js'
 
 const meta: Meta<typeof ToastContainer> = {
-	title: 'Components/toast',
+	title: 'components/toast',
 }
 
 export default meta

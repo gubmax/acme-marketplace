@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta = {
-	title: 'Overview/Typography',
+	title: 'overview/typography',
 }
 
 export default meta

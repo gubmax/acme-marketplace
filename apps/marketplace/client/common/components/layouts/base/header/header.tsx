@@ -9,9 +9,11 @@ function Header() {
 	const page = useStore(pageStore)
 
 	return (
-		<header className="m-header fixed  flex items-center mx-auto px-10 gap-5">
+		<header className="m-header fixed flex items-center mx-auto px-10 gap-5">
 			<h1 className="text-title-lg">{page.title}</h1>
-			<Button className="ml-auto">Sign In</Button>
+			<Button as="a" className="ml-auto" href="/login">
+				Sign In
+			</Button>
 		</header>
 	)
 }

@@ -1,0 +1,11 @@
+/* Sizes */
+
+.ui-icon.ui-size--sm {
+	width: 12px;
+	height: 12px;
+}
+
+.ui-icon.ui-size--md {
+	width: 24px;
+	height: 24px;
+}

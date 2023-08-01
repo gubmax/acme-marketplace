@@ -1,10 +1,49 @@
 .ui-button {
+	border-width: 0;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: 500;
+}
+
+/* Variants */
+
+.ui-button.ui-variant--filled {
+	background: linear-gradient(0deg, #4d55ff 0%, #646cff 100%);
+	box-shadow: inset 0 0 0 1px #646cff;
+	color: var(--color-on-accent);
+}
+
+.ui-button.ui-variant--filled:not(:disabled) {
+	transition: filter 150ms ease;
+
+	&:active {
+		filter: brightness(0.8);
+	}
+}
+
+.ui-button.ui-variant--tonal {
+	background-color: var(--color-outline);
+	color: var(--color-primary);
+}
+
+.ui-button.ui-variant--tonal:not(:disabled) {
+	transition: filter 150ms ease;
+
+	&:active {
+		filter: brightness(0.8);
+	}
+}
+
+/* Sizes */
+
+.ui-button.ui-size--md {
+	min-width: 100px;
+	height: 36px;
+	padding: 0 24px;
+}
+
+.ui-button.ui-size--lg {
 	min-width: 120px;
 	height: 40px;
-	padding: 0;
-	border: none;
-	border-radius: 6px;
-	background: var(--color-accent);
-	color: var(--color-on-accent);
-	cursor: pointer;
+	padding: 0 24px;
 }
