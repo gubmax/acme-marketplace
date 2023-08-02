@@ -1,0 +1,5 @@
+.ui-modal-overlay {
+	display: grid;
+	background: rgb(0 0 0 / 40%);
+	place-items: center;
+}

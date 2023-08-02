@@ -24,7 +24,10 @@ function Button<T extends ButtonBaseElement = 'button'>(
 	return (
 		<ButtonBase
 			ref={ref}
-			className={cn(`ui-button ui-variant--${variant} ui-size--${size} text-label-lg`, className)}
+			className={cn(
+				`ui-button ui-variant--${variant} ui-size--${size} text-label-lg px-6`,
+				className,
+			)}
 			{...(rest as ButtonBaseProps<ButtonBaseElement>)}
 		>
 			{children}

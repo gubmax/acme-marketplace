@@ -1,0 +1,15 @@
+.ui-menu {
+	border: 1px solid var(--color-outline);
+	background-color: var(--color-container);
+}
+
+.ui-menu__item {
+	border-width: 0;
+	cursor: pointer;
+}
+
+/* States */
+
+.ui-menu__item.ui-active {
+	@apply fill-accent-primary text-accent-primary bg-accent-secondary;
+}

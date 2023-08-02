@@ -1,5 +1,9 @@
 {
 	"extends": "tsconfig/web.json",
-	"compilerOptions": { "baseUrl": ".", "composite": true },
+	"compilerOptions": {
+		"baseUrl": ".",
+		"composite": true,
+		"moduleResolution": "Bundler"
+	},
 	"include": ["src"]
 }

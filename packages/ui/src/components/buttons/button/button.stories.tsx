@@ -22,7 +22,7 @@ export const Basic: Story = {
 
 const SizeItem = ({ size }: { size: ButtonSize }) => (
 	<div className="flex flex-col">
-		<h2 className="text-secondary my-4">{size}</h2>
+		<h2 className="text-secondary my-3">{size}</h2>
 		<Button size={size}>Label</Button>
 	</div>
 )

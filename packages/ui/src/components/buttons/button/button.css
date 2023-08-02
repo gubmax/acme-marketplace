@@ -39,11 +39,9 @@
 .ui-button.ui-size--md {
 	min-width: 100px;
 	height: 36px;
-	padding: 0 24px;
 }
 
 .ui-button.ui-size--lg {
 	min-width: 120px;
 	height: 40px;
-	padding: 0 24px;
 }
