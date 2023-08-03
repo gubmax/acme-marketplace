@@ -29,50 +29,42 @@ function copyToClipboard(text?: string) {
 	})
 }
 
-function Color({ color, onColor }: { color: string; onColor?: string }) {
+function Color({ color }: { color: string }) {
 	const colorText = color.slice(3)
-	const onColorText = onColor && onColor.slice(5)
 	const colorVarText = getColorVar(colorText)
-	const onColorVarText = getColorVar(onColorText)
 
 	return (
 		<div className="relative flex gap-3 items-center shrink-0">
 			<div
-				className={cn(color, 'flex-col rounded-md h-20 w-28 flex ui-inner-shadow overflow-hidden')}
-			>
-				<button
-					type="button"
-					className="ui-color-btn flex cursor-pointer min-h-1/2 h-full"
-					onClick={() => copyToClipboard(colorVarText)}
-				/>
-				{!!onColor && (
-					<button
-						type="button"
-						className={`ui-on-color-btn flex items-center justify-center cursor-pointer min-h-1/2 text-${onColorText}`}
-						onClick={() => copyToClipboard(onColorVarText)}
-					>
-						<span className={onColor}>{onColorText}</span>
-					</button>
-				)}
-			</div>
-			<div className="flex flex-col justify-around h-full text-secondary">
-				<p className="text-body-md">{colorVarText}</p>
-				{!!onColor && <p className="text-body-md">{onColorVarText}</p>}
-			</div>
+				className={cn(color, 'rounded-md h-16 w-16 ui-inner-shadow cursor-pointer')}
+				onClick={() => copyToClipboard(colorVarText)}
+			/>
+			<p className="text-body-md text-secondary">{colorVarText}</p>
 		</div>
 	)
 }
 
 export const Palette: StoryObj = {
 	render: () => (
-		<div className="p-10 rounded-lg grid grid-cols-2 gap-5">
-			<Color color="bg-primary" />
-			<Color color="bg-secondary" />
-			<Color color="bg-tertiary" />
-			<Color color="bg-accent" onColor="text-on-accent" />
-			<Color color="bg-surface" />
-			<Color color="bg-container" />
-			<Color color="bg-outline" />
+		<div className="flex flex-col gap-10">
+			<div>
+				<p className="text-title-lg text-secondary mb-3">Text</p>
+				<div className="rounded-lg grid grid-cols-3 gap-5">
+					<Color color="bg-primary" />
+					<Color color="bg-secondary" />
+					<Color color="bg-accent" />
+					<Color color="bg-on-accent" />
+				</div>
+			</div>
+			<div>
+				<p className="text-title-lg text-secondary mb-3">Surfaces</p>
+				<div className="rounded-lg grid grid-cols-3 gap-5">
+					<Color color="bg-surface" />
+					<Color color="bg-container" />
+					<Color color="bg-outline" />
+					<Color color="bg-selected" />
+				</div>
+			</div>
 			<ToastContainer />
 		</div>
 	),

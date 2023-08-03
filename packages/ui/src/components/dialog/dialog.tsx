@@ -1,6 +1,7 @@
 import { type ForwardedRef, forwardRef, type HTMLAttributes } from 'react'
 
 import { cn } from '../../helpers/class-names.js'
+import './dialog.css'
 
 // Dialog
 
@@ -10,7 +11,7 @@ function Dialog(props: DialogProps, ref: ForwardedRef<HTMLDivElement>) {
 	const { className, children, ...rest } = props
 
 	return (
-		<div ref={ref} className={cn('ui-dialog', className)} {...rest}>
+		<div ref={ref} className={cn('ui-dialog rounded-lg', className)} {...rest}>
 			{children}
 		</div>
 	)
@@ -24,11 +25,7 @@ function DialogBody(props: DialogBodyProps, ref: ForwardedRef<HTMLDivElement>) {
 	const { className, children, ...rest } = props
 
 	return (
-		<div
-			ref={ref}
-			className={cn('ui-dialog__body bg-container rounded-t-lg px-6 py-5', className)}
-			{...rest}
-		>
+		<div ref={ref} className={cn('ui-dialog__body bg-container px-6 py-5', className)} {...rest}>
 			{children}
 		</div>
 	)
@@ -44,7 +41,7 @@ function DialogFooter(props: DialogBodyProps, ref: ForwardedRef<HTMLDivElement>)
 	return (
 		<div
 			ref={ref}
-			className={cn('ui-dialog__footer bg-outline rounded-b-lg px-6 py-3', className)}
+			className={cn('ui-dialog__footer bg-surface rounded-b-lg px-6 py-3', className)}
 			{...rest}
 		>
 			{children}

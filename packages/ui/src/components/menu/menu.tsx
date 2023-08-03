@@ -23,7 +23,7 @@ function Menu<T extends MenuElement>(
 	const Element = (as ?? 'ul') as ElementType
 
 	return (
-		<Element ref={ref} className={cn('ui-menu rounded-md py-2 bg-outline', className)} {...rest}>
+		<Element ref={ref} className={cn('ui-menu rounded-md bg-outline p-2', className)} {...rest}>
 			{children}
 		</Element>
 	)
@@ -48,7 +48,7 @@ function MenuItem<T extends MenuItemElement = 'li'>(
 		<Element
 			ref={ref}
 			className={cn(
-				'ui-menu__item flex items-center py-2 px-3 transition-colors',
+				'ui-menu__item flex items-center py-2 rounded-md px-3 transition-colors',
 				active && 'ui-active',
 				className,
 			)}

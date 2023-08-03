@@ -30,10 +30,10 @@ export const Basic: Story = {
 				<Modal ref={refs.setFloating} className="-mt-60" context={context} {...getFloatingProps()}>
 					<Dialog>
 						<Dialog.Body>
-							<h2 className="text-title-1 mb-2">Title</h2>
+							<h2 className="text-title-lg mb-2">Title</h2>
 							<p>Subtitle</p>
 						</Dialog.Body>
-						<Dialog.Footer className="flex justify-end gap-2">
+						<Dialog.Footer className="flex justify-end gap-3">
 							<Button variant="tonal" size="lg" onClick={hidePopup}>
 								Cancel
 							</Button>

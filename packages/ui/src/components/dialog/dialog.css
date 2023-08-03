@@ -1,0 +1,9 @@
+.ui-dialog {
+	overflow: hidden;
+	border: 1px solid var(--color-outline);
+}
+
+.ui-dialog__footer {
+	min-width: 400px;
+	border-top: 1px solid var(--color-outline);
+}

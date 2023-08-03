@@ -30,11 +30,11 @@ export default defineConfig({
 			// Palette
 			primary: 'var(--color-primary)',
 			secondary: 'var(--color-secondary)',
-			tertiary: 'var(--color-tertiary)',
 			accent: 'var(--color-accent)',
 			surface: 'var(--color-surface)',
 			container: 'var(--color-container)',
 			outline: 'var(--color-outline)',
+			selected: 'var(--color-selected)',
 			on: {
 				accent: 'var(--color-on-accent)',
 			},

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import SettingsIcon from '../icons/settings-icon.js'
@@ -24,4 +25,33 @@ export const Basic: Story = {
 			))}
 		</Menu>
 	),
+}
+
+// Interactive
+
+export const Interactive: Story = {
+	render: () => {
+		const [selectedIndex, setSelectedIndex] = useState(0)
+
+		return (
+			<Menu as="nav">
+				{Array.from({ length: 5 }).map((_, index) => {
+					const active = selectedIndex === index
+
+					return (
+						<Menu.Item
+							key={index}
+							as="button"
+							className="w-52 items-center gap-2"
+							active={active}
+							onClick={() => setSelectedIndex(index)}
+						>
+							<SettingsIcon className={active ? 'fill-accent' : 'fill-secondary'} />
+							Label {index + 1}
+						</Menu.Item>
+					)
+				})}
+			</Menu>
+		)
+	},
 }
