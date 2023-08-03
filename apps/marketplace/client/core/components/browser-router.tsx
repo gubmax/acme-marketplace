@@ -5,8 +5,8 @@ import { useEffectOnce } from 'ui/hooks/use-effect-once.js'
 import type { ChildrenProp } from 'ui/typings/children-prop.js'
 
 import { useEnhancedEffect } from 'client/common/hooks/use-enhanced-effect.js'
-import { preloadRouteModel } from '../models/preload-route.model.js'
 import { setPageTitle } from 'client/common/stores/page-store.js'
+import { preloadRouteModel } from '../models/preload-route.model.js'
 
 function BrowserRouter({ children }: ChildrenProp) {
 	const { current: history } = useRef(createBrowserHistory({ window }))
@@ -27,7 +27,7 @@ function BrowserRouter({ children }: ChildrenProp) {
 	useEffectOnce(() => {
 		const subscription = preloadRouteModel.preloadObs.subscribe(({ update, payload }) => {
 			setHistory(update)
-			if (payload?.pageTitle) setPageTitle(payload.pageTitle)
+			setPageTitle(payload.pageTitle ?? '')
 			window.scrollTo(0, 0)
 		})
 

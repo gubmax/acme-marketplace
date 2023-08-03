@@ -19,8 +19,8 @@ async function getContextByModuleId(
 	let meta, payload
 
 	if (module?.ssrModule) {
-		meta = (module?.ssrModule?.meta as () => RenderContext['meta'] | undefined)()
-		payload = (module?.ssrModule?.payload as () => { pageTitle?: string } | undefined)()
+		meta = (module?.ssrModule?.meta as () => RenderContext['meta'] | undefined)?.()
+		payload = (module?.ssrModule?.payload as () => { pageTitle?: string } | undefined)?.()
 	}
 
 	return { meta, payload }
