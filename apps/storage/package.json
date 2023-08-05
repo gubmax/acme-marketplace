@@ -13,13 +13,13 @@
 		"format": "prisma format"
 	},
 	"dependencies": {
-		"@prisma/client": "5.1.0",
+		"@prisma/client": "5.1.1",
 		"awilix": "8.0.1",
 		"dotenv": "16.3.1",
 		"envalid": "7.3.1",
 		"fastify": "4.21.0",
 		"hyperid": "3.1.1",
-		"prisma": "5.1.0",
+		"prisma": "5.1.1",
 		"shared": "workspace:*"
 	},
 	"devDependencies": {
