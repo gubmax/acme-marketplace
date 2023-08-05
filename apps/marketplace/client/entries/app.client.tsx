@@ -13,7 +13,7 @@ import 'virtual:uno.css'
 
 const renderContext = getJSONData<RenderContextType>('__RENDER_CONTEXT__')
 
-setPageTitle(renderContext?.payload.pageTitle ?? '')
+setPageTitle(renderContext?.payload.pageTitle)
 
 hydrateRoot(
 	window.document,

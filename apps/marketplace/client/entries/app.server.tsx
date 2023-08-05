@@ -14,7 +14,7 @@ export interface AppRenderOptions {
 }
 
 export function handleRequest({ url, renderContext }: AppRenderOptions): ReactNode {
-	setPageTitle(renderContext?.payload.pageTitle ?? '')
+	setPageTitle(renderContext?.payload.pageTitle)
 
 	return (
 		<Document renderContext={renderContext}>

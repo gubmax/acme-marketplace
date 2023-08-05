@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import { useEffectOnce } from 'ui/hooks/use-effect-once.js'
+import { useEffect, useState } from 'react'
 
-import { preloadRouteModel } from 'client/core/models/preload-route.model.js'
+import { preloadRouteModel } from 'client/core/models/preload-route-model.js'
 import { useRenderContext } from 'client/core/render-context.js'
 import type { HtmlMetaDescriptor } from './page.js'
 
@@ -9,10 +8,10 @@ function Meta() {
 	const { meta: renderMeta } = useRenderContext()
 	const [meta, setMeta] = useState<HtmlMetaDescriptor>(renderMeta ?? {})
 
-	useEffectOnce(() => {
-		const subscription = preloadRouteModel.preloadObs.subscribe(({ meta }) => setMeta(meta))
+	useEffect(() => {
+		const subscription = preloadRouteModel.preloadObs.subscribe(({ meta }) => setMeta(meta ?? {}))
 		return () => subscription.unsubscribe()
-	})
+	}, [])
 
 	return (
 		<>

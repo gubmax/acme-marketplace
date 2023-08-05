@@ -26,14 +26,14 @@
 	background: var(--color-accent);
 	user-select: none;
 
-	&.loading {
+	&.m-loading {
 		animation-duration: 8s;
 		animation-fill-mode: forwards;
 		animation-name: m-loading;
 		transition: width 500ms ease-in;
 	}
 
-	&.loading-end {
+	&.m-loading-end {
 		width: 100%;
 		animation-duration: 500ms;
 		animation-fill-mode: forwards;
