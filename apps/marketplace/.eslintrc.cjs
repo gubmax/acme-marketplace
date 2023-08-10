@@ -9,9 +9,7 @@ module.exports = {
 		{
 			files: 'client/**/*',
 			extends: ['custom/web'],
-			parserOptions: {
-				project: ['./tsconfig.web.json'],
-			},
+			parserOptions: { project: ['./tsconfig.web.json'] },
 			rules: {
 				// Disabling using of useLayoutEffect from react
 				'react-hooks/exhaustive-deps': ['warn', { additionalHooks: 'useEnhancedEffect' }],

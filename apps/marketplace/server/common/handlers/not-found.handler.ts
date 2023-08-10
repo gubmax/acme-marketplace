@@ -16,10 +16,10 @@ export default function notFoundHandler(
 	server.setNotFoundHandler(async (req, res) => {
 		if (env.isDev) {
 			res.statusCode = 404
-			return renderer.render(req, res, 'app')
+			return renderer.render(req, res, 'app', 'client/404.tsx')
 		}
 
-		const stream = createReadStream(resolvePath('client/pages/404.html'), 'utf-8')
+		const stream = createReadStream(resolvePath('client/404.html'), 'utf-8')
 		return res.status(404).type('text/html').send(stream)
 	})
 }

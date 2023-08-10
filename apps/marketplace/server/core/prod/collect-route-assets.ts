@@ -1,7 +1,5 @@
-import type { RouteMatch } from 'react-router-dom'
 import type { Manifest } from 'vite'
 
-import type { Route } from 'plugins/vite-plugin-routes-manifest.js'
 import type { RenderContext } from '../render-page.js'
 import { getAssetProps } from './get-asset-props.js'
 
@@ -20,7 +18,7 @@ function collectByManifest(manifest: Manifest, path: string): RenderAssets {
 
 		importedModules.add(assetPath)
 
-		const { isEntry, file, css = [], assets = [], imports = [] } = manifest[assetPath]
+		const { isEntry, file, css = [], assets = [], imports = [] } = manifest[assetPath] ?? {}
 
 		for (const url of [file, ...css, ...assets]) {
 			const link = getAssetProps(`/${url}`, isEntry)
@@ -41,8 +39,8 @@ function collectByManifest(manifest: Manifest, path: string): RenderAssets {
 export function collectRouteAssets(
 	renderContext: RenderContext,
 	assetsManifest: Manifest,
-	matches: Array<RouteMatch<string, Route>>,
 	entryPath: string,
+	moduleId: string,
 ) {
 	// Entry
 
@@ -50,11 +48,9 @@ export function collectRouteAssets(
 	renderContext.links.push(...commonAssets.links)
 	renderContext.scripts.push(...commonAssets.scripts)
 
-	// Routes
+	// Route
 
-	for (const match of matches) {
-		const routeAssets = collectByManifest(assetsManifest, match.route.id)
-		renderContext.links.push(...routeAssets.links)
-		renderContext.scripts.push(...routeAssets.scripts)
-	}
+	const routeAssets = collectByManifest(assetsManifest, moduleId)
+	renderContext.links.push(...routeAssets.links)
+	renderContext.scripts.push(...routeAssets.scripts)
 }

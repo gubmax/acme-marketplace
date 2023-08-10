@@ -4,14 +4,13 @@ import type { Plugin } from 'vite'
 
 const PATH_ROUTES_FOLDER = 'client/pages'
 
-export interface Route {
+export interface ManifestRoute {
 	id: string
 	path: string
-	static: boolean
-	children: Route[]
+	static?: boolean
 }
 
-function generateRoutes(routes: Route[], rootFolder: string, prefix = '/') {
+function generateRoutes(routes: ManifestRoute[], rootFolder: string, prefix = '/') {
 	const direntArr = fs.readdirSync(`./${rootFolder}${prefix}`, { withFileTypes: true })
 	const folderArr: fs.Dirent[] = []
 
@@ -31,21 +30,19 @@ function generateRoutes(routes: Route[], rootFolder: string, prefix = '/') {
 			id,
 			path: `${prefix}${subpath}`,
 			static: true, // TODO: add condition for preload routes
-			children: [],
 		})
 	}
 
 	for (const { name } of folderArr) {
 		const currentName = `${prefix}${name}`
-		const parent = routes.find(({ path }) => path.includes(currentName))
-		generateRoutes(parent?.children ?? routes, rootFolder, `${currentName}/`)
+		generateRoutes(routes, rootFolder, `${currentName}/`)
 	}
 }
 
 export function generateRoutesManifest(): Plugin {
 	const virtualModuleId = 'virtual:routes-manifest'
 	const resolvedVirtualModuleId = '\0' + virtualModuleId
-	let routes: Route[] = []
+	let routes: ManifestRoute[] = []
 
 	return {
 		name: 'routes-manifest',

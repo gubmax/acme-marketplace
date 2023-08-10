@@ -1,21 +1,14 @@
-import { useEffect, useState } from 'react'
-
-import { preloadRouteModel } from 'client/core/models/preload-route-model.js'
-import { useRenderContext } from 'client/core/render-context.js'
-import type { HtmlMetaDescriptor } from './page.js'
+import { useSubscription } from 'client/common/hooks/use-subscription.js'
+import { routerModel } from 'client/core/models/router-model.js'
+import { useRenderer } from 'client/core/render-context.js'
 
 function Meta() {
-	const { meta: renderMeta } = useRenderContext()
-	const [meta, setMeta] = useState<HtmlMetaDescriptor>(renderMeta ?? {})
-
-	useEffect(() => {
-		const subscription = preloadRouteModel.preloadObs.subscribe(({ meta }) => setMeta(meta ?? {}))
-		return () => subscription.unsubscribe()
-	}, [])
+	const renderer = useRenderer()
+	const route = useSubscription(routerModel.preloadRouteObs)
 
 	return (
 		<>
-			{Object.entries(meta).map(([name, value], index) => {
+			{Object.entries(route?.meta ?? renderer.meta ?? {}).map(([name, value], index) => {
 				if (name === 'title') return <title key={index}>{String(value)}</title>
 				return <meta key={index} name={name} content={value} />
 			})}

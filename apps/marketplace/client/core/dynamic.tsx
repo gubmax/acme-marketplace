@@ -4,7 +4,7 @@ export interface DynamicProps {
 	fallback?: ReactNode
 }
 
-export type DynamicComponentType<P = unknown, E = never> = ComponentType<P & DynamicProps> & {
+export type DynamicComponent<P = unknown, E = never> = ComponentType<P & DynamicProps> & {
 	loader: DynamicFactory<P, E>
 }
 
@@ -16,7 +16,7 @@ export type DynamicFactory<P = unknown, E = never> = () => Promise<
 	[E] extends [never] ? DynamicModule<P> : DynamicModule<P> & E
 >
 
-export function dynamic<P>(factory: DynamicFactory<P>): DynamicComponentType<P> {
+export function dynamic<P>(factory: DynamicFactory<P>): DynamicComponent<P> {
 	let cache: DynamicModule<P> | null = null
 
 	function Dynamic({ fallback, ...rest }: P & DynamicProps) {

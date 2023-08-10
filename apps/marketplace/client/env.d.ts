@@ -1,11 +1,12 @@
 /// <reference types="ui/client" />
 
-interface Route {
+interface ManifestRoute {
 	id: string
 	path: string
-	children: Route[]
+	element?: ReactNode
+	pattern?: RegExp
 }
 
 declare module 'virtual:routes-manifest' {
-	export const routes: Route[]
+	export const routes: ManifestRoute[]
 }

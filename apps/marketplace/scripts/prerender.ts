@@ -8,7 +8,6 @@ import { dirname } from 'node:path'
 import fastify from 'fastify'
 import pc from 'picocolors'
 
-import type { Route } from 'plugins/vite-plugin-routes-manifest.js'
 import { resolvePath } from 'server/common/helpers/paths.js'
 import type { Renderer } from 'server/core/prod/renderer.js'
 
@@ -21,9 +20,18 @@ console.log(
 // @ts-expect-error: Production js without declaration file
 const { renderer } = (await import('dist/server/core/prod/renderer')) as { renderer: Renderer }
 
+// Init server
+
 const server = await fastify()
+
+for (const route of renderer.routesManifest) {
+	server.get(route.path, async (req, res) => renderer.render(req, res, 'app', route.id))
+}
+
+server.get('/404', async (req, res) => renderer.render(req, res, 'app', 'client/404.tsx'))
 server.get('/error', async (req, res) => renderer.render(req, res, 'error'))
-server.get('*', async (req, res) => renderer.render(req, res, 'app'))
+
+// Write html files
 
 function writePageFile(path: string, html: string) {
 	const pathWithFilename = `${path.endsWith('/') ? path + 'index' : path}.html`
@@ -37,20 +45,14 @@ function writePageFile(path: string, html: string) {
 
 // Pre-render app pages
 
-async function prerenderPages(routes: Route[]) {
-	for (const route of routes) {
-		if (!route.static) continue
+for (const route of renderer.routesManifest) {
+	if (!route.static) continue
 
-		const res = await server.inject(route.path)
-		if (res.statusCode >= 500) throw res.body
+	const res = await server.inject(route.path)
+	if (res.statusCode >= 500) throw res.body
 
-		writePageFile(`pages${route.path}`, res.body)
-
-		if (route.children.length) await prerenderPages(route.children)
-	}
+	writePageFile(`pages${route.path}`, res.body)
 }
-
-await prerenderPages(renderer.routesManifest)
 
 // Pre-render Not Found page
 

@@ -1,19 +1,13 @@
-import { useMemo, useSyncExternalStore } from 'react'
-import { BehaviorSubject } from 'rxjs'
+import { useEffect, useState } from 'react'
+import type { Observable } from 'rxjs'
 
-/**
- * Safely manages subscriptions in concurrent mode.
- */
-export function useSubscription<T>(behaviorSubject: BehaviorSubject<T>): T {
-	const [getSnapshot, subscribe] = useMemo(() => {
-		return [
-			() => behaviorSubject.getValue(),
-			(onStoreChange: () => void) => {
-				const subscription = behaviorSubject.subscribe(onStoreChange)
-				return () => subscription.unsubscribe()
-			},
-		]
-	}, [behaviorSubject])
+export function useSubscription<T>(observable: Observable<T>): T | undefined {
+	const [state, setState] = useState<T>()
 
-	return useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
+	useEffect(() => {
+		const subscription = observable.subscribe((value) => setState(value))
+		return () => subscription.unsubscribe()
+	}, [observable])
+
+	return state
 }

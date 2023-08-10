@@ -1,13 +1,13 @@
 import { memo } from 'react'
 import { cn } from 'ui/helpers/class-names.js'
 
-import { useSubscription } from 'client/common/hooks/use-subscription.js'
-import { preloadRouteModel } from 'client/core/models/preload-route-model.js'
+import { useStore } from 'client/common/hooks/use-store.js'
 import { QueryStatus } from 'client/core/models/query-model.js'
+import { routerModel } from 'client/core/models/router-model.js'
 import './progress-bar.css'
 
 function ProgressBar() {
-	const { status } = useSubscription(preloadRouteModel.preloadQuery.queryObs)
+	const { status } = useStore(routerModel.queryStore)
 
 	return (
 		<hr

@@ -1,19 +1,23 @@
 import { readFile } from 'fs/promises'
 
-import { matchRoutes } from 'react-router-dom'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { PassThrough } from 'stream'
 import type { Manifest } from 'vite'
 
-import type { Route } from 'plugins/vite-plugin-routes-manifest.js'
+import type { ManifestRoute } from 'plugins/vite-plugin-routes-manifest.js'
 import { resolvePath } from 'server/common/helpers/paths.js'
 import { type EntryModule, type RenderContext, renderPage } from '../render-page.js'
 import { collectRouteAssets } from './collect-route-assets.js'
 import { collectRouteContext } from './collect-route-context.js'
 
 export interface Renderer {
-	routesManifest: Route[]
-	render: (req: FastifyRequest, res: FastifyReply, entry: string) => Promise<PassThrough>
+	routesManifest: ManifestRoute[]
+	render: (
+		req: FastifyRequest,
+		res: FastifyReply,
+		entry: string,
+		moduleId?: string,
+	) => Promise<PassThrough>
 }
 
 // Init
@@ -26,7 +30,7 @@ const assetsManifest = JSON.parse(
 
 const routesManifest = JSON.parse(
 	await readFile(resolvePath(`${distPath}server/routes.manifest.json`), 'utf-8'),
-) as Route[]
+) as ManifestRoute[]
 
 // Render
 
@@ -34,25 +38,26 @@ function loadModule<T>(path: string): Promise<T> {
 	return import(resolvePath(distPath + path)) as Promise<T>
 }
 
-function createRenderContext(clientEntry: string, url: string): RenderContext {
+function createRenderContext(clientEntry: string, moduleId?: string): RenderContext {
 	const entryContext: RenderContext = { payload: {}, links: [], styles: [], scripts: [], meta: {} }
-	const matches = matchRoutes<Route>(routesManifest, url) ?? []
 
-	// Assets
-	collectRouteAssets(entryContext, assetsManifest, matches, clientEntry)
+	if (moduleId) {
+		// Assets
+		collectRouteAssets(entryContext, assetsManifest, clientEntry, moduleId)
 
-	// Meta
-	collectRouteContext(entryContext, matches)
+		// Context
+		collectRouteContext(entryContext, moduleId)
+	}
 
 	return entryContext
 }
 
-const render: Renderer['render'] = async (req, res, entry) => {
+const render: Renderer['render'] = async (req, res, entry, moduleId) => {
 	const clientEntry = `client/entries/${entry}.client.tsx`
 	const serverEntry = `server/${entry}.server.js`
 
 	const entryModule = await loadModule<EntryModule>(serverEntry)
-	const renderContext = createRenderContext(clientEntry, req.url)
+	const renderContext = createRenderContext(clientEntry, moduleId)
 	return renderPage(req, res, { entryModule, renderContext })
 }
 

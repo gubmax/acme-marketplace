@@ -1,7 +1,7 @@
-import { useRenderContext } from 'client/core/render-context.js'
+import { useRenderer } from 'client/core/render-context.js'
 
 function Styles() {
-	const { styles } = useRenderContext()
+	const { styles } = useRenderer()
 
 	return (
 		<>

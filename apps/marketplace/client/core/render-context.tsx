@@ -19,7 +19,7 @@ export interface RenderContextType {
 
 const RenderContext = createContext<RenderContextType | null>(null)
 
-export function useRenderContext(): RenderContextType {
+export function useRenderer(): RenderContextType {
 	const context = useContext(RenderContext)
 	invariant(context)
 

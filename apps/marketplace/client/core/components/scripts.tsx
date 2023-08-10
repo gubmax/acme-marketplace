@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 
-import { useRenderContext } from 'client/core/render-context.js'
+import { useRenderer } from 'client/core/render-context.js'
 
 let isHydrated = false
 
 function Scripts() {
-	const { scripts } = useRenderContext()
+	const { scripts } = useRenderer()
 
 	useEffect(() => {
 		isHydrated = true
