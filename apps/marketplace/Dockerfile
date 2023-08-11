@@ -5,7 +5,7 @@ ENV CI 1
 WORKDIR /app
 
 RUN apk add --no-cache libc6-compat git
-RUN npm install -g turbo@1.10.9
+RUN npm install -g turbo@1.10.12
 
 COPY . .
 
