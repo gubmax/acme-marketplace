@@ -3,7 +3,7 @@ import { useEffectOnce } from 'ui/hooks/use-effect-once.js'
 
 import { noop } from 'client/common/helpers/noop.js'
 import { matchRoute } from './match-route.js'
-import { type RouteContext, routerModel } from './models/router-model.js'
+import { historyStore, preloadRouteObs, type RouteContext } from './models/router-model.js'
 import { notFoundRoute } from './routes.js'
 
 type RouteElement = Required<RouteContext>['element']
@@ -20,7 +20,7 @@ export function useRouter({ url, onChange = noop }: RouterOptions): RouteElement
 
 	// Change current page
 	useEffect(() => {
-		const subscription = routerModel.preloadRouteObs.subscribe((route) => {
+		const subscription = preloadRouteObs.subscribe((route) => {
 			setVisibleRoute(route.element)
 			onChange(route)
 			if (route.type !== 'popstate') history.pushState({}, '', route.url)
@@ -30,7 +30,7 @@ export function useRouter({ url, onChange = noop }: RouterOptions): RouteElement
 	}, [onChange])
 
 	// Set preload state on app bootstrap
-	useEffectOnce(() => routerModel.historyStore.next({ type: 'popstate', url }))
+	useEffectOnce(() => historyStore.next({ type: 'popstate', url }))
 
 	/**
 	 * Turn all HTML <a> elements into client side router links, no special framework-specific <Link> component necessary!
@@ -62,7 +62,7 @@ export function useRouter({ url, onChange = noop }: RouterOptions): RouteElement
 
 				if (nextUrl !== prevUrl) {
 					prevUrl = nextUrl
-					routerModel.historyStore.next({ type: 'push', url: nextUrl })
+					historyStore.next({ type: 'push', url: nextUrl })
 				}
 			}
 		}
@@ -74,7 +74,7 @@ export function useRouter({ url, onChange = noop }: RouterOptions): RouteElement
 	// Handle history change
 	useEffect(() => {
 		function popstate() {
-			routerModel.historyStore.next({ type: 'popstate', url: location.pathname })
+			historyStore.next({ type: 'popstate', url: location.pathname })
 		}
 
 		window.addEventListener('popstate', popstate)

@@ -1,10 +1,10 @@
 import { useSubscription } from 'client/common/hooks/use-subscription.js'
-import { routerModel } from 'client/core/models/router-model.js'
+import { preloadRouteObs } from 'client/core/models/router-model.js'
 import { useRenderer } from 'client/core/render-context.js'
 
 function Meta() {
 	const renderer = useRenderer()
-	const route = useSubscription(routerModel.preloadRouteObs)
+	const route = useSubscription(preloadRouteObs)
 
 	return (
 		<>

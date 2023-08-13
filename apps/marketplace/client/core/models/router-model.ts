@@ -17,11 +17,17 @@ interface RouteModuleExports {
 }
 
 type RouteModule = DynamicFactory<unknown, RouteModuleExports>
+type RouteExports = DynamicModule & RouteModuleExports
 
 interface History {
 	type: 'push' | 'replace' | 'popstate'
 	url: string
 }
+
+export const historyStore = new Subject<History>()
+
+const preloadQuery = new QueryModel<RouteExports[]>({ type: QueryStatus.loading })
+export const preloadRouteStore = preloadQuery.queryStore
 
 export interface RouteContext {
 	type: History['type']
@@ -31,13 +37,9 @@ export interface RouteContext {
 	payload?: PayloadDescriptor
 }
 
-const historyStore = new Subject<History>()
 const preloadCache = new WeakMap<RouteModule, RouteContext>()
-const preloadQuery = new QueryModel<Array<DynamicModule & RouteModuleExports>>({
-	type: QueryStatus.loading,
-})
 
-const preloadRouteObs = historyStore.pipe(
+export const preloadRouteObs = historyStore.pipe(
 	// Reset query state
 	tap(() => preloadQuery.reset()),
 	// Preload modules
@@ -88,11 +90,6 @@ const preloadRouteObs = historyStore.pipe(
 	}),
 )
 
-export const routerModel = {
-	preloadRouteObs,
-	queryStore: preloadQuery.queryStore,
-	historyStore,
-	// TODO: Add programmatic navigation
-	// openPage,
-	// redirectPage,
-}
+// TODO: Add programmatic navigation
+// openPage
+// redirectPage

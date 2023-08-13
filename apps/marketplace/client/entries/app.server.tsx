@@ -6,12 +6,12 @@ import Document from 'client/document.js'
 import 'ui/styles/index.css'
 import 'virtual:uno.css'
 
-export interface AppRenderOptions {
+interface HandleRequestOptions {
 	url: string
 	renderContext: RenderContextType
 }
 
-export function handleRequest({ url, renderContext }: AppRenderOptions): ReactNode {
+export function handleRequest({ url, renderContext }: HandleRequestOptions): ReactNode {
 	return (
 		<Document renderContext={renderContext}>
 			<App url={url} />

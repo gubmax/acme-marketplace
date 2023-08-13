@@ -5,11 +5,11 @@ import Document from 'client/document.js'
 import 'ui/styles/index.css'
 import 'virtual:uno.css'
 
-export interface ErrorRenderOptions {
+interface HandleRequestOptions {
 	renderContext: RenderContextType
 }
 
-export function handleRequest({ renderContext }: ErrorRenderOptions): ReactNode {
+export function handleRequest({ renderContext }: HandleRequestOptions): ReactNode {
 	return (
 		<Document renderContext={renderContext}>
 			<p>Error</p>

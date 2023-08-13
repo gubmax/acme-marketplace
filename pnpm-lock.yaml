@@ -32,9 +32,6 @@ importers:
       '@fastify/static':
         specifier: 6.10.2
         version: 6.10.2
-      '@nanostores/react':
-        specifier: 0.7.1
-        version: 0.7.1(nanostores@0.9.3)(react@18.2.0)
       awilix:
         specifier: 8.0.1
         version: 8.0.1
@@ -50,12 +47,12 @@ importers:
       hyperid:
         specifier: 3.1.1
         version: 3.1.1
+      immer:
+        specifier: 10.0.2
+        version: 10.0.2
       isbot:
         specifier: 3.6.13
         version: 3.6.13
-      nanostores:
-        specifier: 0.9.3
-        version: 0.9.3
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -2445,17 +2442,6 @@ packages:
       '@types/react': 18.2.20
       react: 18.2.0
     dev: true
-
-  /@nanostores/react@0.7.1(nanostores@0.9.3)(react@18.2.0):
-    resolution: {integrity: sha512-EXQg9N4MdI4eJQz/AZLIx3hxQ6BuBmV4Q55bCd5YCSgEOAW7tGTsIZxpRXxvxLXzflNvHTBvfrDNY38TlSVBkQ==}
-    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
-    peerDependencies:
-      nanostores: ^0.9.0
-      react: '>=18.0.0'
-    dependencies:
-      nanostores: 0.9.3
-      react: 18.2.0
-    dev: false
 
   /@ndelangen/get-tarball@3.0.9:
     resolution: {integrity: sha512-9JKTEik4vq+yGosHYhZ1tiH/3WpUS0Nh0kej4Agndhox8pAdWhEx5knFVRcb/ya9knCRCs1rPxNrSXTDdfVqpA==}
@@ -7423,6 +7409,10 @@ packages:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
     engines: {node: '>= 4'}
 
+  /immer@10.0.2:
+    resolution: {integrity: sha512-Rx3CqeqQ19sxUtYV9CU911Vhy8/721wRFnJv3REVGWUmoAcIwzifTsdmJte/MV+0/XpM35LZdQMBGkRIoLPwQA==}
+    dev: false
+
   /import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -8576,11 +8566,6 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: true
-
-  /nanostores@0.9.3:
-    resolution: {integrity: sha512-KobZjcVyNndNrb5DAjfs0WG0lRcZu5Q1BOrfTOxokFLi25zFrWPjg+joXC6kuDqNfSt9fQwppyjUBkRPtsL+8w==}
-    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
-    dev: false
 
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}

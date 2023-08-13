@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { setPageTitle } from 'client/common/stores/page-store.js'
+import { setPageTitle } from 'client/common/models/page-model.js'
 import { useRenderer } from 'client/core/render-context.js'
 import { type RouterOptions, useRouter } from 'client/core/router.js'
 import ProgressBar from './progress-bar/progress-bar.js'

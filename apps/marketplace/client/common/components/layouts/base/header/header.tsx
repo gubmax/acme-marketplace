@@ -1,8 +1,8 @@
 import { memo } from 'react'
-import { useStore } from '@nanostores/react'
 import Button from 'ui/components/buttons/button/button.js'
 
-import { pageStore } from 'client/common/stores/page-store.js'
+import { useStore } from 'client/common/hooks/use-store.js'
+import { pageStore } from 'client/common/models/page-model.js'
 import './header.css'
 
 function Header() {
