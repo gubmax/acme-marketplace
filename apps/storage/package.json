@@ -24,7 +24,7 @@
 	},
 	"devDependencies": {
 		"@types/node": "18.11.9",
-		"dotenv-cli": "7.2.1",
+		"dotenv-cli": "7.3.0",
 		"eslint-config-custom": "workspace:*",
 		"tsc-alias": "1.8.7",
 		"tsconfig": "workspace:*",
