@@ -9,3 +9,7 @@
 	grid-area: sidebar;
 	overflow-y: hidden;
 }
+
+.m-sidebar__logo {
+	height: 56px;
+}

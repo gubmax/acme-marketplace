@@ -9,7 +9,7 @@ const modules = import.meta.glob<DynamicModule>('/client/pages/**/*.tsx')
 // Add dynamic elements for preloading
 
 export interface ClientRoute<T = never> extends ManifestRoute {
-	element?: ReactElement<DynamicProps, DynamicComponent<unknown, T>>
+	element: ReactElement<DynamicProps, DynamicComponent<unknown, T>>
 }
 
 for (const route of routesManifest) {

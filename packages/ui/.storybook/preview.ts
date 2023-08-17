@@ -20,7 +20,7 @@ const preview: Preview = {
 		layout: 'centered',
 		options: {
 			storySort: {
-				order: ['overview', 'components'],
+				order: ['overview', 'components', ['buttons', 'floating']],
 			},
 		},
 	},

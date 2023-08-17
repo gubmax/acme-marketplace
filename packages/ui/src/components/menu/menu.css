@@ -6,8 +6,9 @@
 .ui-menu__item {
 	border-width: 0;
 	cursor: pointer;
+	transition: 150ms background-color;
 
-	&:hover {
+	&:active {
 		background: var(--color-selected);
 	}
 }

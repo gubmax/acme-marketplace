@@ -3,11 +3,11 @@ import { cn } from 'ui/helpers/class-names.js'
 
 import { useStore } from 'client/common/hooks/use-store.js'
 import { QueryStatus } from 'client/core/models/query-model.js'
-import { preloadRouteStore } from 'client/core/models/router-model.js'
+import { preloadingQueryStore } from 'client/core/models/router-model.js'
 import './progress-bar.css'
 
 function ProgressBar() {
-	const { status } = useStore(preloadRouteStore)
+	const { status } = useStore(preloadingQueryStore)
 
 	return (
 		<hr

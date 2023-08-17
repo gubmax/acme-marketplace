@@ -9,6 +9,7 @@ async function getContextByModuleId(
 ): Promise<{ meta?: RenderContext['meta']; payload?: { pageTitle?: string } }> {
 	let module = viteServer.moduleGraph.getModuleById(resolvePath(id))
 
+	// Trying to load module on first load of vite middleware
 	if (!module?.ssrModule) {
 		await viteServer.ssrLoadModule(resolvePath(id))
 		module = viteServer.moduleGraph.getModuleById(resolvePath(id))

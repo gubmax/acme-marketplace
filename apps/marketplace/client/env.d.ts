@@ -3,8 +3,8 @@
 interface ManifestRoute {
 	id: string
 	path: string
-	element?: ReactNode
-	pattern?: RegExp
+	element: ReactNode
+	pattern: RegExp
 }
 
 declare module 'virtual:routes-manifest' {

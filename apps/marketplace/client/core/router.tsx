@@ -1,27 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useEffectOnce } from 'ui/hooks/use-effect-once.js'
 
 import { noop } from 'client/common/helpers/noop.js'
-import { matchRoute } from './match-route.js'
-import { historyStore, preloadRouteObs, type RouteContext } from './models/router-model.js'
-import { notFoundRoute } from './routes.js'
+import { useStore } from 'client/common/hooks/use-store.js'
+import {
+	preloadRouteObs,
+	preloadStore,
+	type RouteContext,
+	routeStore,
+} from './models/router-model.js'
 
 type RouteElement = Required<RouteContext>['element']
 
 export interface RouterOptions {
-	url: string
 	onChange?: (context: RouteContext) => void
 }
 
-export function useRouter({ url, onChange = noop }: RouterOptions): RouteElement {
-	const [visibleRoute, setVisibleRoute] = useState<RouteElement>(
-		() => matchRoute(url)?.element ?? notFoundRoute.element,
-	)
+export function useRouter({ onChange = noop }: RouterOptions): RouteElement {
+	const visibleRoute = useStore(routeStore)
 
-	// Change current page
+	// Handle route change
 	useEffect(() => {
 		const subscription = preloadRouteObs.subscribe((route) => {
-			setVisibleRoute(route.element)
 			onChange(route)
 			if (route.type !== 'popstate') history.pushState({}, '', route.url)
 		})
@@ -30,7 +30,17 @@ export function useRouter({ url, onChange = noop }: RouterOptions): RouteElement
 	}, [onChange])
 
 	// Set preload state on app bootstrap
-	useEffectOnce(() => historyStore.next({ type: 'popstate', url }))
+	useEffectOnce(() => preloadStore.next({ type: 'popstate', url: window.location.pathname }))
+
+	// Handle history change
+	useEffect(() => {
+		function popstate() {
+			preloadStore.next({ type: 'popstate', url: location.pathname })
+		}
+
+		window.addEventListener('popstate', popstate)
+		return () => window.removeEventListener('popstate', popstate)
+	}, [])
 
 	/**
 	 * Turn all HTML <a> elements into client side router links, no special framework-specific <Link> component necessary!
@@ -62,7 +72,7 @@ export function useRouter({ url, onChange = noop }: RouterOptions): RouteElement
 
 				if (nextUrl !== prevUrl) {
 					prevUrl = nextUrl
-					historyStore.next({ type: 'push', url: nextUrl })
+					preloadStore.next({ type: 'push', url: nextUrl })
 				}
 			}
 		}
@@ -71,15 +81,5 @@ export function useRouter({ url, onChange = noop }: RouterOptions): RouteElement
 		return () => document.removeEventListener('click', onClick)
 	}, [])
 
-	// Handle history change
-	useEffect(() => {
-		function popstate() {
-			historyStore.next({ type: 'popstate', url: location.pathname })
-		}
-
-		window.addEventListener('popstate', popstate)
-		return () => window.removeEventListener('popstate', popstate)
-	}, [])
-
-	return visibleRoute
+	return visibleRoute.element
 }

@@ -1,0 +1,14 @@
+.ui-navigation__item {
+	border: none;
+	cursor: pointer;
+	transition: 150ms background-color;
+
+	&:active {
+		background-color: var(--color-selected);
+	}
+}
+
+.ui-navigation__item.ui-active {
+	background-color: var(--color-selected);
+	color: var(--color-accent);
+}
