@@ -1,19 +1,19 @@
 import { useEffect } from 'react'
-import { useEffectOnce } from 'ui/hooks/use-effect-once.js'
 
 import { noop } from 'client/common/helpers/noop.js'
 import { useStore } from 'client/common/hooks/use-store.js'
 import {
 	preloadRouteObs,
 	preloadStore,
-	type RouteContext,
+	type RouteState,
 	routeStore,
 } from './models/router-model.js'
+import { getRelativeRouteURL, parsePath } from './path.js'
 
-type RouteElement = Required<RouteContext>['element']
+type RouteElement = Required<RouteState>['element']
 
 export interface RouterOptions {
-	onChange?: (context: RouteContext) => void
+	onChange?: (context: RouteState) => void
 }
 
 export function useRouter({ onChange = noop }: RouterOptions): RouteElement {
@@ -22,20 +22,21 @@ export function useRouter({ onChange = noop }: RouterOptions): RouteElement {
 	// Handle route change
 	useEffect(() => {
 		const subscription = preloadRouteObs.subscribe((route) => {
+			routeStore.next(route)
 			onChange(route)
-			if (route.type !== 'popstate') history.pushState({}, '', route.url)
+
+			const updateArgs = [{}, '', getRelativeRouteURL(route)] as const
+			if (route.type === 'push') history.pushState(...updateArgs)
+			else if (route.type === 'replace') history.replaceState(...updateArgs)
 		})
 
 		return () => subscription.unsubscribe()
 	}, [onChange])
 
-	// Set preload state on app bootstrap
-	useEffectOnce(() => preloadStore.next({ type: 'popstate', url: window.location.pathname }))
-
 	// Handle history change
 	useEffect(() => {
 		function popstate() {
-			preloadStore.next({ type: 'popstate', url: location.pathname })
+			preloadStore.next({ type: 'popstate', href: getRelativeRouteURL(location) })
 		}
 
 		window.addEventListener('popstate', popstate)
@@ -47,8 +48,6 @@ export function useRouter({ onChange = noop }: RouterOptions): RouteElement {
 	 * @link https://gist.github.com/devongovett/919dc0f06585bd88af053562fd7c41b7
 	 */
 	useEffect(() => {
-		let prevUrl = location.pathname + location.search
-
 		const onClick = (e: MouseEvent) => {
 			const link = e.target instanceof Element ? e.target.closest('a') : null
 
@@ -68,18 +67,19 @@ export function useRouter({ onChange = noop }: RouterOptions): RouteElement {
 			) {
 				e.preventDefault()
 
-				const nextUrl = link.getAttribute('href') ?? ''
+				const path = parsePath(link.getAttribute('href') ?? '')
+				const nextHref = getRelativeRouteURL(path)
+				const prevHref = getRelativeRouteURL(visibleRoute)
 
-				if (nextUrl !== prevUrl) {
-					prevUrl = nextUrl
-					preloadStore.next({ type: 'push', url: nextUrl })
+				if (nextHref !== prevHref) {
+					preloadStore.next({ type: 'push', href: getRelativeRouteURL(path) })
 				}
 			}
 		}
 
 		document.addEventListener('click', onClick)
 		return () => document.removeEventListener('click', onClick)
-	}, [])
+	}, [visibleRoute])
 
 	return visibleRoute.element
 }

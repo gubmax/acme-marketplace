@@ -1,4 +1,4 @@
-import { BehaviorSubject, from, iif, map, of, Subject, switchMap, tap } from 'rxjs'
+import { BehaviorSubject, first, from, iif, map, of, Subject, switchMap, tap } from 'rxjs'
 
 import type {
 	HtmlMetaDescriptor,
@@ -8,6 +8,7 @@ import type {
 } from '../components/page.js'
 import { type DynamicFactory, type DynamicModule } from '../dynamic.js'
 import { matchRoute } from '../match-route.js'
+import { parseParams, parsePath, type Path } from '../path.js'
 import { type ClientRoute, notFoundRoute } from '../routes.js'
 import { QueryModel, QueryStatus } from './query-model.js'
 
@@ -19,94 +20,106 @@ export interface RouteDescriptor {
 type RouteFactory = DynamicFactory<unknown, RouteDescriptor>
 type RouteModule = DynamicModule & RouteDescriptor
 type RouteElement = ClientRoute<RouteDescriptor>['element']
+type RouteParams = Record<string, string>
+type RouteLink = { pathname: string; params?: RouteParams } | { href: string }
 
 // Route
 
-export interface RouteContext {
-	type: PreloadOptions['type']
-	url: PreloadOptions['url']
+export interface RouteState {
 	element: RouteElement
 	meta: HtmlMetaDescriptor
+	params: Readonly<RouteParams>
+	pathname: Path['pathname']
 	payload: PayloadDescriptor
+	search: string
+	type: PreloadOptions['type']
 }
 
-export const routeStore = new BehaviorSubject<RouteContext>({
-	element: notFoundRoute.element,
-	meta: {},
-	payload: {},
-	type: 'popstate',
-	url: '',
-})
+function createRouteState(options: PreloadOptions | null): RouteState {
+	const state = {
+		element: notFoundRoute.element,
+		meta: {},
+		params: {},
+		pathname: '',
+		payload: {},
+		search: '',
+		type: options?.type ?? 'push',
+	}
+
+	if (options === null) return state
+
+	if ('href' in options) {
+		const { pathname, search } = parsePath(options.href)
+		const params = parseParams(search)
+		Object.assign(state, { pathname, params, search })
+	} else {
+		const { pathname, params = {} } = options
+		const search = new URLSearchParams(params).toString()
+		Object.assign(state, { pathname: pathname || '/', params, search })
+	}
+
+	const routeElement = matchRoute(state.pathname)?.element
+	if (routeElement) state.element = routeElement
+
+	return state
+}
+
+export const routeStore = new BehaviorSubject<RouteState>(createRouteState(null))
 
 // Preload route
 
-interface PreloadOptions {
-	type: 'push' | 'replace' | 'popstate'
-	url: string
-}
+type PreloadOptions = RouteLink & { type: 'push' | 'replace' | 'popstate' }
 
 export const preloadStore = new Subject<PreloadOptions>()
 
 const preloadingQuery = new QueryModel<RouteModule[]>({ type: QueryStatus.loading })
 export const preloadingQueryStore = preloadingQuery.queryStore
 
-const preloadingCache = new WeakMap<RouteElement, Pick<RouteContext, 'meta' | 'payload'>>()
+const preloadingCache = new WeakMap<RouteElement, Pick<RouteState, 'meta' | 'payload'>>()
 
 export const preloadRouteObs = preloadStore.pipe(
 	// Reset query state
 	tap(() => preloadingQuery.reset()),
 	// Preload modules
-	switchMap(({ type, url }) => {
+	switchMap((options) => {
 		const loaders: RouteFactory[] = []
-		const data: RouteContext = {
-			element: notFoundRoute.element,
-			meta: {},
-			payload: {},
-			type,
-			url,
-		}
-
-		// Match route element
-
-		const routeElement = matchRoute(url)?.element
-		if (routeElement) data.element = routeElement
+		const state = createRouteState(options)
 
 		// Get loaders for current route module
 
-		if (data.element && 'loader' in data.element.type) {
-			const { loader } = data.element.type
+		if (state.element && 'loader' in state.element.type) {
+			const { loader } = state.element.type
 
-			if (preloadingCache.has(data.element)) {
-				const cache = preloadingCache.get(data.element)
-				Object.assign(data, cache)
+			if (preloadingCache.has(state.element)) {
+				const cache = preloadingCache.get(state.element)
+				Object.assign(state, cache)
 			} else loaders.push(loader)
 		}
 
 		// Preload
 		return iif(
 			() => !loaders.length,
-			of(data).pipe(tap(() => routeStore.next(data))),
-			of(data).pipe(
+			of(state),
+			of(state).pipe(
 				switchMap(() => {
 					const loaderPromises = loaders.map(async (loader) => {
 						const module = await loader()
 
 						const routeMeta = module.meta?.()
-						if (routeMeta) data.meta = routeMeta
+						if (routeMeta) state.meta = routeMeta
 
 						const routePayload = module.payload?.()
-						if (routePayload) data.payload = routePayload
+						if (routePayload) state.payload = routePayload
 
 						return module
 					})
 
 					return from(preloadingQuery.run(() => Promise.all(loaderPromises))).pipe(
 						tap(() => {
-							const { element, meta, payload } = data
+							const { element, meta, payload } = state
 							preloadingCache.set(element, { meta, payload })
-							routeStore.next(data)
 						}),
-						map(() => data),
+						map(() => state),
 					)
 				}),
 			),
@@ -116,17 +129,28 @@ export const preloadRouteObs = preloadStore.pipe(
 
 // Actions
 
-export interface InitialRouteOptions {
-	meta?: RouteContext['meta']
-	payload?: RouteContext['payload']
-	url: string
+type InitialRouteOptions = {
+	href: string
+	meta?: HtmlMetaDescriptor
+	payload?: PayloadDescriptor
 }
 
-export function setInitialRoute({ meta = {}, payload = {}, url }: InitialRouteOptions) {
-	const element = matchRoute(url)?.element ?? notFoundRoute.element
-	routeStore.next({ element, meta, payload, type: 'push', url })
+export function setInitialPage({ meta, payload, href }: InitialRouteOptions): void {
+	const state = createRouteState({ type: 'popstate', href })
+	if (meta) state.meta = meta
+	if (payload) state.payload = payload
+	routeStore.next(state)
+
+	if (!import.meta.env.SSR) {
+		// Set preload state on app bootstrap
+		preloadRouteObs.pipe(first()).subscribe()
+		preloadStore.next({ type: 'popstate', href })
+	}
+}
+
+export function openPage(pathname: string, params?: RouteParams, replace = false) {
+	preloadStore.next({ params, pathname, type: replace ? 'replace' : 'push' })
 }
 
 // TODO: Add programmatic navigation
-// openPage
 // redirectPage

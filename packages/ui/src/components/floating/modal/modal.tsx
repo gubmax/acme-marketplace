@@ -1,21 +1,20 @@
 import { type ForwardedRef, forwardRef, type HTMLAttributes } from 'react'
-import {
-	type FloatingContext,
-	FloatingFocusManager,
-	FloatingOverlay,
-	FloatingPortal,
-} from '@floating-ui/react'
+import { FloatingFocusManager, FloatingOverlay, FloatingPortal } from '@floating-ui/react'
 
 import { cn } from '../../../helpers/class-names.js'
+import { mergeRefs } from '../../../helpers/merge-refs.js'
+import { usePopover } from '../../../hooks/use-popover.js'
 import './modal.css'
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+	open?: boolean
+	onOpenChange?: (open: boolean) => void
 	labelId?: string
-	context: FloatingContext
 }
 
 function Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
-	const { className, labelId, context, children, ...rest } = props
+	const { className, labelId, open = false, children, onOpenChange, ...rest } = props
+	const { context, refs, getFloatingProps } = usePopover({ open, onOpenChange })
 
 	return (
 		<FloatingPortal>
@@ -23,9 +22,10 @@ function Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
 				<FloatingOverlay className="ui-modal-overlay" lockScroll>
 					<FloatingFocusManager context={context} modal>
 						<div
-							ref={ref}
+							ref={mergeRefs(ref, refs.setFloating)}
 							className={cn('ui-modal', className)}
 							aria-labelledby={labelId}
+							{...getFloatingProps()}
 							{...rest}
 						>
 							{children}

@@ -9,8 +9,12 @@ import { routeStore } from 'client/core/models/router-model.js'
 import CustomNavigationItem from './components/custom-navigation-item.js'
 import './sidebar.css'
 
+const PATH_HOME = '/'
+const PATH_ABOUT = '/about'
+const PATH_SETTINGS = '/settings'
+
 function Sidebar() {
-	const { url } = useStore(routeStore)
+	const { pathname } = useStore(routeStore)
 
 	return (
 		<aside className="m-sidebar flex flex-col bg-container px-3 pb-3">
@@ -20,17 +24,22 @@ function Sidebar() {
 				</a>
 			</div>
 			<Navigation as="nav" className="grow-1">
-				<CustomNavigationItem href="/" active={url === '/'} icon={HomeIcon} text="Home" />
 				<CustomNavigationItem
-					href="/about"
-					active={url === '/about'}
+					href={PATH_HOME}
+					active={pathname === PATH_HOME}
+					icon={HomeIcon}
+					text="Home"
+				/>
+				<CustomNavigationItem
+					href={PATH_ABOUT}
+					active={pathname === PATH_ABOUT}
 					icon={InfoIcon}
 					text="About"
 				/>
 				<CustomNavigationItem
 					className="mt-auto"
-					href="/settings"
-					active={url === '/settings'}
+					href={PATH_SETTINGS}
+					active={pathname === PATH_SETTINGS}
 					icon={SettingsIcon}
 					text="Settings"
 				/>

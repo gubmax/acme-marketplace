@@ -1,8 +1,8 @@
 import { type ClientRoute, routes } from './routes.js'
 
-export function matchRoute(url: string): ClientRoute | undefined {
+export function matchRoute(href: string): ClientRoute | undefined {
 	for (const route of routes) {
-		const match = url.match(route.pattern)
+		const match = href.match(route.pattern)
 		if (match) return route
 	}
 }
