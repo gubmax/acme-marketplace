@@ -20,22 +20,22 @@ function Header() {
 		return route.pathname + '?' + searchParams.toString()
 	}, [route])
 
-	const hidePopup = useCallback(() => {
+	const hideModal = useCallback(() => {
 		const newParams = produce(route.params, (draft) => {
-			delete draft[MODAL_PARAM]
+			delete draft.modal
 		})
 		openPage(route.pathname, newParams)
 	}, [route])
 
 	return (
 		<header className="m-header fixed flex items-center mx-auto px-10 gap-5">
-			<h1 className="text-title-lg">{route.payload?.pageTitle}</h1>
+			<h1 className="text-title-lg">{route.payload.pageTitle}</h1>
 			<Button as="a" className="ml-auto" href={modalHref}>
 				Sign In
 			</Button>
-			<Modal open={route.params[MODAL_PARAM] === MODAL_VALUE} onOpenChange={hidePopup}>
+			<Modal open={route.params[MODAL_PARAM] === MODAL_VALUE} onOpenChange={hideModal}>
 				<Dialog>
-					<form onSubmit={hidePopup}>
+					<form onSubmit={hideModal}>
 						<Dialog.Body className="flex flex-col gap-5">
 							<label>
 								<label className="block mb-3">Login</label>

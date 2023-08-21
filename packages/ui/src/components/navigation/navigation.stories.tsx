@@ -29,7 +29,9 @@ export const Basic: Story = {
 							key={index}
 							className="text-body-lg w-52 items-center gap-2"
 							active={active}
-							onClick={() => setSelectedIndex(index)}
+							onClick={() => {
+								setSelectedIndex(index)
+							}}
 						>
 							<SettingsIcon className={active ? 'fill-accent' : 'fill-secondary'} />
 							Label {index + 1}

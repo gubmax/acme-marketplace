@@ -18,7 +18,7 @@ function collectByManifest(manifest: Manifest, path: string): RenderAssets {
 
 		importedModules.add(assetPath)
 
-		const { isEntry, file, css = [], assets = [], imports = [] } = manifest[assetPath] ?? {}
+		const { isEntry, file, css = [], assets = [], imports = [] } = manifest[assetPath]
 
 		for (const url of [file, ...css, ...assets]) {
 			const link = getAssetProps(`/${url}`, isEntry)

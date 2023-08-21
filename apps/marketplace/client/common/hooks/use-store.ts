@@ -10,7 +10,10 @@ export function useStore<T>(behaviorSubject: BehaviorSubject<T>): T {
 			() => behaviorSubject.getValue(),
 			(onStoreChange: () => void) => {
 				const subscription = behaviorSubject.subscribe(onStoreChange)
-				return () => subscription.unsubscribe()
+
+				return () => {
+					subscription.unsubscribe()
+				}
 			},
 		]
 	}, [behaviorSubject])

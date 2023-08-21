@@ -1,6 +1,6 @@
 const { defineConfig } = require('eslint-define-config')
 
-module.exports = {
+module.exports = defineConfig({
 	root: true,
 	extends: ['custom'],
 	parserOptions: {
@@ -15,5 +15,10 @@ module.exports = {
 				project: ['./tsconfig.web.json'],
 			},
 		},
+		{
+			files: 'src/**/*.stories.tsx',
+			rules: { 'react-hooks/rules-of-hooks': 'off' },
+		},
 	],
-}
+	ignorePatterns: ['storybook-static'],
+})

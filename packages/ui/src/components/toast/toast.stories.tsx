@@ -20,9 +20,13 @@ const COMMON_PROPS = {
 
 export const Basic: Story = {
 	render: () => {
-		const handleClick = useCallback(() => toast(COMMON_PROPS), [])
+		const handleClick = useCallback(() => {
+			toast(COMMON_PROPS)
+		}, [])
 
-		useEffectOnce(() => toast(COMMON_PROPS))
+		useEffectOnce(() => {
+			toast(COMMON_PROPS)
+		})
 
 		return (
 			<>

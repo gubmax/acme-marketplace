@@ -17,7 +17,7 @@ export const viteServer = await createServer({
 })
 
 const { routes } = await loadModule<{ routes: ManifestRoute[] }>('virtual:routes-manifest')
-const routesManifest = routes ?? []
+const routesManifest = routes
 
 // Render
 

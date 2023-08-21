@@ -18,8 +18,9 @@ async function getContextByModuleId(
 	let meta, payload
 
 	if (module?.ssrModule) {
-		meta = (module?.ssrModule?.meta as () => RenderContext['meta'] | undefined)?.()
-		payload = (module?.ssrModule?.payload as () => { pageTitle?: string } | undefined)?.()
+		// TODO: Move HtmlMetaDescriptor and PayloadDescriptor types to shared package
+		meta = (module.ssrModule.meta as (() => RenderContext['meta']) | undefined)?.()
+		payload = (module.ssrModule.payload as (() => { pageTitle?: string }) | undefined)?.()
 	}
 
 	return { meta, payload }

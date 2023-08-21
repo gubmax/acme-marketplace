@@ -1,12 +1,17 @@
-module.exports = {
+const { defineConfig } = require('eslint-define-config')
+
+module.exports = defineConfig({
 	env: { node: true },
 	parser: '@typescript-eslint/parser',
 	plugins: ['turbo', 'prettier', 'simple-import-sort'],
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
-		'plugin:@typescript-eslint/recommended-requiring-type-checking',
+		'plugin:@typescript-eslint/recommended-type-checked',
 		'plugin:@typescript-eslint/strict',
+		'plugin:@typescript-eslint/strict-type-checked',
+		'plugin:@typescript-eslint/stylistic',
+		'plugin:@typescript-eslint/stylistic-type-checked',
 	],
 	parserOptions: {
 		ecmaVersion: 'latest',
@@ -17,6 +22,8 @@ module.exports = {
 		'object-curly-spacing': ['error', 'always'],
 		quotes: ['error', 'single'],
 		semi: ['error', 'never'],
+		// Typescript
+		'@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
 		// Pretier
 		'prettier/prettier': 'error',
 		// Import and exports sort
@@ -33,4 +40,4 @@ module.exports = {
 		],
 	},
 	ignorePatterns: ['dist', 'node_modules', '*.cjs'],
-}
+})

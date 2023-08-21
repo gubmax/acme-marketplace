@@ -13,7 +13,7 @@
 		"sb": "FORCE_COLOR=1 sb dev -p 6006",
 		"sb.build": "sb build",
 		"lint": "pnpm run /^lint./",
-		"lint.es": "eslint **/*.ts*",
+		"lint.es": "eslint .",
 		"lint.types": "tsc --noEmit",
 		"lint.styles": "stylelint **/*.css"
 	},
@@ -39,9 +39,7 @@
 		"@unocss/reset": "0.55.1",
 		"autoprefixer": "10.4.15",
 		"csstype": "3.1.2",
-		"eslint": "8.47.0",
 		"eslint-config-custom": "workspace:*",
-		"eslint-define-config": "1.23.0",
 		"postcss": "8.4.28",
 		"postcss-import": "15.1.0",
 		"postcss-mixins": "9.0.4",

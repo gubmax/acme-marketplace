@@ -1,7 +1,8 @@
-module.exports = {
-	root: true,
+const { defineConfig } = require('eslint-define-config')
+
+module.exports = defineConfig({
 	env: { node: false, browser: true },
-	extends: ['./index', 'plugin:react/recommended', 'plugin:react-hooks/recommended'],
+	extends: ['./index.cjs', 'plugin:react/recommended', 'plugin:react-hooks/recommended'],
 	parserOptions: {
 		ecmaFeatures: { jsx: true },
 	},
@@ -15,4 +16,4 @@ module.exports = {
 		'react/prop-types': 'off',
 		'react/react-in-jsx-scope': 'off',
 	},
-}
+})

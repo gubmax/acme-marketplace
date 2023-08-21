@@ -44,7 +44,9 @@ export const Interactive: Story = {
 							as="button"
 							className="w-52 items-center gap-2"
 							active={active}
-							onClick={() => setSelectedIndex(index)}
+							onClick={() => {
+								setSelectedIndex(index)
+							}}
 						>
 							<SettingsIcon className={active ? 'fill-accent' : 'fill-secondary'} />
 							Label {index + 1}

@@ -72,6 +72,8 @@ export function renderPage(
 			},
 		})
 
-		setTimeout(() => stream.abort(), ABORT_RENDER_DELAY)
+		setTimeout(() => {
+			stream.abort()
+		}, ABORT_RENDER_DELAY)
 	})
 }

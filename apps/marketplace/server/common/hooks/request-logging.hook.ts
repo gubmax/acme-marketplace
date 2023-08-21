@@ -35,7 +35,9 @@ export default function requestLoggingHook(
 		}
 		logger.info(reqPayload, 'Incoming request')
 
-		storage.run(store, () => done())
+		storage.run(store, () => {
+			done()
+		})
 	}
 
 	function logResponse(

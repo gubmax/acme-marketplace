@@ -22,14 +22,18 @@ const ToastContainer = ({ limit = 5, position }: ToastContainerProps) => {
 	const { toasts } = useToasterStore()
 
 	useEffectOnce(() => {
-		toasts.forEach((t) => toast.remove(t.id))
+		toasts.forEach((t) => {
+			toast.remove(t.id)
+		})
 	})
 
 	useEffect(() => {
 		toasts
 			.filter((t) => t.visible)
 			.filter((_, i) => i >= limit)
-			.forEach((t) => toast.remove(t.id))
+			.forEach((t) => {
+				toast.remove(t.id)
+			})
 	}, [limit, toasts])
 
 	return <Toaster position={position ?? 'bottom-center'} />
@@ -61,6 +65,8 @@ function customToast(props: CustomToast): void {
 	)
 }
 
-customToast.remove = (toastId: string) => toast.remove(toastId)
+customToast.remove = (toastId: string) => {
+	toast.remove(toastId)
+}
 
 export { customToast as toast, ToastContainer, useToasterStore }

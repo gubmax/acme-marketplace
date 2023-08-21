@@ -37,7 +37,9 @@ function Color({ color }: { color: string }) {
 		<div className="relative flex gap-3 items-center shrink-0">
 			<div
 				className={cn(color, 'rounded-md h-16 w-16 ui-inner-shadow cursor-pointer')}
-				onClick={() => copyToClipboard(colorVarText)}
+				onClick={() => {
+					copyToClipboard(colorVarText)
+				}}
 			/>
 			<p className="text-body-md text-secondary">{colorVarText}</p>
 		</div>

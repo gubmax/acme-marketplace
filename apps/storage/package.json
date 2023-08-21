@@ -8,7 +8,7 @@
 		"codegen": "prisma generate",
 		"prisma": "tsx scripts/prisma",
 		"lint": "pnpm run /^lint./",
-		"lint.es": "eslint **/*.ts",
+		"lint.es": "eslint .",
 		"lint.types": "tsc --noEmit",
 		"format": "prisma format"
 	},

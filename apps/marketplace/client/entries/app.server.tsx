@@ -13,7 +13,7 @@ interface HandleRequestOptions {
 }
 
 export function handleRequest({ url, renderContext }: HandleRequestOptions): ReactNode {
-	const { meta, payload } = renderContext ?? {}
+	const { meta, payload } = renderContext
 	setInitialPage({ meta, payload, href: url })
 
 	return (

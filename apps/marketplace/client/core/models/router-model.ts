@@ -79,7 +79,9 @@ const preloadingCache = new WeakMap<RouteElement, Pick<RouteState, 'meta' | 'pay
 
 export const preloadRouteObs = preloadStore.pipe(
 	// Reset query state
-	tap(() => preloadingQuery.reset()),
+	tap(() => {
+		preloadingQuery.reset()
+	}),
 	// Preload modules
 	switchMap((options) => {
 		const loaders: RouteFactory[] = []
@@ -87,7 +89,7 @@ export const preloadRouteObs = preloadStore.pipe(
 
 		// Get loaders for current route module
 
-		if (state.element && 'loader' in state.element.type) {
+		if ('loader' in state.element.type) {
 			const { loader } = state.element.type
 
 			if (preloadingCache.has(state.element)) {
@@ -129,7 +131,7 @@ export const preloadRouteObs = preloadStore.pipe(
 
 // Actions
 
-type InitialRouteOptions = {
+interface InitialRouteOptions {
 	href: string
 	meta?: HtmlMetaDescriptor
 	payload?: PayloadDescriptor

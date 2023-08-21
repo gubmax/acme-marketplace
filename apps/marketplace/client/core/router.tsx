@@ -30,7 +30,9 @@ export function useRouter({ onChange = noop }: RouterOptions): RouteElement {
 			else if (route.type === 'replace') history.replaceState(...updateArgs)
 		})
 
-		return () => subscription.unsubscribe()
+		return () => {
+			subscription.unsubscribe()
+		}
 	}, [onChange])
 
 	// Handle history change
@@ -40,7 +42,9 @@ export function useRouter({ onChange = noop }: RouterOptions): RouteElement {
 		}
 
 		window.addEventListener('popstate', popstate)
-		return () => window.removeEventListener('popstate', popstate)
+		return () => {
+			window.removeEventListener('popstate', popstate)
+		}
 	}, [])
 
 	/**
@@ -78,7 +82,9 @@ export function useRouter({ onChange = noop }: RouterOptions): RouteElement {
 		}
 
 		document.addEventListener('click', onClick)
-		return () => document.removeEventListener('click', onClick)
+		return () => {
+			document.removeEventListener('click', onClick)
+		}
 	}, [visibleRoute])
 
 	return visibleRoute.element

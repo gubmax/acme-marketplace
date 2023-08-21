@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-throw-literal */
 /**
  * Pre-render the app into static HTML.
  * run `pnpm prerender` and then `dist/client` can be served as a static site.

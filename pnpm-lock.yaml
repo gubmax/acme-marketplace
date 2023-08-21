@@ -11,6 +11,9 @@ importers:
       eslint:
         specifier: 8.47.0
         version: 8.47.0
+      eslint-define-config:
+        specifier: 1.23.0
+        version: 1.23.0
       husky:
         specifier: 8.0.3
         version: 8.0.3
@@ -206,9 +209,6 @@ importers:
         specifier: 10.2.0
         version: 10.2.0
     devDependencies:
-      eslint:
-        specifier: 8.47.0
-        version: 8.47.0
       eslint-config-custom:
         specifier: workspace:*
         version: link:../eslint-config-custom
@@ -281,15 +281,9 @@ importers:
       csstype:
         specifier: 3.1.2
         version: 3.1.2
-      eslint:
-        specifier: 8.47.0
-        version: 8.47.0
       eslint-config-custom:
         specifier: workspace:*
         version: link:../eslint-config-custom
-      eslint-define-config:
-        specifier: 1.23.0
-        version: 1.23.0
       postcss:
         specifier: 8.4.28
         version: 8.4.28

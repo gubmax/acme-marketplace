@@ -10,7 +10,7 @@
 		"build.server": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
 		"prerender": "tsx scripts/prerender",
 		"lint": "pnpm run /^lint./",
-		"lint.es": "eslint **/*.ts* --fix",
+		"lint.es": "eslint .",
 		"lint.types.client": "tsc -p tsconfig.web.json --noEmit",
 		"lint.types.server": "tsc --noEmit",
 		"lint.styles": "stylelint client/**/*.css"

@@ -1,4 +1,6 @@
-module.exports = {
+const { defineConfig } = require('eslint-define-config')
+
+module.exports = defineConfig({
 	root: true,
 	env: { node: true },
 	extends: 'custom',
@@ -6,4 +8,4 @@ module.exports = {
 		project: ['./tsconfig.json'],
 		tsconfigRootDir: __dirname,
 	},
-}
+})
