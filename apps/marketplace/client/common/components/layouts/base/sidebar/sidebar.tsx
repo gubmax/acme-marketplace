@@ -1,7 +1,10 @@
 import { memo } from 'react'
-import HomeIcon from 'ui/components/icons/home-icon.js'
+import ControllerIcon from 'ui/components/icons/controller-icon.js'
+import GridViewIcon from 'ui/components/icons/grid-view-icon.js'
+import HelpIcon from 'ui/components/icons/help-icon.js'
 import InfoIcon from 'ui/components/icons/info-icon.js'
 import SettingsIcon from 'ui/components/icons/settings-icon.js'
+import ShoppingBagIcon from 'ui/components/icons/shopping-bag.js'
 import Navigation from 'ui/components/navigation/navigation.js'
 
 import { useStore } from 'client/common/hooks/use-store.js'
@@ -9,9 +12,14 @@ import { routeStore } from 'client/core/models/router-model.js'
 import CustomNavigationItem from './components/custom-navigation-item.js'
 import './sidebar.css'
 
-const PATH_HOME = '/'
-const PATH_ABOUT = '/about'
-const PATH_SETTINGS = '/settings'
+const NAVIGATION_ITEMS = [
+	{ href: '/', icon: GridViewIcon, text: 'Discover' },
+	{ href: '/marketplace', icon: ShoppingBagIcon, text: 'Marketplace' },
+	{ href: '/gaming', icon: ControllerIcon, text: 'Gaming' },
+	{ href: '/settings', icon: SettingsIcon, text: 'Settings', className: 'mt-auto' },
+	{ href: '/help', icon: HelpIcon, text: 'Help' },
+	{ href: '/about', icon: InfoIcon, text: 'About' },
+] as const
 
 function Sidebar() {
 	const { pathname } = useStore(routeStore)
@@ -19,30 +27,14 @@ function Sidebar() {
 	return (
 		<aside className="m-sidebar flex flex-col bg-container px-3 pb-3">
 			<div className="m-sidebar__logo inline-flex items-center">
-				<a className="px-4 py-1 text-title-lg font-700" href="/">
+				<a className="px-4 py-1 text-title-lg font-700 rounded-md" href="/">
 					ACME
 				</a>
 			</div>
 			<Navigation as="nav" className="grow-1">
-				<CustomNavigationItem
-					href={PATH_HOME}
-					active={pathname === PATH_HOME}
-					icon={HomeIcon}
-					text="Home"
-				/>
-				<CustomNavigationItem
-					href={PATH_ABOUT}
-					active={pathname === PATH_ABOUT}
-					icon={InfoIcon}
-					text="About"
-				/>
-				<CustomNavigationItem
-					className="mt-auto"
-					href={PATH_SETTINGS}
-					active={pathname === PATH_SETTINGS}
-					icon={SettingsIcon}
-					text="Settings"
-				/>
+				{NAVIGATION_ITEMS.map((item, index) => (
+					<CustomNavigationItem key={index} active={item.href === pathname} {...item} />
+				))}
 			</Navigation>
 		</aside>
 	)

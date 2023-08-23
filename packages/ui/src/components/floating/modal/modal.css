@@ -1,6 +1,6 @@
 .ui-modal-overlay {
 	z-index: 1;
 	display: grid;
-	background: rgb(0 0 0 / 40%);
+	background: rgb(0 0 0 / 50%);
 	place-items: center;
 }

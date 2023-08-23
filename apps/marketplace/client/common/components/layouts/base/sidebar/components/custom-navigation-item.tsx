@@ -20,7 +20,7 @@ function CustomNavigationItem({
 	return (
 		<Navigation.Item
 			as="a"
-			className={cn('text-body-lg gap-2 text-secondary', className)}
+			className={cn('text-body-lg gap-2 text-secondary font-500', className)}
 			href={href}
 			active={active}
 		>
