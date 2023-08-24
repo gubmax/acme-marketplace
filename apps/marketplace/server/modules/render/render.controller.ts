@@ -21,7 +21,7 @@ export default (
 			return res.status(200).type('text/html').send(stream)
 		}
 
-		return renderer.render(req, res, 'app', route.id)
+		return renderer.render(req, res, route.id)
 	}
 
 	for (const route of renderer.routesManifest) {

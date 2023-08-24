@@ -1,6 +1,6 @@
 import type { Manifest } from 'vite'
 
-import type { RenderContext } from '../render-page.js'
+import type { RenderContext } from '../render.context.js'
 import { getAssetProps } from './get-asset-props.js'
 
 export interface RenderAssets {

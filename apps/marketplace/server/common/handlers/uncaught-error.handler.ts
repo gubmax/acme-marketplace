@@ -21,7 +21,7 @@ export function uncaughtErrorHandler(
 
 		if (env.isDev) {
 			res.statusCode = 500
-			return renderer.render(req, res, 'error')
+			return renderer.render(req, res)
 		}
 
 		const stream = createReadStream(resolvePath('client/pages/error.html'), 'utf-8')

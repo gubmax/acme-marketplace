@@ -1,23 +1,24 @@
 import { readFile } from 'fs/promises'
 
+import type { ReactNode } from 'react'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { PassThrough } from 'stream'
 import type { Manifest } from 'vite'
 
 import type { ManifestRoute } from 'plugins/vite-plugin-routes-manifest.js'
 import { resolvePath } from 'server/common/helpers/paths.js'
-import { type EntryModule, type RenderContext, renderPage } from '../render-page.js'
+import { getRenderContextJSON, type RenderContext } from '../render.context.js'
+import { renderPage } from '../render-page.js'
 import { collectRouteAssets } from './collect-route-assets.js'
 import { collectRouteContext } from './collect-route-context.js'
 
+export interface EntryModule {
+	handleRequest: (options: { url: string; renderContext: RenderContext }) => ReactNode
+}
+
 export interface Renderer {
 	routesManifest: ManifestRoute[]
-	render: (
-		req: FastifyRequest,
-		res: FastifyReply,
-		entry: string,
-		moduleId?: string,
-	) => Promise<PassThrough>
+	render: (req: FastifyRequest, res: FastifyReply, moduleId?: string) => Promise<PassThrough>
 }
 
 // Init
@@ -52,13 +53,19 @@ function createRenderContext(clientEntry: string, moduleId?: string): RenderCont
 	return entryContext
 }
 
-const render: Renderer['render'] = async (req, res, entry, moduleId) => {
-	const clientEntry = `client/entries/${entry}.client.tsx`
-	const serverEntry = `server/${entry}.server.js`
+const render: Renderer['render'] = async (req, res, moduleId) => {
+	const clientEntry = 'client/entry.client.tsx'
+	const serverEntry = 'server/entry.server.js'
+
+	const renderContext = createRenderContext(clientEntry, moduleId)
 
 	const entryModule = await loadModule<EntryModule>(serverEntry)
-	const renderContext = createRenderContext(clientEntry, moduleId)
-	return renderPage(req, res, { entryModule, renderContext })
+	const node = entryModule.handleRequest({ url: req.url, renderContext })
+
+	const renderContextJSON = getRenderContextJSON(renderContext)
+	renderContext.scripts.push(renderContextJSON)
+
+	return renderPage(req, res, node)
 }
 
 export const renderer: Renderer = { routesManifest, render }

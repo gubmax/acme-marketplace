@@ -1,7 +1,6 @@
 import type { ChildrenProp } from 'ui/typings/children-prop.js'
 
 import Links from './core/components/links.js'
-import LiveReload from './core/components/live-reload.js'
 import Meta from './core/components/meta.js'
 import Scripts from './core/components/scripts.js'
 import Styles from './core/components/styles.js'
@@ -26,7 +25,6 @@ export default function Document({ renderContext, children }: DocumentProps) {
 				</head>
 				<body>
 					{children}
-					<LiveReload />
 					<Scripts />
 				</body>
 			</html>

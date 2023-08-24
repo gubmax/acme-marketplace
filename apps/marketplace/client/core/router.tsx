@@ -10,13 +10,11 @@ import {
 } from './models/router-model.js'
 import { getRelativeRouteURL, parsePath } from './path.js'
 
-type RouteElement = Required<RouteState>['element']
-
 export interface RouterOptions {
 	onChange?: (context: RouteState) => void
 }
 
-export function useRouter({ onChange = noop }: RouterOptions): RouteElement {
+export function useRouter({ onChange = noop }: RouterOptions): void {
 	const visibleRoute = useStore(routeStore)
 
 	// Handle route change
@@ -86,6 +84,4 @@ export function useRouter({ onChange = noop }: RouterOptions): RouteElement {
 			document.removeEventListener('click', onClick)
 		}
 	}, [visibleRoute])
-
-	return visibleRoute.element
 }

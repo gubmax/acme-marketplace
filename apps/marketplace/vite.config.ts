@@ -23,24 +23,20 @@ export default defineConfig(({ ssrBuild }) => {
 		build: {
 			emptyOutDir: false,
 			outDir: './dist/server',
-			rollupOptions: {
-				input: ['./client/entries/app.server', './client/entries/error.server'],
-			},
+			rollupOptions: { input: ['./client/entry.server'] },
 		},
 	}
 
-	const spaConfig: UserConfig = {
+	const clientConfig: UserConfig = {
 		plugins,
 		publicDir: './client/public',
 		build: {
 			emptyOutDir: false,
 			manifest: 'assets.manifest.json',
 			outDir: './dist/client',
-			rollupOptions: {
-				input: ['./client/entries/app.client', './client/entries/error.client'],
-			},
+			rollupOptions: { input: ['./client/entry.client'] },
 		},
 	}
 
-	return ssrBuild ? ssrConfig : spaConfig
+	return ssrBuild ? ssrConfig : clientConfig
 })

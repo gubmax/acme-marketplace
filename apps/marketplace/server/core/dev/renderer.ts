@@ -2,8 +2,9 @@ import { createServer } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 import type { ManifestRoute } from 'plugins/vite-plugin-routes-manifest.js'
-import type { Renderer } from '../prod/renderer.js'
-import { type EntryModule, type RenderContext, renderPage } from '../render-page.js'
+import type { EntryModule, Renderer } from '../prod/renderer.js'
+import { getRenderContextJSON, type RenderContext } from '../render.context.js'
+import { renderPage } from '../render-page.js'
 import { collectRouteContext } from './collect-route-context.js'
 import { collectRouteStyles } from './collect-route-styles.js'
 
@@ -34,6 +35,16 @@ async function createRenderContext(
 
 	// Scripts
 	renderContext.scripts.push(
+		{
+			type: 'module',
+			content: String.raw`
+import RefreshRuntime from "/@react-refresh"
+RefreshRuntime.injectIntoGlobalHook(window)
+window.$RefreshReg$ = () => {}
+window.$RefreshSig$ = () => (type) => type
+window.__vite_plugin_react_preamble_installed__ = true
+`,
+		},
 		{ type: 'module', src: '/@vite/client' },
 		{ type: 'module', src: clientEntry },
 	)
@@ -47,13 +58,19 @@ async function createRenderContext(
 	return renderContext
 }
 
-const render: Renderer['render'] = async (req, res, entry, moduleId) => {
-	const clientEntry = `client/entries/${entry}.client.tsx`
-	const serverEntry = `client/entries/${entry}.server.tsx`
+const render: Renderer['render'] = async (req, res, moduleId) => {
+	const clientEntry = 'client/entry.client.tsx'
+	const serverEntry = 'client/entry.server.tsx'
+
+	const renderContext = await createRenderContext(clientEntry, serverEntry, moduleId)
 
 	const entryModule = await loadModule<EntryModule>(serverEntry)
-	const renderContext = await createRenderContext(clientEntry, serverEntry, moduleId)
-	return renderPage(req, res, { entryModule, renderContext })
+	const node = entryModule.handleRequest({ url: req.url, renderContext })
+
+	const renderContextJSON = getRenderContextJSON(renderContext)
+	renderContext.scripts.push(renderContextJSON)
+
+	return renderPage(req, res, node)
 }
 
 export const renderer: Renderer = { routesManifest, render }

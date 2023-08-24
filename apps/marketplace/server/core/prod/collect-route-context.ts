@@ -1,4 +1,4 @@
-import type { RenderContext } from '../render-page.js'
+import type { RenderContext } from '../render.context'
 
 /**
  * TODO: Add meta and payload collecting

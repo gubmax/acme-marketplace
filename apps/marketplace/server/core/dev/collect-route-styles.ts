@@ -1,7 +1,7 @@
 import type { ModuleNode, ViteDevServer } from 'vite'
 
 import { resolvePath } from 'server/common/helpers/paths.js'
-import type { RenderContext } from '../render-page.js'
+import type { RenderContext } from '../render.context'
 
 export interface RenderStyles {
 	styles: Array<Record<string, unknown>>

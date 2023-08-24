@@ -26,11 +26,11 @@ const { renderer } = (await import('dist/server/core/prod/renderer')) as { rende
 const server = await fastify()
 
 for (const route of renderer.routesManifest) {
-	server.get(route.path, async (req, res) => renderer.render(req, res, 'app', route.id))
+	server.get(route.path, async (req, res) => renderer.render(req, res, route.id))
 }
 
-server.get('/404', async (req, res) => renderer.render(req, res, 'app', 'client/404.tsx'))
-server.get('/error', async (req, res) => renderer.render(req, res, 'error'))
+server.get('/404', async (req, res) => renderer.render(req, res, 'client/404.tsx'))
+server.get('/error', async (req, res) => renderer.render(req, res))
 
 // Write html files
 
