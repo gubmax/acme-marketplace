@@ -18,7 +18,7 @@ ENV CI 1
 WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
-RUN npm install -g pnpm@8.6.2
+RUN npm install -g pnpm@8.7.0
 
 COPY .npmrc pnpm-lock.yaml ./
 RUN pnpm config set store-dir /app/.pnpm-store

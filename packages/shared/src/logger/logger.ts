@@ -12,6 +12,8 @@ export function customLogger({ enabled = true, pretty = false }: CustomLoggerOpt
 	let optionsOrStream: LoggerOptions | DestinationStream
 
 	if (enabled && pretty) {
+		// @ts-expect-error Wrong export for NodeNext modules
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		optionsOrStream = pinoPretty({
 			colorize: false,
 			hideObject: true,

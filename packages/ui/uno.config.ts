@@ -2,6 +2,7 @@ import presetMini, { type Theme } from '@unocss/preset-mini'
 import { defineConfig } from 'unocss'
 
 export default defineConfig({
+	// @ts-expect-error Wrong export for NodeNext modules
 	presets: [presetMini({ variablePrefix: 'ui-' })],
 	extendTheme: (theme): Theme => ({
 		...theme,

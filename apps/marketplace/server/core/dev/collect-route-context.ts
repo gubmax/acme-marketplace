@@ -1,7 +1,7 @@
 import type { ViteDevServer } from 'vite'
 
 import { resolvePath } from 'server/common/helpers/paths.js'
-import type { RenderContext } from '../render.context'
+import type { RenderContext } from '../render.context.js'
 
 async function getContextByModuleId(
 	viteServer: ViteDevServer,

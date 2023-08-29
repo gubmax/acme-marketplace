@@ -4,7 +4,6 @@
 	"extends": "./base.json",
 	"compilerOptions": {
 		"lib": ["ESNext"],
-		"resolveJsonModule": true,
-		"moduleResolution": "Bundler"
+		"resolveJsonModule": true
 	}
 }

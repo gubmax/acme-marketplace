@@ -1,5 +1,5 @@
-import react from '@vitejs/plugin-react'
-import unocss from 'unocss/vite'
+import react from '@vitejs/plugin-react-swc'
+import unoCSS from 'unocss/vite'
 import { defineConfig, splitVendorChunkPlugin, type UserConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
@@ -12,7 +12,8 @@ export default defineConfig(({ ssrBuild }) => {
 	const plugins = [
 		tsconfigPaths({ root: '.' }),
 		react(),
-		unocss(),
+		// @ts-expect-error Wrong export for NodeNext modules
+		unoCSS(),
 		splitVendorChunkPlugin(),
 		generateRoutesManifest(),
 	]

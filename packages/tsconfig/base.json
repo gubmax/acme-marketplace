@@ -5,7 +5,7 @@
 		"allowSyntheticDefaultImports": true,
 		"composite": false,
 		"forceConsistentCasingInFileNames": true,
-		"module": "ESNext",
+		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"skipLibCheck": true,
 		"strict": true,
