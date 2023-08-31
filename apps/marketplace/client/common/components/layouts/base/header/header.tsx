@@ -3,6 +3,7 @@ import { produce } from 'immer'
 import Button from 'ui/components/buttons/button/button.js'
 import Dialog from 'ui/components/dialog/dialog.js'
 import Modal from 'ui/components/floating/modal/modal.js'
+import Input from 'ui/components/form/input/input.js'
 
 import { useStore } from 'client/common/hooks/use-store.js'
 import { openPage, routeStore } from 'client/core/models/router-model.js'
@@ -37,14 +38,20 @@ function Header() {
 				<Dialog>
 					<form onSubmit={hideModal}>
 						<Dialog.Body className="flex flex-col gap-5">
-							<label>
-								<label className="block mb-3">Login</label>
-								<input type="text" name="login" defaultValue="admin" required />
-							</label>
-							<label>
-								<span className="block mb-3">Password</span>
-								<input type="password" name="password" defaultValue="admin" required />
-							</label>
+							<div>
+								<label className="block text-label-lg mb-2">Login</label>
+								<Input className="w-full" type="text" name="login" defaultValue="admin" required />
+							</div>
+							<div>
+								<label className="block text-label-lg mb-2">Password</label>
+								<Input
+									className="w-full"
+									type="password"
+									name="password"
+									defaultValue="admin"
+									required
+								/>
+							</div>
 						</Dialog.Body>
 						<Dialog.Footer className="flex justify-end gap-3">
 							<Button variant="filled" size="lg" type="submit">
