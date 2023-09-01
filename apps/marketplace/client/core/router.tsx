@@ -1,25 +1,40 @@
-import { useEffect } from 'react'
-
+import { isBrowser } from 'client/common/helpers/environment.js'
 import { noop } from 'client/common/helpers/noop.js'
-import { useStore } from 'client/common/hooks/use-store.js'
 import {
+	type InitialRouteOptions,
 	preloadRouteObs,
 	preloadStore,
 	type RouteState,
 	routeStore,
+	setInitialPage,
 } from './models/router-model.js'
 import { getRelativeRouteURL, parsePath } from './path.js'
 
-export interface RouterOptions {
+function isRouterClick(event: MouseEvent, link: HTMLAnchorElement | null): boolean {
+	return (
+		!!link &&
+		link instanceof HTMLAnchorElement &&
+		!!link.href &&
+		(!link.target || link.target === '_self') &&
+		link.origin === location.origin &&
+		!link.hasAttribute('download') &&
+		event.button === 0 && // left clicks only
+		!event.metaKey && // open in new tab (mac)
+		!event.ctrlKey && // open in new tab (windows)
+		!event.altKey && // download
+		!event.shiftKey &&
+		!event.defaultPrevented
+	)
+}
+
+export interface RouterOptions extends InitialRouteOptions {
 	onChange?: (context: RouteState) => void
 }
 
-export function useRouter({ onChange = noop }: RouterOptions): void {
-	const visibleRoute = useStore(routeStore)
-
-	// Handle route change
-	useEffect(() => {
-		const subscription = preloadRouteObs.subscribe((route) => {
+export function initRouter({ meta, payload, href, onChange = noop }: RouterOptions): void {
+	if (isBrowser) {
+		// Handle route change
+		preloadRouteObs.subscribe((route) => {
 			routeStore.next(route)
 			onChange(route)
 
@@ -28,60 +43,33 @@ export function useRouter({ onChange = noop }: RouterOptions): void {
 			else if (route.type === 'replace') history.replaceState(...updateArgs)
 		})
 
-		return () => {
-			subscription.unsubscribe()
-		}
-	}, [onChange])
+		// Cache initial page
+		preloadStore.next({ type: 'popstate', href })
 
-	// Handle history change
-	useEffect(() => {
-		function popstate() {
+		// Handle history change
+		window.addEventListener('popstate', () => {
 			preloadStore.next({ type: 'popstate', href: getRelativeRouteURL(location) })
-		}
+		})
 
-		window.addEventListener('popstate', popstate)
-		return () => {
-			window.removeEventListener('popstate', popstate)
-		}
-	}, [])
+		/**
+		 * Turn all HTML <a> elements into client side router links, no special framework-specific <Link> component necessary!
+		 * @link https://gist.github.com/devongovett/919dc0f06585bd88af053562fd7c41b7
+		 */
+		document.addEventListener('click', (event) => {
+			const link = event.target instanceof Element ? event.target.closest('a') : null
+			if (!link || !isRouterClick(event, link)) return
 
-	/**
-	 * Turn all HTML <a> elements into client side router links, no special framework-specific <Link> component necessary!
-	 * @link https://gist.github.com/devongovett/919dc0f06585bd88af053562fd7c41b7
-	 */
-	useEffect(() => {
-		const onClick = (e: MouseEvent) => {
-			const link = e.target instanceof Element ? e.target.closest('a') : null
+			event.preventDefault()
 
-			if (
-				link &&
-				link instanceof HTMLAnchorElement &&
-				link.href &&
-				(!link.target || link.target === '_self') &&
-				link.origin === location.origin &&
-				!link.hasAttribute('download') &&
-				e.button === 0 && // left clicks only
-				!e.metaKey && // open in new tab (mac)
-				!e.ctrlKey && // open in new tab (windows)
-				!e.altKey && // download
-				!e.shiftKey &&
-				!e.defaultPrevented
-			) {
-				e.preventDefault()
+			const path = parsePath(link.getAttribute('href') ?? '')
+			const nextHref = getRelativeRouteURL(path)
+			const prevHref = getRelativeRouteURL(routeStore.value)
 
-				const path = parsePath(link.getAttribute('href') ?? '')
-				const nextHref = getRelativeRouteURL(path)
-				const prevHref = getRelativeRouteURL(visibleRoute)
-
-				if (nextHref !== prevHref) {
-					preloadStore.next({ type: 'push', href: getRelativeRouteURL(path) })
-				}
+			if (nextHref !== prevHref) {
+				preloadStore.next({ type: 'push', href: getRelativeRouteURL(path) })
 			}
-		}
+		})
+	}
 
-		document.addEventListener('click', onClick)
-		return () => {
-			document.removeEventListener('click', onClick)
-		}
-	}, [visibleRoute])
+	setInitialPage({ meta, payload, href })
 }
