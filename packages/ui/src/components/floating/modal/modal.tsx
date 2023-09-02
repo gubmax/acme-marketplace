@@ -19,7 +19,7 @@ function Modal(props: ModalProps, ref: ForwardedRef<HTMLDivElement>) {
 	return (
 		<FloatingPortal>
 			{context.open && (
-				<FloatingOverlay className="ui-modal-overlay" lockScroll>
+				<FloatingOverlay className="ui-modal-overlay">
 					<FloatingFocusManager context={context} modal>
 						<div
 							ref={mergeRefs(ref, refs.setFloating)}

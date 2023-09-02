@@ -41,7 +41,7 @@ function DialogFooter(props: DialogBodyProps, ref: ForwardedRef<HTMLDivElement>)
 	return (
 		<div
 			ref={ref}
-			className={cn('ui-dialog__footer bg-surface rounded-b-lg px-6 py-3', className)}
+			className={cn('ui-dialog__footer bg-container rounded-b-lg px-6 py-3', className)}
 			{...rest}
 		>
 			{children}
