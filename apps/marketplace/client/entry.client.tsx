@@ -12,6 +12,7 @@ import 'ui/styles/index.css'
 import 'virtual:uno.css'
 
 import 'client/common/utils/error-handler.js'
+import 'client/common/utils/internet-connection.js'
 
 const renderContext = getJSONData<RenderContextType>('__RENDER_CONTEXT__')
 const { meta, payload } = renderContext ?? {}
