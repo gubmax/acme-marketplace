@@ -6,9 +6,9 @@ import {
 	type ToastPosition,
 	useToasterStore,
 } from 'react-hot-toast'
-import { cn } from 'src/helpers/class-names.js'
-import { useEffectOnce } from 'src/hooks/use-effect-once.js'
 
+import { cn } from '../../helpers/class-names.js'
+import { useEffectOnce } from '../../hooks/use-effect-once.js'
 import './toast.css'
 
 // ToastContainer
@@ -42,7 +42,7 @@ const ToastContainer = ({ limit = 5, position }: ToastContainerProps) => {
 // Toast
 
 export interface CustomToast
-	extends Pick<ToastOptions, 'duration' | 'className' | 'style' | 'ariaProps'> {
+	extends Pick<ToastOptions, 'id' | 'duration' | 'className' | 'style' | 'ariaProps'> {
 	content?: ReactNode
 }
 
@@ -51,7 +51,7 @@ function customToast(props: CustomToast): void {
 		(t) => (
 			<div
 				className={cn(
-					'ui-toast ui-inner-shadow flex items-center bg-outline py-4 px-6 rounded-lg',
+					'ui-toast ui-inner-shadow flex items-center bg-outline p-4 rounded-lg',
 					t.visible ? 'animate--enter' : 'animate--leave',
 					t.className,
 				)}

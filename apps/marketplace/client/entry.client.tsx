@@ -11,6 +11,8 @@ import { initRouter } from './core/router.js'
 import 'ui/styles/index.css'
 import 'virtual:uno.css'
 
+import 'client/common/utils/error-handler.js'
+
 const renderContext = getJSONData<RenderContextType>('__RENDER_CONTEXT__')
 const { meta, payload } = renderContext ?? {}
 
