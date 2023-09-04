@@ -3,11 +3,11 @@ import assert from 'node:assert'
 import pc from 'picocolors'
 import type { PinoPretty } from 'pino-pretty'
 
-import { colorByType, levelByNumber, LogLevelWeights } from './constants.js'
+import { COLOR_BY_TYPE, LEVEL_BY_NUMBER, LogLevelWeight } from './constants.js'
 
 interface InputData {
 	[key: string]: unknown
-	level: LogLevelWeights
+	level: LogLevelWeight
 	time: number
 	pid: number
 	hostname: string
@@ -27,31 +27,29 @@ interface InputData {
 	msg: string
 }
 
-const baseColor = (level: string | number, description: string) => {
-	const levelText = levelByNumber[level]
-	const baseColorFn = pc[colorByType[levelText]]
-
+function baseColor(level: string | number, description: string): string {
+	const levelType = LEVEL_BY_NUMBER[level]
+	const baseColorFn = pc[COLOR_BY_TYPE[levelType]]
 	assert(typeof baseColorFn === 'function')
 
 	return baseColorFn(description)
 }
 
-export const timePrettifier: PinoPretty.Prettifier = (time) => {
-	if (typeof time === 'object') return ''
+// Prettifiers
 
-	return pc.dim(time)
+export const timePrettifier: PinoPretty.Prettifier = (time) => {
+	return typeof time === 'object' ? '' : pc.dim(time)
 }
 
 export const levelPrettifier: PinoPretty.Prettifier = (level) => {
-	if (typeof level === 'object') return ''
-
-	const levelText = levelByNumber[level]
-
-	return baseColor(level, levelText)
+	return typeof level === 'object' ? '' : baseColor(level, LEVEL_BY_NUMBER[level])
 }
 
-const joinMsg = (...arr: Array<string | undefined>): string =>
-	arr.filter((item): item is string => !!item).join(' ')
+// Format message
+
+function joinMsg(...arr: Array<string | undefined>): string {
+	return arr.filter((item) => !!item).join(' ')
+}
 
 export const messageFormat: PinoPretty.MessageFormatFunc = (log) => {
 	const input = log as InputData
@@ -83,7 +81,7 @@ export const messageFormat: PinoPretty.MessageFormatFunc = (log) => {
 	if (input.err) {
 		const { level, err } = input
 		const prettyDesc = baseColor(level, err.message)
-		return joinMsg(prettyDesc, msg).concat('\n', err.stack ?? '')
+		return joinMsg(prettyDesc, msg, '\n', err.stack ?? '')
 	}
 
 	// Info

@@ -1,37 +1,37 @@
 import type { Colors } from 'picocolors/types.js'
 
-export enum LogLevelTexts {
-	TRACE = 'TRACE',
-	DEBUG = 'DEBUG',
-	INFO = 'INFO',
-	WARN = 'WARN',
-	ERROR = 'ERROR',
-	FATAL = 'FATAL',
+export enum LogLevel {
+	Trace = 'TRACE',
+	Debug = 'DEBUG',
+	Info = 'INFO',
+	Warn = 'WARN',
+	Error = 'ERROR',
+	Fatal = 'FATAL',
 }
 
-export enum LogLevelWeights {
-	TRACE = 10,
-	DEBUG = 20,
-	INFO = 30,
-	WARN = 40,
-	ERROR = 50,
-	FATAL = 60,
+export enum LogLevelWeight {
+	Trace = 10,
+	Debug = 20,
+	Info = 30,
+	Warn = 40,
+	Error = 50,
+	Fatal = 60,
 }
 
-export const colorByType: Record<string, keyof Colors> = {
-	[LogLevelTexts.TRACE]: 'cyan',
-	[LogLevelTexts.DEBUG]: 'green',
-	[LogLevelTexts.INFO]: 'blue',
-	[LogLevelTexts.WARN]: 'yellow',
-	[LogLevelTexts.ERROR]: 'red',
-	[LogLevelTexts.FATAL]: 'magenta',
+export const COLOR_BY_TYPE: Record<string, keyof Colors> = {
+	[LogLevel.Trace]: 'cyan',
+	[LogLevel.Debug]: 'green',
+	[LogLevel.Info]: 'blue',
+	[LogLevel.Warn]: 'yellow',
+	[LogLevel.Error]: 'red',
+	[LogLevel.Fatal]: 'magenta',
 }
 
-export const levelByNumber: Record<string, LogLevelTexts> = {
-	[LogLevelWeights.TRACE]: LogLevelTexts.TRACE,
-	[LogLevelWeights.DEBUG]: LogLevelTexts.DEBUG,
-	[LogLevelWeights.INFO]: LogLevelTexts.INFO,
-	[LogLevelWeights.WARN]: LogLevelTexts.WARN,
-	[LogLevelWeights.ERROR]: LogLevelTexts.ERROR,
-	[LogLevelWeights.FATAL]: LogLevelTexts.FATAL,
+export const LEVEL_BY_NUMBER: Record<string, LogLevel> = {
+	[LogLevelWeight.Trace]: LogLevel.Trace,
+	[LogLevelWeight.Debug]: LogLevel.Debug,
+	[LogLevelWeight.Info]: LogLevel.Info,
+	[LogLevelWeight.Warn]: LogLevel.Warn,
+	[LogLevelWeight.Error]: LogLevel.Error,
+	[LogLevelWeight.Fatal]: LogLevel.Fatal,
 }
