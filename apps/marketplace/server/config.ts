@@ -1,5 +1,7 @@
 import { customCleanEnv, num, str } from 'envalid'
 
+import { LogLevel } from 'shared/logger/constants.js'
+
 import 'shared/load-env.js'
 
 const cleanedEnv = customCleanEnv(
@@ -14,7 +16,18 @@ const cleanedEnv = customCleanEnv(
 			default: 'production',
 		}),
 		HOST: str({ default: '0.0.0.0' }),
-		PORT: num(),
+		PORT: num({ default: 3000 }),
+		LOG_LEVEL: str({
+			choices: [
+				LogLevel.Fatal, // 60
+				LogLevel.Error, // 50
+				LogLevel.Warn, // 40
+				LogLevel.Info, // 30
+				LogLevel.Debug, // 20
+				LogLevel.Trace, // 10
+			],
+			default: LogLevel.Info,
+		}),
 	},
 	(cleaned) => cleaned,
 )

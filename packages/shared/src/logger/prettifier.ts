@@ -42,7 +42,7 @@ export const timePrettifier: PinoPretty.Prettifier = (time) => {
 }
 
 export const levelPrettifier: PinoPretty.Prettifier = (level) => {
-	return typeof level === 'object' ? '' : baseColor(level, LEVEL_BY_NUMBER[level])
+	return typeof level === 'object' ? '' : baseColor(level, LEVEL_BY_NUMBER[level].toUpperCase())
 }
 
 // Format message

@@ -33,7 +33,7 @@ export default function requestLoggingHook(
 				url: req.url,
 			},
 		}
-		logger.info(reqPayload, 'Incoming request')
+		logger.trace(reqPayload, 'Incoming request')
 
 		storage.run(store, () => {
 			done()

@@ -1,12 +1,12 @@
 import type { Colors } from 'picocolors/types.js'
 
 export enum LogLevel {
-	Trace = 'TRACE',
-	Debug = 'DEBUG',
-	Info = 'INFO',
-	Warn = 'WARN',
-	Error = 'ERROR',
-	Fatal = 'FATAL',
+	Trace = 'trace',
+	Debug = 'debug',
+	Info = 'info',
+	Warn = 'warn',
+	Error = 'error',
+	Fatal = 'fatal',
 }
 
 export enum LogLevelWeight {
