@@ -6,7 +6,7 @@ export const meta: MetaFunction = () => ({ title: 'Page not found · Acme' })
 
 export default function NotFoundPage() {
 	return (
-		<BaseLayout className="flex justify-center flex-col">
+		<BaseLayout contentClassName="flex justify-center flex-col">
 			<NotFound />
 		</BaseLayout>
 	)

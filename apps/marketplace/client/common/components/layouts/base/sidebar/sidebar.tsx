@@ -27,7 +27,8 @@ function Sidebar() {
 	return (
 		<aside className="m-sidebar flex flex-col bg-container px-3 pb-3">
 			<div className="m-sidebar__logo inline-flex items-center">
-				<a className="px-4 py-1 text-title-lg font-700 rounded-md" href="/">
+				<a className="flex gap-2 px-3 py-1 text-title-lg font-700 rounded-md items-center" href="/">
+					<img className="w-6 h-6" src="/favicon.svg" alt="logo" />
 					ACME
 				</a>
 			</div>
