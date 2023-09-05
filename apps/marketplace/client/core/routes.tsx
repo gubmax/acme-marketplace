@@ -4,7 +4,8 @@ import { routes as routesManifest } from 'virtual:routes-manifest'
 import { dynamic, type DynamicComponent, type DynamicModule, type DynamicProps } from './dynamic.js'
 
 // Pages by folder structure
-const modules = import.meta.glob<DynamicModule>('/client/pages/**/*.tsx')
+export const modules = import.meta.glob<DynamicModule>('/client/pages/**/*.tsx')
+export const notFoundModule = () => import('client/404.js')
 
 // Add dynamic elements for preloading
 
@@ -27,5 +28,5 @@ for (const route of routesManifest) {
 export const routes: ClientRoute[] = routesManifest
 
 // Not Found route
-const NotFoundPage = dynamic(() => import('client/404.js'))
+const NotFoundPage = dynamic(notFoundModule)
 export const notFoundRoute = { element: <NotFoundPage /> }

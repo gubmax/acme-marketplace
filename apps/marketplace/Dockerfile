@@ -34,6 +34,7 @@ RUN pnpm install --offline
 
 COPY --from=builder /app/out/full/ ./
 
+ENV NODE_ENV production
 RUN pnpm build --filter=marketplace...
 ###############################################################################
 # Stage 4

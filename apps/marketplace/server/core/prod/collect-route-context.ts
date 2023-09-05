@@ -1,12 +1,24 @@
 import type { RenderContext } from '../render.context.js'
+import { type EntryModule } from './renderer.js'
 
-/**
- * TODO: Add meta and payload collecting
- */
-export function collectRouteContext(
+async function getContextByModuleId(
+	entryModule: EntryModule,
+	id: string,
+): Promise<{ meta?: RenderContext['meta']; payload?: { pageTitle?: string } }> {
+	const module = await (entryModule.modules['/' + id] ?? entryModule.notFoundModule)()
+
+	const meta = (module.meta as (() => RenderContext['meta']) | undefined)?.()
+	const payload = (module.payload as (() => { pageTitle?: string }) | undefined)?.()
+
+	return { meta, payload }
+}
+
+export async function collectRouteContext(
 	entryContext: RenderContext,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	entryModule: EntryModule,
 	moduleId: string,
-): void {
-	Object.assign(entryContext.meta, {})
+): Promise<void> {
+	const { meta, payload } = await getContextByModuleId(entryModule, moduleId)
+	if (meta) Object.assign(entryContext.meta, meta)
+	if (payload) Object.assign(entryContext.payload, payload)
 }

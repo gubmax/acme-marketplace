@@ -12,8 +12,15 @@ import { renderPage } from '../render-page.js'
 import { collectRouteAssets } from './collect-route-assets.js'
 import { collectRouteContext } from './collect-route-context.js'
 
+interface RouteModule {
+	meta?: RenderContext['meta']
+	payload?: { pageTitle?: string }
+}
+
 export interface EntryModule {
 	handleRequest: (options: { url: string; renderContext: RenderContext }) => ReactNode
+	modules: Record<string, (() => Promise<RouteModule>) | undefined>
+	notFoundModule: () => Promise<RouteModule>
 }
 
 export interface Renderer {
@@ -39,7 +46,11 @@ function loadModule<T>(path: string): Promise<T> {
 	return import(resolvePath(distPath + path)) as Promise<T>
 }
 
-function createRenderContext(clientEntry: string, moduleId?: string): RenderContext {
+async function createRenderContext(
+	clientEntry: string,
+	entryModule: EntryModule,
+	moduleId?: string,
+): Promise<RenderContext> {
 	const entryContext: RenderContext = { payload: {}, links: [], styles: [], scripts: [], meta: {} }
 
 	if (moduleId) {
@@ -47,7 +58,7 @@ function createRenderContext(clientEntry: string, moduleId?: string): RenderCont
 		collectRouteAssets(entryContext, assetsManifest, clientEntry, moduleId)
 
 		// Context
-		collectRouteContext(entryContext, moduleId)
+		await collectRouteContext(entryContext, entryModule, moduleId)
 	}
 
 	return entryContext
@@ -57,9 +68,8 @@ const render: Renderer['render'] = async (req, res, moduleId) => {
 	const clientEntry = 'client/entry.client.tsx'
 	const serverEntry = 'server/entry.server.js'
 
-	const renderContext = createRenderContext(clientEntry, moduleId)
-
 	const entryModule = await loadModule<EntryModule>(serverEntry)
+	const renderContext = await createRenderContext(clientEntry, entryModule, moduleId)
 	const node = entryModule.handleRequest({ url: req.url, renderContext })
 
 	const renderContextJSON = getRenderContextJSON(renderContext)

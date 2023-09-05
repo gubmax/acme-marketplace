@@ -7,6 +7,8 @@ import { initRouter } from './core/router.js'
 import 'ui/styles/index.css'
 import 'virtual:uno.css'
 
+export { modules, notFoundModule } from './core/routes.js'
+
 interface HandleRequestOptions {
 	url: string
 	renderContext: RenderContextType
