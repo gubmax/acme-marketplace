@@ -51,17 +51,19 @@ async function createRenderContext(
 	entryModule: EntryModule,
 	moduleId?: string,
 ): Promise<RenderContext> {
-	const entryContext: RenderContext = { payload: {}, links: [], styles: [], scripts: [], meta: {} }
+	const renderContext: RenderContext = { payload: {}, links: [], styles: [], scripts: [], meta: {} }
+
+	renderContext.links.push({ rel: 'manifest', href: '/manifest.webmanifest' })
 
 	if (moduleId) {
 		// Assets
-		collectRouteAssets(entryContext, assetsManifest, clientEntry, moduleId)
+		collectRouteAssets(renderContext, assetsManifest, clientEntry, moduleId)
 
 		// Context
-		await collectRouteContext(entryContext, entryModule, moduleId)
+		await collectRouteContext(renderContext, entryModule, moduleId)
 	}
 
-	return entryContext
+	return renderContext
 }
 
 const render: Renderer['render'] = async (req, res, moduleId) => {

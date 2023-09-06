@@ -8,16 +8,6 @@
 	}
 }
 
-@keyframes m-loading-end {
-	from {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0;
-	}
-}
-
 .m-progress-bar {
 	position: fixed;
 	z-index: 2;
@@ -35,9 +25,7 @@
 
 	&.m-loading-end {
 		width: 100%;
-		animation-duration: 500ms;
-		animation-fill-mode: forwards;
-		animation-name: m-loading-end;
+		opacity: 0;
 		transition:
 			width 500ms ease-in,
 			opacity 500ms ease-in;

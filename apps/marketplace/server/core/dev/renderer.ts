@@ -49,6 +49,9 @@ window.__vite_plugin_react_preamble_installed__ = true
 		{ type: 'module', src: clientEntry },
 	)
 
+	//Links
+	renderContext.links.push({ rel: 'manifest', href: '/manifest.webmanifest' })
+
 	// Styles
 	await collectRouteStyles(viteServer, renderContext, serverEntry)
 

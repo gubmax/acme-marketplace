@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react-swc'
 import unoCSS from 'unocss/vite'
 import { defineConfig, splitVendorChunkPlugin, type UserConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 import { generateRoutesManifest } from './plugins/vite-plugin-routes-manifest.js'
@@ -8,7 +9,9 @@ import { generateRoutesManifest } from './plugins/vite-plugin-routes-manifest.js
 /**
  * @link https://vitejs.dev/config/
  */
-export default defineConfig(({ ssrBuild }) => {
+export default defineConfig(({ mode, ssrBuild }) => {
+	const isDev = mode === 'development'
+
 	const plugins = [
 		tsconfigPaths({ root: '.' }),
 		react(),
@@ -16,6 +19,30 @@ export default defineConfig(({ ssrBuild }) => {
 		unoCSS(),
 		splitVendorChunkPlugin(),
 		generateRoutesManifest(),
+		VitePWA({
+			registerType: 'prompt',
+			strategies: 'generateSW',
+			manifest: {
+				background_color: '#17181c',
+				description:
+					'The largest digital marketplace. Buy, sell, and discover exclusive digital items.',
+				display: 'minimal-ui',
+				id: '/',
+				name: 'ACME Marketplace',
+				short_name: 'ACME',
+				theme_color: '#17181c',
+			},
+			workbox: {
+				navigateFallback: '',
+				navigateFallbackDenylist: [/^\/storybook/],
+			},
+			devOptions: {
+				navigateFallback: '',
+				enabled: isDev,
+				type: 'module',
+				suppressWarnings: true,
+			},
+		}),
 	]
 
 	const ssrConfig: UserConfig = {

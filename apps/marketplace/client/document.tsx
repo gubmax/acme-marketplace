@@ -18,8 +18,12 @@ export default function Document({ renderContext, children }: DocumentProps) {
 					<meta charSet="UTF-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 					<meta name="color-scheme" content="dark light" />
+					<meta name="theme-color" content="#f9f9f9" media="(prefers-color-scheme: light)" />
+					<meta name="theme-color" content="#17181c" media="(prefers-color-scheme: dark)" />
+					<meta name="apple-mobile-web-app-capable" content="yes" />
 					<Meta />
 					<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+					<link rel="mask-icon" href="/favicon.svg" color="#646cff" />
 					<Links />
 					<Styles />
 				</head>

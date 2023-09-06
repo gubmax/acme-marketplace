@@ -1,4 +1,3 @@
-import { isBrowser } from 'client/common/helpers/environment.js'
 import { noop } from 'client/common/helpers/noop.js'
 import {
 	type InitialRouteOptions,
@@ -32,7 +31,7 @@ export interface RouterOptions extends InitialRouteOptions {
 }
 
 export function initRouter({ meta, payload, href, onChange = noop }: RouterOptions): void {
-	if (isBrowser) {
+	if (!import.meta.env.SSR) {
 		// Handle route change
 		preloadRouteObs.subscribe((route) => {
 			routeStore.next(route)

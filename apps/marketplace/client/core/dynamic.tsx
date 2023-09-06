@@ -6,6 +6,7 @@ export interface DynamicProps {
 
 export type DynamicComponent<P = unknown, E = never> = ComponentType<P & DynamicProps> & {
 	loader: DynamicFactory<P, E>
+	fulfilled: DynamicModule<P> | null
 }
 
 export interface DynamicModule<P = unknown> {
@@ -17,18 +18,16 @@ export type DynamicFactory<P = unknown, E = never> = () => Promise<
 >
 
 export function dynamic<P>(factory: DynamicFactory<P>): DynamicComponent<P> {
-	let cache: DynamicModule<P> | null = null
-
-	function Dynamic({ fallback, ...rest }: P & DynamicProps) {
+	const Dynamic: DynamicComponent<P> = ({ fallback, ...rest }: P & DynamicProps) => {
 		const LazyComponent = lazy(async function dynamicFactory() {
-			if (cache !== null) return cache
+			if (Dynamic.fulfilled !== null) return Dynamic.fulfilled
 
 			const component = await factory()
-			cache = component
+			Dynamic.fulfilled = component
 			return component
 		})
 
-		const Component = cache?.default ?? LazyComponent
+		const Component = Dynamic.fulfilled?.default ?? LazyComponent
 		const componentProps = rest as P & PropsWithRef<P> & JSX.IntrinsicAttributes
 
 		return (
@@ -39,6 +38,7 @@ export function dynamic<P>(factory: DynamicFactory<P>): DynamicComponent<P> {
 	}
 
 	Dynamic.loader = factory
+	Dynamic.fulfilled = null
 
 	return Dynamic
 }

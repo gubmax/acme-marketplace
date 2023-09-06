@@ -1,13 +1,12 @@
 import { BehaviorSubject, from, iif, map, of, Subject, switchMap, tap } from 'rxjs'
 
-import { invariant } from 'client/common/helpers/invariant.js'
 import type {
 	HtmlMetaDescriptor,
 	MetaFunction,
 	PayloadDescriptor,
 	PayloadFunction,
 } from '../components/page.js'
-import { type DynamicFactory, type DynamicModule } from '../dynamic.js'
+import { type DynamicModule } from '../dynamic.js'
 import { matchRoute } from '../match-route.js'
 import { parseParams, parsePath, type Path } from '../path.js'
 import { type ClientRoute, notFoundRoute } from '../routes.js'
@@ -18,7 +17,6 @@ export interface RouteDescriptor {
 	payload?: PayloadFunction
 }
 
-type RouteFactory = DynamicFactory<unknown, RouteDescriptor>
 type RouteModule = DynamicModule & RouteDescriptor
 type RouteElement = ClientRoute<RouteDescriptor>['element']
 type RouteParams = Record<string, string>
@@ -87,8 +85,6 @@ function setRouteDescriptors(state: RouteState, module: RouteModule) {
 	if (routePayload) state.payload = routePayload
 }
 
-const loadedModules = new WeakMap<RouteElement, RouteModule>()
-
 export const preloadRouteObs = preloadStore.pipe(
 	// Reset query state
 	tap(() => {
@@ -96,37 +92,24 @@ export const preloadRouteObs = preloadStore.pipe(
 	}),
 	// Preload module
 	switchMap((options) => {
-		let factory: RouteFactory | undefined
 		const state = createRouteState(options)
+		const dynamicComponent = state.element.type
 
-		// Get loaders for current route module
-
-		if ('loader' in state.element.type) {
-			if (loadedModules.has(state.element)) {
-				const module = loadedModules.get(state.element)
-				if (module) setRouteDescriptors(state, module)
-			} else {
-				factory = state.element.type.loader
-			}
-		}
+		if (dynamicComponent.fulfilled) setRouteDescriptors(state, dynamicComponent.fulfilled)
 
 		// Preload
 		return iif(
-			() => !factory,
+			() => !!dynamicComponent.fulfilled,
 			of(state),
 			of(state).pipe(
 				switchMap(() => {
 					return from(
 						preloadingQuery.run(async () => {
-							invariant(factory)
-							const module = await factory()
+							const module = await dynamicComponent.loader()
 							setRouteDescriptors(state, module)
 							return module
 						}),
-					).pipe(
-						tap((module) => loadedModules.set(state.element, module)),
-						map(() => state),
-					)
+					).pipe(map(() => state))
 				}),
 			),
 		)

@@ -26,4 +26,5 @@ module.exports = defineConfig({
 			},
 		},
 	],
+	ignorePatterns: ['dev-dist'],
 })
