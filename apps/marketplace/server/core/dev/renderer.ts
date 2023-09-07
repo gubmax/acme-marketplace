@@ -1,9 +1,9 @@
+import type { ManifestRoute } from 'virtual:routes-manifest'
 import { createServer } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
-import type { ManifestRoute } from 'plugins/vite-plugin-routes-manifest.js'
 import type { EntryModule, Renderer } from '../prod/renderer.js'
-import { getRenderContextJSON, type RenderContext } from '../render.context.js'
+import { getClientRenderContext, type RenderContext } from '../render-context.js'
 import { renderPage } from '../render-page.js'
 import { collectRouteContext } from './collect-route-context.js'
 import { collectRouteStyles } from './collect-route-styles.js'
@@ -33,7 +33,11 @@ async function createRenderContext(
 ): Promise<RenderContext> {
 	const renderContext: RenderContext = { links: [], meta: {}, payload: {}, scripts: [], styles: [] }
 
+	// Context
+	if (moduleId) await collectRouteContext(viteServer, renderContext, moduleId)
+
 	// Scripts
+	const clientRenderContext = getClientRenderContext(renderContext)
 	renderContext.scripts.push(
 		{
 			type: 'module',
@@ -47,6 +51,7 @@ window.__vite_plugin_react_preamble_installed__ = true
 		},
 		{ type: 'module', src: '/@vite/client' },
 		{ type: 'module', src: clientEntry },
+		{ content: clientRenderContext },
 	)
 
 	//Links
@@ -54,9 +59,6 @@ window.__vite_plugin_react_preamble_installed__ = true
 
 	// Styles
 	await collectRouteStyles(viteServer, renderContext, serverEntry)
-
-	// Context
-	if (moduleId) await collectRouteContext(viteServer, renderContext, moduleId)
 
 	return renderContext
 }
@@ -69,9 +71,6 @@ const render: Renderer['render'] = async (req, res, moduleId) => {
 
 	const entryModule = await loadModule<EntryModule>(serverEntry)
 	const node = entryModule.handleRequest({ url: req.url, renderContext })
-
-	const renderContextJSON = getRenderContextJSON(renderContext)
-	renderContext.scripts.push(renderContextJSON)
 
 	return renderPage(req, res, node)
 }

@@ -1,4 +1,4 @@
-import type { RenderContext } from '../render.context.js'
+import type { RenderContext } from '../render-context.js'
 import { type EntryModule } from './renderer.js'
 
 async function getContextByModuleId(

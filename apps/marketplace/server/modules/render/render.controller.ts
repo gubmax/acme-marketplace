@@ -1,8 +1,8 @@
 import { createReadStream } from 'node:fs'
 
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import type { ManifestRoute } from 'virtual:routes-manifest'
 
-import type { ManifestRoute } from 'plugins/vite-plugin-routes-manifest.js'
 import { resolvePath } from 'server/common/helpers/paths.js'
 import type { Renderer } from 'server/core/prod/renderer.js'
 import type ConfigService from '../config/config.service.js'

@@ -1,14 +1,9 @@
 import fs from 'node:fs'
 
+import type { ManifestRoute } from 'virtual:routes-manifest'
 import type { Plugin } from 'vite'
 
 const PATH_ROUTES_FOLDER = 'client/pages'
-
-export interface ManifestRoute {
-	id: string
-	path: string
-	static?: boolean
-}
 
 function generateRoutes(routes: ManifestRoute[], rootFolder: string, prefix = '/') {
 	const direntArr = fs.readdirSync(`./${rootFolder}${prefix}`, { withFileTypes: true })

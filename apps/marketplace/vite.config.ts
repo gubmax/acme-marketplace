@@ -4,7 +4,7 @@ import { defineConfig, splitVendorChunkPlugin, type UserConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
-import { generateRoutesManifest } from './plugins/vite-plugin-routes-manifest.js'
+import { generateRoutesManifest } from './plugins/vite-plugin-routes-manifest/index.js'
 
 /**
  * @link https://vitejs.dev/config/

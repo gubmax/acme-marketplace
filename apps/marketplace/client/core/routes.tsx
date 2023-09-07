@@ -1,9 +1,10 @@
 import type { ReactElement } from 'react'
-import { routes as routesManifest } from 'virtual:routes-manifest'
+import { type ManifestRoute, routes as routesManifest } from 'virtual:routes-manifest'
 
 import { dynamic, type DynamicComponent, type DynamicModule, type DynamicProps } from './dynamic.js'
 
 // Pages by folder structure
+
 export const modules = import.meta.glob<DynamicModule>('/client/pages/**/*.tsx')
 export const notFoundModule = () => import('client/404.js')
 
@@ -11,22 +12,27 @@ export const notFoundModule = () => import('client/404.js')
 
 export interface ClientRoute<T = never> extends ManifestRoute {
 	element: ReactElement<DynamicProps, DynamicComponent<unknown, T>>
-}
-
-for (const route of routesManifest) {
-	const pattern = route.path
-		.replace(/[\s!#$()+,.:<=?[\\\]^{|}]/g, '\\$&')
-		.replace(/\/\\:\w+\\\?/g, '/?([^/]*)')
-		.replace(/\/\\:\w+/g, '/([^/]+)')
-	route.pattern = RegExp('^' + pattern + '$', 'i')
-
-	const DynamicPage = dynamic(modules[`/${route.id}`])
-	route.element = <DynamicPage />
+	pattern: RegExp
 }
 
 // Page routes with extended type
-export const routes: ClientRoute[] = routesManifest
+
+export const routes: ClientRoute[] = []
+
+for (const route of routesManifest) {
+	const routePattern = route.path
+		.replace(/[\s!#$()+,.:<=?[\\\]^{|}]/g, '\\$&')
+		.replace(/\/\\:\w+\\\?/g, '/?([^/]*)')
+		.replace(/\/\\:\w+/g, '/([^/]+)')
+	const pattern = RegExp('^' + routePattern + '$', 'i')
+
+	const DynamicPage = dynamic(modules[`/${route.id}`])
+	const element = <DynamicPage />
+
+	routes.push({ ...route, pattern, element })
+}
 
 // Not Found route
+
 const NotFoundPage = dynamic(notFoundModule)
 export const notFoundRoute = { element: <NotFoundPage /> }
