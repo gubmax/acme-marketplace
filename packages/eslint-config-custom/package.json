@@ -7,8 +7,8 @@
 		"./web": "./web.cjs"
 	},
 	"dependencies": {
-		"@typescript-eslint/eslint-plugin": "6.5.0",
-		"@typescript-eslint/parser": "6.5.0",
+		"@typescript-eslint/eslint-plugin": "6.6.0",
+		"@typescript-eslint/parser": "6.6.0",
 		"eslint-config-turbo": "1.10.13",
 		"eslint-plugin-prettier": "5.0.0",
 		"eslint-plugin-react": "7.33.2",
