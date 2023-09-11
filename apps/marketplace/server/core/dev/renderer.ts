@@ -31,7 +31,7 @@ async function createRenderContext(
 	serverEntry: string,
 	moduleId?: string,
 ): Promise<RenderContext> {
-	const renderContext: RenderContext = { links: [], meta: {}, payload: {}, scripts: [], styles: [] }
+	const renderContext: RenderContext = { links: [], loader: {}, meta: {}, scripts: [], styles: [] }
 
 	// Context
 	if (moduleId) await collectRouteContext(viteServer, renderContext, moduleId)

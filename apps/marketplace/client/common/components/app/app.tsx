@@ -1,19 +1,20 @@
 import { ToastContainer } from 'ui/components/toast/toast.js'
 
 import { useStore } from 'client/common/hooks/use-store.js'
-import ServiceWorker from 'client/common/utils/service-worker.js'
 import { routeStore } from 'client/core/models/router-model.js'
+import BaseLayout from '../layouts/base/base-layout.js'
 import ProgressBar from './progress-bar/progress-bar.js'
 
 function App() {
-	const route = useStore(routeStore)
+	const { Component } = useStore(routeStore)
 
 	return (
 		<>
 			<ProgressBar />
-			{route.element}
+			<BaseLayout>
+				<Component />
+			</BaseLayout>
 			<ToastContainer />
-			{!import.meta.env.SSR && <ServiceWorker />}
 		</>
 	)
 }

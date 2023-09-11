@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { cn } from 'ui/helpers/class-names.js'
 
 import { useStore } from 'client/common/hooks/use-store.js'
@@ -7,14 +7,20 @@ import { preloadingQueryStore } from 'client/core/models/router-model.js'
 import './progress-bar.css'
 
 function ProgressBar() {
+	const [isMounted, setIsMounted] = useState(false)
 	const { status } = useStore(preloadingQueryStore)
+
+	useEffect(() => {
+		setIsMounted(true)
+	}, [])
 
 	return (
 		<hr
 			className={cn(
 				'm-progress-bar',
-				status === QueryStatus.loading && 'm-loading',
-				status === QueryStatus.success && 'm-loading-end',
+				(!isMounted || status === QueryStatus.loading) && 'm-loading',
+				((isMounted && status !== QueryStatus.loading) || status === QueryStatus.success) &&
+					'm-loading-end',
 			)}
 		/>
 	)

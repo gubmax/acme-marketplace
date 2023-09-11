@@ -1,46 +1,37 @@
 import { BehaviorSubject, from, iif, map, of, Subject, switchMap, tap } from 'rxjs'
 
-import type {
-	HtmlMetaDescriptor,
-	MetaFunction,
-	PayloadDescriptor,
-	PayloadFunction,
-} from '../components/page.js'
-import { type DynamicModule } from '../dynamic.js'
+import type { HtmlMetaDescriptor, LoaderDescriptor } from '../components/page.js'
 import { matchRoute } from '../match-route.js'
 import { parseParams, parsePath, type Path } from '../path.js'
-import { type ClientRoute, notFoundRoute } from '../routes.js'
-import { QueryModel, QueryStatus } from './query-model.js'
+import {
+	type ClientRoute,
+	notFoundRoute,
+	type RouteDescriptor,
+	type RouteModule,
+} from '../routes.js'
+import { QueryModel } from './query-model.js'
 
-export interface RouteDescriptor {
-	meta?: MetaFunction
-	payload?: PayloadFunction
-}
-
-type RouteModule = DynamicModule & RouteDescriptor
-type RouteElement = ClientRoute<RouteDescriptor>['element']
 type RouteParams = Record<string, string>
-type RouteLink = { pathname: string; params?: RouteParams } | { href: string }
 
 // Route
 
 export interface RouteState {
-	element: RouteElement
+	Component: ClientRoute<unknown, RouteDescriptor>['Component']
+	loader: LoaderDescriptor
 	meta: HtmlMetaDescriptor
 	params: Readonly<RouteParams>
 	pathname: Path['pathname']
-	payload: PayloadDescriptor
 	search: string
 	type: PreloadOptions['type']
 }
 
 function createRouteState(options: PreloadOptions | null): RouteState {
-	const state = {
-		element: notFoundRoute.element,
+	const state: RouteState = {
+		Component: notFoundRoute.Component,
+		loader: {},
 		meta: {},
 		params: {},
 		pathname: '',
-		payload: {},
 		search: '',
 		type: options?.type ?? 'push',
 	}
@@ -57,8 +48,8 @@ function createRouteState(options: PreloadOptions | null): RouteState {
 		Object.assign(state, { pathname: pathname || '/', params, search })
 	}
 
-	const routeElement = matchRoute(state.pathname)?.element
-	if (routeElement) state.element = routeElement
+	const route = matchRoute(state.pathname)
+	if (route?.Component) state.Component = route.Component
 
 	return state
 }
@@ -67,22 +58,22 @@ export const routeStore = new BehaviorSubject<RouteState>(createRouteState(null)
 
 // Preload route
 
+type RouteLink = { pathname: string; params?: RouteParams } | { href: string }
 type PreloadOptions = RouteLink & { type: 'push' | 'replace' | 'popstate' }
 export const preloadStore = new Subject<PreloadOptions>()
 
-const preloadingQuery = new QueryModel<RouteModule>({ type: QueryStatus.loading })
+const preloadingQuery = new QueryModel<RouteModule>()
 export const preloadingQueryStore = preloadingQuery.queryStore
 
 /**
  * @override state.meta
- * @override state.payload
  */
-function setRouteDescriptors(state: RouteState, module: RouteModule) {
+function setRouteDescriptors(state: RouteState, module: RouteModule): void {
+	const routeLoader = module.loader?.()
+	if (routeLoader) state.loader = routeLoader
+
 	const routeMeta = module.meta?.()
 	if (routeMeta) state.meta = routeMeta
-
-	const routePayload = module.payload?.()
-	if (routePayload) state.payload = routePayload
 }
 
 export const preloadRouteObs = preloadStore.pipe(
@@ -93,7 +84,7 @@ export const preloadRouteObs = preloadStore.pipe(
 	// Preload module
 	switchMap((options) => {
 		const state = createRouteState(options)
-		const dynamicComponent = state.element.type
+		const dynamicComponent = state.Component
 
 		if (dynamicComponent.fulfilled) setRouteDescriptors(state, dynamicComponent.fulfilled)
 
@@ -120,14 +111,14 @@ export const preloadRouteObs = preloadStore.pipe(
 
 export interface InitialRouteOptions {
 	href: string
+	loader?: LoaderDescriptor
 	meta?: HtmlMetaDescriptor
-	payload?: PayloadDescriptor
 }
 
-export function setInitialPage({ meta, payload, href }: InitialRouteOptions): void {
+export function setInitialPage({ loader, meta, href }: InitialRouteOptions): void {
 	const state = createRouteState({ type: 'popstate', href })
+	if (loader) state.loader = loader
 	if (meta) state.meta = meta
-	if (payload) state.payload = payload
 	routeStore.next(state)
 }
 

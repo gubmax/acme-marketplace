@@ -1,13 +1,12 @@
-import BaseLayout from 'client/common/components/layouts/base/base-layout.js'
-import type { MetaFunction, PayloadFunction } from 'client/core/components/page.js'
+import type { LoaderFunction, MetaFunction } from 'client/core/components/page.js'
 
 export const meta: MetaFunction = () => ({ title: 'Discover · Acme' })
 
-export const payload: PayloadFunction = () => ({ pageTitle: 'Discover' })
+export const loader: LoaderFunction = () => ({ pageTitle: 'Discover' })
 
 export default function DiscoverPage() {
 	return (
-		<BaseLayout>
+		<>
 			<div className="mb-10 grid h-80 grid-cols-[1fr_1fr] gap-5">
 				<div className="bg-outline row-start-1 row-end-3 rounded-lg" />
 				<div className="bg-outline rounded-lg" />
@@ -18,6 +17,6 @@ export default function DiscoverPage() {
 					<div key={index} className="bg-outline h-60 rounded-lg" />
 				))}
 			</div>
-		</BaseLayout>
+		</>
 	)
 }

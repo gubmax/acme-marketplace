@@ -8,8 +8,9 @@ export type HtmlMetaDescriptor =
 
 export type MetaFunction = () => HtmlMetaDescriptor
 
-export interface PayloadDescriptor {
+export type LoaderDescriptor<Params = unknown> = Params & {
 	pageTitle?: string
+	contentClassName?: string
 }
 
-export type PayloadFunction = () => PayloadDescriptor
+export type LoaderFunction<Params = unknown> = () => LoaderDescriptor<Params>

@@ -12,6 +12,7 @@ const MODAL_VALUE = 'login'
 
 function Header() {
 	const route = useStore(routeStore)
+	const { pageTitle } = route.loader
 
 	const modalHref = useMemo(() => {
 		const searchParams = new URLSearchParams(route.params)
@@ -28,7 +29,7 @@ function Header() {
 
 	return (
 		<header className="m-header fixed flex items-center mx-auto px-10 gap-5">
-			<h1 className="text-title-lg">{route.payload.pageTitle}</h1>
+			{pageTitle?.length && <h1 className="text-title-lg">{pageTitle}</h1>}
 			<Button as="a" className="ml-auto" href={modalHref}>
 				Sign In
 			</Button>

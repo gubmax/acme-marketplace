@@ -7,12 +7,12 @@ import {
 import type { ChildrenProp } from 'ui/typings/children-prop.js'
 
 import { invariant } from 'client/common/helpers/invariant.js'
-import type { HtmlMetaDescriptor } from './components/page.js'
+import type { HtmlMetaDescriptor, LoaderDescriptor } from './components/page.js'
 
 export interface RenderContextType {
-	payload: { pageTitle: string }
 	links?: Array<LinkHTMLAttributes<HTMLLinkElement>>
 	styles?: Array<LinkHTMLAttributes<HTMLStyleElement>>
+	loader?: LoaderDescriptor
 	meta?: HtmlMetaDescriptor
 	scripts?: Array<ScriptHTMLAttributes<HTMLScriptElement> & { content: string }>
 }

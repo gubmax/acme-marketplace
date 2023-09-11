@@ -13,8 +13,8 @@ import { collectRouteAssets } from './collect-route-assets.js'
 import { collectRouteContext } from './collect-route-context.js'
 
 interface RouteModule {
+	loader?: RenderContext['loader']
 	meta?: RenderContext['meta']
-	payload?: { pageTitle?: string }
 }
 
 export interface EntryModule {
@@ -51,7 +51,7 @@ async function createRenderContext(
 	entryModule: EntryModule,
 	moduleId?: string,
 ): Promise<RenderContext> {
-	const renderContext: RenderContext = { payload: {}, links: [], styles: [], scripts: [], meta: {} }
+	const renderContext: RenderContext = { links: [], loader: {}, meta: {}, scripts: [], styles: [] }
 
 	if (moduleId) {
 		// Assets
