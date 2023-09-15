@@ -17,10 +17,10 @@
 		"prepare": "husky install"
 	},
 	"devDependencies": {
-		"eslint": "8.48.0",
+		"eslint": "8.49.0",
 		"eslint-define-config": "1.23.0",
 		"husky": "8.0.3",
-		"npm-check-updates": "16.13.2",
+		"npm-check-updates": "16.14.2",
 		"prettier": "3.0.3",
 		"turbo": "1.10.13",
 		"typescript": "5.2.2"
