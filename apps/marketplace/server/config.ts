@@ -9,7 +9,7 @@ const cleanedEnv = customCleanEnv(
 	{
 		NODE_ENV: str({
 			choices: ['development', 'test', 'production', 'staging'],
-			default: process.env.NODE_ENV ?? 'development',
+			default: 'development',
 		}),
 		BUILD_ENV: str({
 			choices: ['prerendering', 'production'],

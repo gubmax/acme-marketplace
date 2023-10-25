@@ -23,7 +23,7 @@
 		"shared": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/node": "18.11.9",
+		"@types/node": "20.8.8",
 		"dotenv-cli": "7.3.0",
 		"eslint-config-custom": "workspace:*",
 		"tsc-alias": "1.8.8",

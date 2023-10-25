@@ -1,5 +1,5 @@
 # Stage 1
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 ENV CI 1
 WORKDIR /app
@@ -12,13 +12,13 @@ COPY . .
 RUN turbo prune --scope=marketplace --docker
 ###############################################################################
 # Stage 2
-FROM node:18-alpine AS store
+FROM node:20-alpine AS store
 
 ENV CI 1
 WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
-RUN npm install -g pnpm@8.7.0
+RUN npm install -g pnpm@8.9.0
 
 COPY .npmrc pnpm-lock.yaml ./
 RUN pnpm config set store-dir /app/.pnpm-store
