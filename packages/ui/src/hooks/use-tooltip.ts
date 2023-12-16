@@ -1,5 +1,5 @@
 import { useMemo, useRef } from 'react'
-import { useBoolean } from 'react-use'
+import { useBoolean } from 'react-use/esm'
 import {
 	arrow,
 	autoUpdate,

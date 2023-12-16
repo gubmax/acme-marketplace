@@ -9,7 +9,7 @@ import { generateRoutesManifest } from './plugins/vite-plugin-routes-manifest/in
 /**
  * @link https://vitejs.dev/config/
  */
-export default defineConfig(({ mode, ssrBuild }) => {
+export default defineConfig(({ mode, isSsrBuild }) => {
 	const isDev = mode === 'development'
 
 	const plugins = [
@@ -66,5 +66,5 @@ export default defineConfig(({ mode, ssrBuild }) => {
 		},
 	}
 
-	return ssrBuild ? ssrConfig : clientConfig
+	return isSsrBuild ? ssrConfig : clientConfig
 })

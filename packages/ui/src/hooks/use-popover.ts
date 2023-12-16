@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useBoolean } from 'react-use'
+import { useBoolean } from 'react-use/esm'
 import {
 	autoUpdate,
 	flip,
