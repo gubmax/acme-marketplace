@@ -13,13 +13,13 @@
 		"format": "prisma format"
 	},
 	"dependencies": {
-		"@prisma/client": "5.7.0",
+		"@prisma/client": "5.7.1",
 		"awilix": "9.0.0",
 		"dotenv": "16.3.1",
 		"envalid": "8.0.0",
 		"fastify": "4.25.1",
 		"hyperid": "3.1.1",
-		"prisma": "5.7.0",
+		"prisma": "5.7.1",
 		"shared": "workspace:*"
 	},
 	"devDependencies": {
@@ -28,6 +28,6 @@
 		"eslint-config-custom": "workspace:*",
 		"tsc-alias": "1.8.8",
 		"tsconfig": "workspace:*",
-		"tsx": "4.6.2"
+		"tsx": "4.7.0"
 	}
 }

@@ -3,7 +3,7 @@ import { PassThrough } from 'node:stream'
 import type { ReactNode } from 'react'
 import { renderToPipeableStream } from 'react-dom/server'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import isbot from 'isbot'
+import { isbot } from 'isbot'
 
 const ABORT_RENDER_DELAY = 5000
 
