@@ -7,7 +7,7 @@ WORKDIR /workspace
 
 RUN apt-get -y install git
 
-RUN npm install -g pnpm@8.9.0
+RUN npm install -g pnpm@8.12.1
 RUN pnpm config set store-dir /workspace/.pnpm-store
 
 CMD [ "sleep", "infinity" ]

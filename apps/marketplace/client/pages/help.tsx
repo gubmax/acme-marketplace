@@ -1,4 +1,4 @@
-import type { LoaderFunction, MetaFunction } from 'client/core/components/page.js'
+import type { LoaderFunction, MetaFunction } from 'client/core/page.js'
 
 export const meta: MetaFunction = () => ({ title: 'Help · Acme' })
 

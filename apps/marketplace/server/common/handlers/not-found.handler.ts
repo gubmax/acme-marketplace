@@ -1,8 +1,8 @@
 import { createReadStream } from 'node:fs'
+import { resolve } from 'node:path'
 
 import type { FastifyInstance } from 'fastify'
 
-import { resolvePath } from 'server/common/helpers/paths.js'
 import type { Renderer } from 'server/core/prod/renderer.js'
 import type ConfigService from 'server/modules/config/config.service.js'
 
@@ -19,7 +19,7 @@ export default function notFoundHandler(
 			return renderer.render(req, res, 'client/404.tsx')
 		}
 
-		const stream = createReadStream(resolvePath('client/404.html'), 'utf-8')
+		const stream = createReadStream(resolve('client/404.html'), 'utf-8')
 		return res.status(404).type('text/html').send(stream)
 	})
 }

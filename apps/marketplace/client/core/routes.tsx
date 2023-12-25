@@ -1,7 +1,7 @@
 import { type ManifestRoute, routes as routesManifest } from 'virtual:routes-manifest'
 
-import type { LoaderFunction, MetaFunction } from './components/page.js'
 import { dynamic, type DynamicComponent, type DynamicModule } from './dynamic.js'
+import type { LoaderFunction, MetaFunction } from './page.js'
 
 // Pages by folder structure
 

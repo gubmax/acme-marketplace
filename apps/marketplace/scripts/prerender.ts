@@ -1,25 +1,21 @@
-/* eslint-disable @typescript-eslint/no-throw-literal */
 /**
- * Pre-render the app into static HTML.
- * run `pnpm prerender` and then `dist/client` can be served as a static site.
+ * Pre-render the app pages into static HTML.
  */
+import assert from 'node:assert'
 import fs from 'node:fs'
-import { dirname } from 'node:path'
+import { dirname, resolve } from 'node:path'
 
 import fastify from 'fastify'
 import pc from 'picocolors'
-
-import { resolvePath } from 'server/common/helpers/paths.js'
-import type { Renderer } from 'server/core/prod/renderer.js'
-
-process.env.BUILD_ENV = 'prerendering'
 
 console.log(
 	`${pc.cyan('pre-render script')} ${pc.green('creating HTML files for static routes...')}`,
 )
 
-// @ts-expect-error: Production js without declaration file
-const { renderer } = (await import('dist/server/core/prod/renderer')) as { renderer: Renderer }
+// Renderer
+
+process.env.BUILD_ENV = 'prerendering'
+const { renderer } = await import('server/core/prod/renderer.js')
 
 // Init server
 
@@ -36,7 +32,7 @@ server.get('/error', async (req, res) => renderer.render(req, res))
 
 function writePageFile(path: string, html: string) {
 	const pathWithFilename = `${path.endsWith('/') ? path + 'index' : path}.html`
-	const pagePath = resolvePath(`dist/client/${pathWithFilename}`)
+	const pagePath = resolve(`dist/client/${pathWithFilename}`)
 
 	fs.mkdirSync(dirname(pagePath), { recursive: true })
 	fs.writeFileSync(pagePath, html)
@@ -50,19 +46,18 @@ for (const route of renderer.routesManifest) {
 	if (!route.static) continue
 
 	const res = await server.inject(route.path)
-	if (res.statusCode >= 500) throw res.body
-
+	assert(res.statusCode < 500, res.body)
 	writePageFile(`pages${route.path}`, res.body)
 }
 
 // Pre-render Not Found page
 
 const notFoundRes = await server.inject('/404')
-if (notFoundRes.statusCode >= 500) throw notFoundRes.body
+assert(notFoundRes.statusCode < 500, notFoundRes.body)
 writePageFile('404', notFoundRes.body)
 
 // Pre-render Error page
 
 const errorRes = await server.inject('/error')
-if (errorRes.statusCode >= 500) throw notFoundRes.body
+assert(errorRes.statusCode < 500, errorRes.body)
 writePageFile('error', errorRes.body)

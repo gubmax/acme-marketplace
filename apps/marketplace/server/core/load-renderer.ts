@@ -1,6 +1,7 @@
+import { resolve } from 'node:path'
+
 import type { FastifyInstance } from 'fastify'
 
-import { resolvePath } from 'server/common/helpers/paths.js'
 import type ConfigService from 'server/modules/config/config.service.js'
 import type { Renderer } from './prod/renderer.js'
 
@@ -18,7 +19,7 @@ export async function loadRenderer(
 		return rendererModule.renderer
 	}
 
-	await server.register(import('@fastify/static'), { root: resolvePath('client') })
+	await server.register(import('@fastify/static'), { root: resolve('client') })
 	const rendererModule = await import('./prod/renderer.js')
 
 	return rendererModule.renderer

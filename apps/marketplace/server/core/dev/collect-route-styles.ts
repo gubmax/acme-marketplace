@@ -1,6 +1,8 @@
+import assert from 'node:assert'
+import { resolve } from 'node:path'
+
 import type { ModuleNode, ViteDevServer } from 'vite'
 
-import { resolvePath } from 'server/common/helpers/paths.js'
 import type { RenderContext } from '../render-context.js'
 
 export interface RenderStyles {
@@ -12,8 +14,16 @@ export async function collectRouteStyles(
 	renderContext: RenderContext,
 	entryPath: string,
 ) {
-	const entryModule = viteServer.moduleGraph.getModuleById(resolvePath(entryPath))
-	if (!entryModule) return
+	const normalizedPath = resolve(entryPath).replace(/\\/g, '/')
+	let entryModule = viteServer.moduleGraph.getModuleById(normalizedPath)
+
+	// Trying to load module on first load of vite middleware
+	if (!entryModule) {
+		await viteServer.ssrLoadModule(normalizedPath)
+		entryModule = viteServer.moduleGraph.getModuleById(normalizedPath)
+	}
+
+	assert(entryModule)
 
 	const acc: RenderStyles = { styles: [] }
 	const importedIds = new Set<string>()
@@ -41,6 +51,5 @@ export async function collectRouteStyles(
 	}
 
 	await collect(entryModule)
-
 	renderContext.styles.push(...acc.styles)
 }

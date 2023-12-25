@@ -1,5 +1,5 @@
 {
 	"extends": "tsconfig/node.json",
 	"compilerOptions": { "baseUrl": ".", "outDir": "dist" },
-	"include": ["server"]
+	"include": ["server", "scripts"]
 }

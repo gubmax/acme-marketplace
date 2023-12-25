@@ -1,4 +1,5 @@
-import { readFile } from 'fs/promises'
+import { readFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
 
 import type { ReactNode } from 'react'
 import type { FastifyReply, FastifyRequest } from 'fastify'
@@ -6,7 +7,6 @@ import type { PassThrough } from 'stream'
 import type { ManifestRoute } from 'virtual:routes-manifest'
 import type { Manifest } from 'vite'
 
-import { resolvePath } from 'server/common/helpers/paths.js'
 import { getClientRenderContext, type RenderContext } from '../render-context.js'
 import { renderPage } from '../render-page.js'
 import { collectRouteAssets } from './collect-route-assets.js'
@@ -33,17 +33,17 @@ export interface Renderer {
 const distPath = process.env.BUILD_ENV === 'prerendering' ? 'dist/' : ''
 
 const assetsManifest = JSON.parse(
-	await readFile(resolvePath(`${distPath}client/assets.manifest.json`), 'utf-8'),
+	await readFile(resolve(distPath, 'client/assets.manifest.json'), 'utf-8'),
 ) as Manifest
 
 const routesManifest = JSON.parse(
-	await readFile(resolvePath(`${distPath}server/routes.manifest.json`), 'utf-8'),
+	await readFile(resolve(distPath, 'server/routes.manifest.json'), 'utf-8'),
 ) as ManifestRoute[]
 
 // Render
 
 function loadModule<T>(path: string): Promise<T> {
-	return import(resolvePath(distPath + path)) as Promise<T>
+	return import(resolve(distPath, path)) as Promise<T>
 }
 
 async function createRenderContext(

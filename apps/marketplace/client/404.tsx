@@ -1,5 +1,5 @@
 import NotFound from './common/components/not-found/not-found.js'
-import type { LoaderFunction, MetaFunction } from './core/components/page.js'
+import type { LoaderFunction, MetaFunction } from './core/page.js'
 
 export const meta: MetaFunction = () => ({ title: 'Page not found · Acme' })
 
