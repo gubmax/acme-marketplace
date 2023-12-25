@@ -21,10 +21,10 @@ export enum QueryStatus {
 }
 
 export class QueryModel<R> {
-	readonly queryStore: BehaviorSubject<QueryState<R>>
+	readonly store: BehaviorSubject<QueryState<R>>
 
 	constructor(initialAction: QueryAction<R> = { type: QueryStatus.idle }) {
-		this.queryStore = new BehaviorSubject<QueryState<R>>(this.#reduce(initialAction))
+		this.store = new BehaviorSubject<QueryState<R>>(this.#reduce(initialAction))
 	}
 
 	#reduce = (action: QueryAction<R>) => {
@@ -44,7 +44,7 @@ export class QueryModel<R> {
 	}
 
 	#dispatch = (action: QueryAction<R>): void => {
-		this.queryStore.next(this.#reduce(action))
+		this.store.next(this.#reduce(action))
 	}
 
 	// Public

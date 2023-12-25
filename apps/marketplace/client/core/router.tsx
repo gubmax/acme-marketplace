@@ -59,7 +59,7 @@ export function initBrowserRouter({ onChange = noop }: RouterOptions): void {
 		const prevHref = getRelativeRouteURL(routeStore.value)
 
 		if (nextHref !== prevHref) {
-			preloadStore.next({ type: 'push', href: getRelativeRouteURL(path) })
+			preloadStore.next({ type: 'push', href: nextHref })
 		}
 	})
 }

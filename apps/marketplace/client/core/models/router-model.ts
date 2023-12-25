@@ -1,7 +1,7 @@
-import { BehaviorSubject, from, iif, map, of, Subject, switchMap, tap } from 'rxjs'
+import { BehaviorSubject, from, map, of, Subject, switchMap } from 'rxjs'
 
-import type { HtmlMetaDescriptor, LoaderDescriptor } from '../components/page.js'
 import { matchRoute } from '../match-route.js'
+import type { HtmlMetaDescriptor, LoaderDescriptor } from '../page.js'
 import { parseParams, parsePath, type Path } from '../path.js'
 import {
 	type ClientRoute,
@@ -62,8 +62,7 @@ type RouteLink = { pathname: string; params?: RouteParams } | { href: string }
 type PreloadOptions = RouteLink & { type: 'push' | 'replace' | 'popstate' }
 export const preloadStore = new Subject<PreloadOptions>()
 
-const preloadingQuery = new QueryModel<RouteModule>()
-export const preloadingQueryStore = preloadingQuery.queryStore
+export const preloadingQuery = new QueryModel<RouteModule>()
 
 /**
  * @override state.meta
@@ -77,33 +76,23 @@ function setRouteDescriptors(state: RouteState, module: RouteModule): void {
 }
 
 export const preloadRouteObs = preloadStore.pipe(
-	// Reset query state
-	tap(() => {
-		preloadingQuery.reset()
-	}),
-	// Preload module
 	switchMap((options) => {
 		const state = createRouteState(options)
-		const dynamicComponent = state.Component
+		const module = state.Component.fulfilled
 
-		if (dynamicComponent.fulfilled) setRouteDescriptors(state, dynamicComponent.fulfilled)
+		if (module) {
+			setRouteDescriptors(state, module)
+			return of(state)
+		}
 
 		// Preload
-		return iif(
-			() => !!dynamicComponent.fulfilled,
-			of(state),
-			of(state).pipe(
-				switchMap(() => {
-					return from(
-						preloadingQuery.run(async () => {
-							const module = await dynamicComponent.loader()
-							setRouteDescriptors(state, module)
-							return module
-						}),
-					).pipe(map(() => state))
-				}),
-			),
-		)
+		return from(
+			preloadingQuery.run(async () => {
+				const loadedModule = await state.Component.loader()
+				setRouteDescriptors(state, loadedModule)
+				return loadedModule
+			}),
+		).pipe(map(() => state))
 	}),
 )
 
