@@ -15,11 +15,12 @@ This repo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `marketplace`: a React SPA + SSR
-- `storage`: a [Fastify](https://fastify.dev/) API for marketplace
-- `ui`: a stub React component library shared by both `marketplace` and `cms` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+- `apps/marketplace`: a React SSR app with client router
+- `apps/storage`: a [Fastify](https://fastify.dev/) API for marketplace
+- `packages/ui`: a React component library shared by all frontend applications
+- `packages/shared`: shared React utilities
+- `packages/eslint-config`: `eslint` configurations
+- `packages/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
 ## Setup
 
@@ -34,6 +35,14 @@ pnpm codegen
 pnpm --filter=storage prisma migrate dev
 pnpm dev
 ```
+
+## Storybook
+
+Storybook provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally.
+
+Helpful Storybook scripts:
+- `pnpm sb`: starts Storybook in dev mode with hot reloading at [localhost:6006](http://localhost:6006/)
+- `pnpm sb.build`: builds the Storybook UI and generates the static HTML files
 
 ## Migrations
 
