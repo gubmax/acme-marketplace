@@ -2,7 +2,7 @@ const { defineConfig } = require('eslint-define-config')
 
 module.exports = defineConfig({
 	root: true,
-	extends: ['custom'],
+	extends: ['@acme/eslint-config'],
 	parserOptions: {
 		project: ['./tsconfig.json'],
 		tsconfigRootDir: __dirname,
@@ -10,7 +10,7 @@ module.exports = defineConfig({
 	overrides: [
 		{
 			files: 'src/**/*',
-			extends: ['custom/web'],
+			extends: ['@acme/eslint-config/web'],
 			parserOptions: {
 				project: ['./tsconfig.web.json'],
 			},

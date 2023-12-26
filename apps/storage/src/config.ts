@@ -1,8 +1,7 @@
+import { LogLevel } from '@acme/shared/logger/constants.js'
 import { customCleanEnv, num, str } from 'envalid'
 
-import { LogLevel } from 'shared/logger/constants.js'
-
-import 'shared/load-env.js'
+import '@acme/shared/load-env.js'
 
 export const cleanedEnv = customCleanEnv(
 	process.env,

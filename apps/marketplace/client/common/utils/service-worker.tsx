@@ -1,7 +1,7 @@
 import { memo, useRef, useState } from 'react'
-import Button from 'ui/components/buttons/button/button.js'
-import Modal from 'ui/components/floating/modal/modal.js'
-import { toast } from 'ui/components/toast/toast.js'
+import Button from '@acme/ui/components/buttons/button/button.js'
+import Modal from '@acme/ui/components/floating/modal/modal.js'
+import { toast } from '@acme/ui/components/toast/toast.js'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 
 const ID_RELOAD_PROMT = 'sw-reload-promt'

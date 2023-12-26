@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { toast } from 'ui/components/toast/toast.js'
+import { toast } from '@acme/ui/components/toast/toast.js'
 
 function handleError(error: unknown, defaultContent: ReactNode) {
 	let content = defaultContent

@@ -1,5 +1,5 @@
 {
-	"name": "eslint-config-custom",
+	"name": "@acme/eslint-config",
 	"version": "0.0.0",
 	"type": "module",
 	"exports": {
@@ -7,8 +7,8 @@
 		"./web": "./web.cjs"
 	},
 	"dependencies": {
-		"@typescript-eslint/eslint-plugin": "6.15.0",
-		"@typescript-eslint/parser": "6.15.0",
+		"@typescript-eslint/eslint-plugin": "6.16.0",
+		"@typescript-eslint/parser": "6.16.0",
 		"eslint-config-turbo": "1.11.2",
 		"eslint-plugin-prettier": "5.1.2",
 		"eslint-plugin-react": "7.33.2",

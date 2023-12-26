@@ -1,8 +1,8 @@
 import { type FormEventHandler, memo } from 'react'
-import Button from 'ui/components/buttons/button/button.js'
-import Dialog from 'ui/components/dialog/dialog.js'
-import Modal, { type ModalProps } from 'ui/components/floating/modal/modal.js'
-import Input from 'ui/components/form/input/input.js'
+import Button from '@acme/ui/components/buttons/button/button.js'
+import Dialog from '@acme/ui/components/dialog/dialog.js'
+import Modal, { type ModalProps } from '@acme/ui/components/floating/modal/modal.js'
+import Input from '@acme/ui/components/form/input/input.js'
 
 interface AuthModalProps extends Omit<ModalProps, 'onSubmit'> {
 	onSubmit: FormEventHandler<HTMLFormElement>

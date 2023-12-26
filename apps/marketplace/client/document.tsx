@@ -1,4 +1,4 @@
-import type { ChildrenProp } from 'ui/typings/children-prop.js'
+import type { ChildrenProp } from '@acme/ui/typings/children-prop.js'
 
 import Links from './core/components/links.js'
 import Meta from './core/components/meta.js'

@@ -1,5 +1,5 @@
-import { cn } from 'ui/helpers/class-names.js'
-import type { ChildrenProp } from 'ui/typings/children-prop.js'
+import { cn } from '@acme/ui/helpers/class-names.js'
+import type { ChildrenProp } from '@acme/ui/typings/children-prop.js'
 
 import { useStore } from 'client/common/hooks/use-store.js'
 import { routeStore } from 'client/core/models/router-model.js'

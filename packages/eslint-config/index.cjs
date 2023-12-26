@@ -34,7 +34,7 @@ module.exports = defineConfig({
 				groups: [
 					['^node:', `^(${require('module').builtinModules.join('|')})(/|$)`],
 					['^react', '^@?\\w'],
-					['^(client|server|shared|plugins)(/.*|$)', '^\\.', '^.+\\.css$'],
+					['^(client|server|plugins)(/.*|$)', '^\\.', '^.+\\.css$'],
 				],
 			},
 		],

@@ -1,4 +1,4 @@
 export default {
-	extends: ['ui/stylelint.config'],
+	extends: ['@acme/ui/stylelint.config'],
 	ignoreFiles: ['dist/**'],
 }

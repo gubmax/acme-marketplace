@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import Button from 'ui/components/buttons/button/button.js'
+import Button from '@acme/ui/components/buttons/button/button.js'
 
 import './not-found.css'
 

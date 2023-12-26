@@ -1,4 +1,4 @@
-/// <reference types="ui/client" />
+/// <reference types="@acme/ui/client" />
 /// <reference types="vite-plugin-pwa/react" />
 /// <reference types="../plugins/vite-plugin-routes-manifest/types.d.ts" />
 

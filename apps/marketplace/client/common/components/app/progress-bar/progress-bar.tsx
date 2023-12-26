@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react'
-import { cn } from 'ui/helpers/class-names.js'
+import { cn } from '@acme/ui/helpers/class-names.js'
 
 import { useStore } from 'client/common/hooks/use-store.js'
 import { QueryStatus } from 'client/core/models/query-model.js'

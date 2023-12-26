@@ -1,5 +1,5 @@
 {
-	"extends": "tsconfig/node.json",
+	"extends": "@acme/typescript-config/node.json",
 	"compilerOptions": { "baseUrl": ".", "outDir": "dist" },
 	"include": ["src"]
 }

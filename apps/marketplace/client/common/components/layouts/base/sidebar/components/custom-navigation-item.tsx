@@ -1,7 +1,7 @@
 import type { ElementType } from 'react'
-import Navigation from 'ui/components/navigation/navigation.js'
-import { cn } from 'ui/helpers/class-names.js'
-import type { StyledProps } from 'ui/typings/styled-props.js'
+import Navigation from '@acme/ui/components/navigation/navigation.js'
+import { cn } from '@acme/ui/helpers/class-names.js'
+import type { StyledProps } from '@acme/ui/typings/styled-props.js'
 
 interface CustomNavigationItemProps extends StyledProps {
 	active: boolean

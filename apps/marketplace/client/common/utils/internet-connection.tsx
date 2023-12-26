@@ -1,6 +1,6 @@
-import DoneIcon from 'ui/components/icons/done-icon.js'
-import Loader from 'ui/components/loader/loader.js'
-import { toast } from 'ui/components/toast/toast.js'
+import DoneIcon from '@acme/ui/components/icons/done-icon.js'
+import Loader from '@acme/ui/components/loader/loader.js'
+import { toast } from '@acme/ui/components/toast/toast.js'
 
 const ID_OFFLINE_TOAST = 'internet-connection-offline'
 

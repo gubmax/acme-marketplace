@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo } from 'react'
+import Button from '@acme/ui/components/buttons/button/button.js'
 import { produce } from 'immer'
-import Button from 'ui/components/buttons/button/button.js'
 
 import { useStore } from 'client/common/hooks/use-store.js'
 import { openPage, routeStore } from 'client/core/models/router-model.js'

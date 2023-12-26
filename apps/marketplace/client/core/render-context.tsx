@@ -4,7 +4,7 @@ import {
 	type ScriptHTMLAttributes,
 	useContext,
 } from 'react'
-import type { ChildrenProp } from 'ui/typings/children-prop.js'
+import type { ChildrenProp } from '@acme/ui/typings/children-prop.js'
 
 import { invariant } from 'client/common/helpers/invariant.js'
 import type { HtmlMetaDescriptor, LoaderDescriptor } from './page.js'

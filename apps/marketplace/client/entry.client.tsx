@@ -8,7 +8,7 @@ import { getRelativeRouteURL } from 'client/core/path.js'
 import Document from 'client/document.js'
 import { setInitialPage } from './core/models/router-model.js'
 import { initBrowserRouter } from './core/router.js'
-import 'ui/styles/index.css'
+import '@acme/ui/styles/index.css'
 import 'virtual:uno.css'
 
 import 'client/common/utils/error-handler.js'

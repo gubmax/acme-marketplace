@@ -1,6 +1,6 @@
+import { customLogger } from '@acme/shared/logger/logger.js'
 import type { FastifyBaseLogger } from 'fastify'
 
-import { customLogger } from 'shared/logger/logger.js'
 import type ConfigService from '../config/config.service.js'
 
 export default class LoggerService {

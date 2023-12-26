@@ -13,21 +13,21 @@
 		"format": "prisma format"
 	},
 	"dependencies": {
+		"@acme/shared": "workspace:*",
 		"@prisma/client": "5.7.1",
 		"awilix": "9.0.0",
 		"dotenv": "16.3.1",
 		"envalid": "8.0.0",
-		"fastify": "4.25.1",
+		"fastify": "4.25.2",
 		"hyperid": "3.1.1",
-		"prisma": "5.7.1",
-		"shared": "workspace:*"
+		"prisma": "5.7.1"
 	},
 	"devDependencies": {
+		"@acme/eslint-config": "workspace:*",
+		"@acme/typescript-config": "workspace:*",
 		"@types/node": "20.8.8",
 		"dotenv-cli": "7.3.0",
-		"eslint-config-custom": "workspace:*",
 		"tsc-alias": "1.8.8",
-		"tsconfig": "workspace:*",
 		"tsx": "4.7.0"
 	}
 }
