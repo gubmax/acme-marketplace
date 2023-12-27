@@ -25,6 +25,7 @@
 		"react-use": "17.4.2"
 	},
 	"devDependencies": {
+		"@acme/browserslist-config": "workspace:*",
 		"@acme/eslint-config": "workspace:*",
 		"@acme/typescript-config": "workspace:*",
 		"@storybook/addon-essentials": "7.6.6",
