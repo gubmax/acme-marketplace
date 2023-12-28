@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import { resolve } from 'node:path'
 
 import type { ManifestRoute } from 'virtual:routes-manifest'
 import type { Plugin } from 'vite'
@@ -6,7 +7,7 @@ import type { Plugin } from 'vite'
 const PATH_ROUTES_FOLDER = 'client/pages'
 
 function generateRoutes(routes: ManifestRoute[], rootFolder: string, prefix = '/') {
-	const direntArr = fs.readdirSync(`./${rootFolder}${prefix}`, { withFileTypes: true })
+	const direntArr = fs.readdirSync(resolve(rootFolder + prefix), { withFileTypes: true })
 	const folderArr: fs.Dirent[] = []
 
 	for (const dirent of direntArr) {
@@ -28,9 +29,9 @@ function generateRoutes(routes: ManifestRoute[], rootFolder: string, prefix = '/
 		})
 	}
 
-	for (const { name } of folderArr) {
-		const currentName = `${prefix}${name}`
-		generateRoutes(routes, rootFolder, `${currentName}/`)
+	for (const folder of folderArr) {
+		const currentName = `${prefix}${folder.name}/`
+		generateRoutes(routes, rootFolder, currentName)
 	}
 }
 
@@ -61,8 +62,8 @@ export function generateRoutesManifest(): Plugin {
 			}
 		},
 		closeBundle() {
-			fs.mkdirSync('./dist/server', { recursive: true })
-			fs.writeFileSync('./dist/server/routes.manifest.json', JSON.stringify(routes))
+			fs.mkdirSync(resolve('dist/server'), { recursive: true })
+			fs.writeFileSync(resolve('dist/server/routes.manifest.json'), JSON.stringify(routes))
 		},
 	}
 }
