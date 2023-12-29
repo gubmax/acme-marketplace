@@ -3,7 +3,7 @@
 	"type": "module",
 	"version": "0.0.0",
 	"scripts": {
-		"dev": "FORCE_COLOR=1 tsx watch --clear-screen=false src/main.ts",
+		"dev": "tsx watch --clear-screen=false src/main.ts",
 		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
 		"codegen": "prisma generate",
 		"prisma": "tsx scripts/prisma",

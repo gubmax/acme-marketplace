@@ -48,15 +48,15 @@ export interface CustomToast
 
 function customToast(props: CustomToast): void {
 	toast.custom(
-		(t) => (
+		(options) => (
 			<div
 				className={cn(
 					'ui-toast ui-inner-shadow flex items-center bg-outline p-4 rounded-lg',
-					t.visible ? 'animate--enter' : 'animate--leave',
-					t.className,
+					options.visible ? 'animate--enter' : 'animate--leave',
+					options.className,
 				)}
-				style={t.style}
-				{...t.ariaProps}
+				style={options.style}
+				{...options.ariaProps}
 			>
 				{props.content}
 			</div>

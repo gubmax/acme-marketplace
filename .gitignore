@@ -22,8 +22,14 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Typescript
+*.tsbuildinfo
+
 # Turbo
 .turbo
+
+# Vite
+*.timestamp-*
 
 # Editor directories and files
 .idea

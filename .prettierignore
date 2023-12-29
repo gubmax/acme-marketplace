@@ -1,7 +1,6 @@
 # Ignore artifacts:
 dist
-dist-dev
-coverage
+dev-dist
 storybook-static
 *.timestamp-*
 *.tsbuildinfo
