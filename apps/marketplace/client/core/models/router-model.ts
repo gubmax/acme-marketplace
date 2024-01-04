@@ -9,7 +9,7 @@ import {
 	type RouteDescriptor,
 	type RouteModule,
 } from '../routes.js'
-import { QueryModel } from './query-model.js'
+import { queryModel } from './query-model.js'
 
 type RouteParams = Record<string, string>
 
@@ -62,7 +62,7 @@ type RouteLink = { pathname: string; params?: RouteParams } | { href: string }
 type PreloadOptions = RouteLink & { type: 'push' | 'replace' | 'popstate' }
 export const preloadStore = new Subject<PreloadOptions>()
 
-export const preloadingQuery = new QueryModel<RouteModule>()
+export const preloadingQuery = queryModel<RouteModule>()
 
 /**
  * @override state.meta

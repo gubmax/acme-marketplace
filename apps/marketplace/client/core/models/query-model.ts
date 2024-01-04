@@ -1,5 +1,7 @@
 import { BehaviorSubject } from 'rxjs'
 
+export type QueryStatus = 'idle' | 'loading' | 'success' | 'failure'
+
 export interface QueryState<T> {
 	status: QueryStatus
 	loading: boolean
@@ -8,60 +10,48 @@ export interface QueryState<T> {
 }
 
 export type QueryAction<T> =
-	| { type: QueryStatus.idle }
-	| { type: QueryStatus.loading }
-	| { type: QueryStatus.success; payload: T }
-	| { type: QueryStatus.failure; payload: unknown }
+	| { type: 'idle' }
+	| { type: 'loading' }
+	| { type: 'success'; payload: T }
+	| { type: 'failure'; payload: unknown }
 
-export enum QueryStatus {
-	idle = 'IDLE',
-	loading = 'LOADING',
-	success = 'SUCCESS',
-	failure = 'FAILURE',
-}
+export function queryModel<R>(initialAction: QueryAction<R> = { type: 'idle' }) {
+	const store = new BehaviorSubject<QueryState<R>>(reduce(initialAction))
 
-export class QueryModel<R> {
-	readonly store: BehaviorSubject<QueryState<R>>
-
-	constructor(initialAction: QueryAction<R> = { type: QueryStatus.idle }) {
-		this.store = new BehaviorSubject<QueryState<R>>(this.#reduce(initialAction))
-	}
-
-	#reduce = (action: QueryAction<R>) => {
+	function reduce(action: QueryAction<R>) {
 		switch (action.type) {
-			case QueryStatus.idle:
-				return { status: QueryStatus.idle, loading: false, response: undefined, error: undefined }
-
-			case QueryStatus.loading:
-				return { status: QueryStatus.loading, loading: true, response: undefined, error: undefined }
-
-			case QueryStatus.success:
-				return { status: QueryStatus.success, loading: false, response: action.payload }
-
-			case QueryStatus.failure:
-				return { status: QueryStatus.failure, loading: false, error: action.payload }
+			case 'idle':
+				return { status: 'idle', loading: false, response: undefined, error: undefined } as const
+			case 'loading':
+				return { status: 'loading', loading: true, response: undefined, error: undefined } as const
+			case 'success':
+				return { status: 'success', loading: false, response: action.payload } as const
+			case 'failure':
+				return { status: 'failure', loading: false, error: action.payload } as const
 		}
 	}
 
-	#dispatch = (action: QueryAction<R>): void => {
-		this.store.next(this.#reduce(action))
+	function dispatch(action: QueryAction<R>): void {
+		store.next(reduce(action))
 	}
 
-	// Public
+	// Public methods
 
-	async run(callback: () => Promise<R>): Promise<R> {
+	async function run(callback: () => Promise<R>): Promise<R> {
 		try {
-			this.#dispatch({ type: QueryStatus.loading })
+			dispatch({ type: 'loading' })
 			const res = await callback()
-			this.#dispatch({ type: QueryStatus.success, payload: res })
+			dispatch({ type: 'success', payload: res })
 			return res
 		} catch (error: unknown) {
-			this.#dispatch({ type: QueryStatus.failure, payload: error })
+			dispatch({ type: 'failure', payload: error })
 			throw error
 		}
 	}
 
-	reset(): void {
-		this.#dispatch({ type: QueryStatus.idle })
+	function reset(): void {
+		dispatch({ type: 'idle' })
 	}
+
+	return { store, run, reset } as const
 }
