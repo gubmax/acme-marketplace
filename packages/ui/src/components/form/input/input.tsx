@@ -15,7 +15,7 @@ function Input(props: InputProps, ref: ForwardedRef<HTMLInputElement>) {
 				className,
 			)}
 			{...rest}
-		></input>
+		/>
 	)
 }
 

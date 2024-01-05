@@ -36,6 +36,7 @@ export default defineConfig({
 			container: 'var(--color-container)',
 			outline: 'var(--color-outline)',
 			selected: 'var(--color-selected)',
+			error: 'var(--color-error)',
 			on: {
 				accent: 'var(--color-on-accent)',
 			},

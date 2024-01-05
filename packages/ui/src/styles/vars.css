@@ -8,6 +8,7 @@
 	--color-container: #fff;
 	--color-outline: #f0f0f0;
 	--color-selected: #646cff26;
+	--color-error: #d32f2f;
 	--inner-shadow: inset 0 0 0 1px rgb(0 0 0 / 5%);
 }
 
@@ -21,6 +22,7 @@
 	--color-container: #1e1f23;
 	--color-outline: #2d2e33;
 	--color-selected: #646cff26;
+	--color-error: #d32f2f;
 	--inner-shadow: inset 0 0 0 1px rgb(255 255 255 / 5%);
 }
 
