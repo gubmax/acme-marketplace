@@ -31,12 +31,14 @@ export interface RouterOptions {
 export function initBrowserRouter({ onChange = noop }: RouterOptions): void {
 	// Handle route change
 	preloadRouteObs.subscribe((route) => {
-		routeStore.next(route)
-		onChange(route)
+		if (route.loading) return
 
-		const updateArgs = [{}, '', getRelativeRouteURL(route)] as const
-		if (route.type === 'push') history.pushState(...updateArgs)
-		else if (route.type === 'replace') history.replaceState(...updateArgs)
+		routeStore.next(route.state)
+		onChange(route.state)
+
+		const updateArgs = [{}, '', getRelativeRouteURL(route.state)] as const
+		if (route.state.type === 'push') history.pushState(...updateArgs)
+		else if (route.state.type === 'replace') history.replaceState(...updateArgs)
 	})
 
 	// Handle history change

@@ -62,8 +62,6 @@ type RouteLink = { pathname: string; params?: RouteParams } | { href: string }
 type PreloadOptions = RouteLink & { type: 'push' | 'replace' | 'popstate' }
 export const preloadStore = new Subject<PreloadOptions>()
 
-export const preloadingQuery = queryModel<RouteModule>()
-
 /**
  * @override state.meta
  */
@@ -82,17 +80,20 @@ export const preloadRouteObs = preloadStore.pipe(
 
 		if (module) {
 			setRouteDescriptors(state, module)
-			return of(state)
+			return of({ loading: false, state })
 		}
 
 		// Preload
-		return from(
-			preloadingQuery.run(async () => {
-				const loadedModule = await state.Component.loader()
-				setRouteDescriptors(state, loadedModule)
-				return loadedModule
-			}),
-		).pipe(map(() => state))
+
+		const preloadingQuery = queryModel<RouteModule>()
+
+		void preloadingQuery.run(async () => {
+			const loadedModule = await state.Component.loader()
+			setRouteDescriptors(state, loadedModule)
+			return loadedModule
+		})
+
+		return from(preloadingQuery.store).pipe(map(({ loading }) => ({ loading, state })))
 	}),
 )
 

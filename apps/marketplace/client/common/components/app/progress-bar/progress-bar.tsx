@@ -1,24 +1,34 @@
 import { memo, useEffect, useState } from 'react'
 import { cn } from '@acme/ui/helpers/class-names.js'
+import { debounce, of, timer } from 'rxjs'
 
-import { useStore } from 'client/common/hooks/use-store.js'
-import { preloadingQuery } from 'client/core/models/router-model.js'
+import { useMountedState } from 'client/common/hooks/use-mounted-state.js'
+import { preloadRouteObs } from 'client/core/models/router-model.js'
 import './progress-bar.css'
 
 function ProgressBar() {
-	const [isMounted, setIsMounted] = useState(false)
-	const { status } = useStore(preloadingQuery.store)
+	const [isLoading, setIsLoading] = useState(false)
+	const isMounted = useMountedState()
 
+	// Show loading status only if it is longer than 250ms
 	useEffect(() => {
-		setIsMounted(true)
+		const subscription = preloadRouteObs
+			.pipe(debounce((route) => (route.loading ? timer(250) : of(route))))
+			.subscribe((route) => {
+				setIsLoading(route.loading)
+			})
+
+		return () => {
+			subscription.unsubscribe()
+		}
 	}, [])
 
 	return (
 		<hr
 			className={cn(
 				'm-progress-bar',
-				(!isMounted || status === 'loading') && 'm-loading',
-				isMounted && status !== 'loading' && 'm-loading-end',
+				(!isMounted || isLoading) && 'm-loading',
+				isMounted && !isLoading && 'm-loading-end',
 			)}
 		/>
 	)
