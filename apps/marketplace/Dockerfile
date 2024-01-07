@@ -5,7 +5,7 @@ ENV CI 1
 WORKDIR /app
 
 RUN apk add --no-cache libc6-compat git
-RUN npm install -g turbo@1.11.2
+RUN npm install -g turbo@1.11.3
 
 COPY . .
 
@@ -18,7 +18,7 @@ ENV CI 1
 WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
-RUN npm install -g pnpm@8.12.1
+RUN npm install -g pnpm@8.14.0
 
 COPY .npmrc pnpm-lock.yaml ./
 RUN pnpm config set store-dir /app/.pnpm-store
