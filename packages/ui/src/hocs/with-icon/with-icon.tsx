@@ -3,7 +3,7 @@ import type { ElementType } from 'react'
 import { cn } from '../../helpers/class-names.js'
 import './with-icon.css'
 
-export type IconSize = 'sm' | 'md'
+export type IconSize = 'sm' | 'md' | 'lg'
 
 export interface IconProps {
 	className?: string

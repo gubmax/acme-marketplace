@@ -37,6 +37,7 @@ export const Sizes: Story = {
 		<div className="flex gap-5">
 			<SizeItem size="sm" />
 			<SizeItem size="md" />
+			<SizeItem size="lg" />
 		</div>
 	),
 }
