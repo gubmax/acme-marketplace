@@ -6,10 +6,12 @@ const config: StorybookConfig = {
 	stories: ['../src/**/*.stories.@(ts|tsx)'],
 	addons: ['@storybook/addon-essentials', 'storybook-dark-mode'],
 	framework: '@storybook/react-vite',
+	staticDirs: ['../public'],
 	core: {
 		disableTelemetry: true,
 		builder: '@storybook/builder-vite',
 	},
+	docs: { autodocs: 'tag' },
 	async viteFinal(config) {
 		config.plugins?.push(tsconfigPaths(), unoCSS())
 

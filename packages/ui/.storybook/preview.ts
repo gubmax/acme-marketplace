@@ -16,7 +16,6 @@ const preview: Preview = {
 			light,
 			stylePreview: true,
 		},
-		docs: { theme: dark },
 		layout: 'centered',
 		options: {
 			storySort: {
