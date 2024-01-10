@@ -48,7 +48,7 @@ function MenuItem<T extends MenuItemElement = 'li'>(
 		<Element
 			ref={ref}
 			className={cn(
-				'ui-menu__item flex items-center py-2 rounded-md px-3 transition-colors',
+				'ui-menu__item flex items-center p-2 rounded-md transition-colors',
 				active && 'ui-active',
 				className,
 			)}

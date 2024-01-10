@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 
+import ControllerIcon from '../icons/controller-icon.js'
+import HelpIcon from '../icons/help-icon.js'
+import InfoIcon from '../icons/info-icon.js'
 import SettingsIcon from '../icons/settings-icon.js'
+import ShoppingBagIcon from '../icons/shopping-bag-icon.js'
 import Navigation from './navigation.js'
 
 const meta: Meta<typeof Navigation> = {
@@ -14,6 +18,8 @@ type Story = StoryObj<typeof Navigation>
 
 // Basic
 
+const ICONS = [ControllerIcon, ShoppingBagIcon, InfoIcon, HelpIcon, SettingsIcon]
+
 export const Basic: Story = {
 	render: () => {
 		const [selectedIndex, setSelectedIndex] = useState(0)
@@ -22,6 +28,7 @@ export const Basic: Story = {
 			<Navigation as="nav">
 				{Array.from({ length: 5 }).map((_, index) => {
 					const active = selectedIndex === index
+					const Icon = ICONS[index]
 
 					return (
 						<Navigation.Item
@@ -33,7 +40,7 @@ export const Basic: Story = {
 								setSelectedIndex(index)
 							}}
 						>
-							<SettingsIcon className={active ? 'fill-accent' : 'fill-secondary'} />
+							<Icon className={active ? 'fill-accent' : 'fill-secondary'} />
 							Label {index + 1}
 						</Navigation.Item>
 					)

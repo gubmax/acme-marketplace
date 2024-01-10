@@ -48,7 +48,7 @@ function NavigationItem<T extends NavigationItemElement = 'li'>(
 		<Component
 			ref={ref}
 			className={cn(
-				'ui-navigation__item flex rounded-md px-3 py-2 h-10',
+				'ui-navigation__item flex rounded-md p-2 h-10',
 				active && 'ui-active',
 				className,
 			)}

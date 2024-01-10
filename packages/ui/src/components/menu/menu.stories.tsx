@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 
-import SettingsIcon from '../icons/settings-icon.js'
+import DoneIcon from '../icons/done-icon.js'
 import Menu from './menu.js'
 
 const meta: Meta<typeof Menu> = {
@@ -19,7 +19,7 @@ export const Basic: Story = {
 		<Menu as="nav">
 			{Array.from({ length: 5 }).map((_, index) => (
 				<Menu.Item key={index} as="button" className="w-52 items-center gap-2">
-					<SettingsIcon className="fill-secondary" />
+					<DoneIcon className="fill-secondary" />
 					Label {index + 1}
 				</Menu.Item>
 			))}
@@ -48,7 +48,7 @@ export const Interactive: Story = {
 								setSelectedIndex(index)
 							}}
 						>
-							<SettingsIcon className={active ? 'fill-accent' : 'fill-secondary'} />
+							<DoneIcon className={active ? 'fill-accent' : 'fill-secondary'} />
 							Label {index + 1}
 						</Menu.Item>
 					)
