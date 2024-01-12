@@ -1,6 +1,6 @@
 import { type ForwardedRef, forwardRef, type HTMLAttributes, isValidElement } from 'react'
-import { cn } from 'src/helpers/class-names.js'
 
+import { cn } from '../../helpers/class-names.js'
 import UserIcon from '../icons/user-icon.js'
 import './avatar.css'
 

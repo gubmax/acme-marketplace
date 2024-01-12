@@ -1,6 +1,6 @@
 import { type ForwardedRef, forwardRef, type HTMLAttributes, type TdHTMLAttributes } from 'react'
-import { cn } from 'src/helpers/class-names.js'
 
+import { cn } from '../../helpers/class-names.js'
 import './table.css'
 
 export type TableSectionProps = HTMLAttributes<HTMLTableSectionElement>
