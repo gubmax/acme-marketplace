@@ -1,3 +1,4 @@
+import { UAParser } from 'ua-parser-js'
 import type { ManifestRoute } from 'virtual:routes-manifest'
 import { createServer } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
@@ -30,8 +31,16 @@ async function createRenderContext(
 	clientEntry: string,
 	serverEntry: string,
 	moduleId?: string,
+	uaString?: string,
 ): Promise<RenderContext> {
-	const renderContext: RenderContext = { links: [], loader: {}, meta: {}, scripts: [], styles: [] }
+	const renderContext: RenderContext = {
+		deviceType: 'desktop',
+		links: [],
+		loader: {},
+		meta: {},
+		scripts: [],
+		styles: [],
+	}
 
 	// Context
 	if (moduleId) await collectRouteContext(viteServer, renderContext, moduleId)
@@ -60,6 +69,10 @@ window.__vite_plugin_react_preamble_installed__ = true
 	// Styles
 	await collectRouteStyles(viteServer, renderContext, serverEntry)
 
+	// Device Type
+	const ua = UAParser(uaString)
+	if (ua.device.type) renderContext.deviceType = ua.device.type
+
 	return renderContext
 }
 
@@ -67,7 +80,12 @@ const render: Renderer['render'] = async (req, res, moduleId) => {
 	const clientEntry = 'client/entry.client.tsx'
 	const serverEntry = 'client/entry.server.tsx'
 
-	const renderContext = await createRenderContext(clientEntry, serverEntry, moduleId)
+	const renderContext = await createRenderContext(
+		clientEntry,
+		serverEntry,
+		moduleId,
+		req.headers['user-agent'],
+	)
 
 	const entryModule = await loadModule<EntryModule>(serverEntry)
 	const node = entryModule.handleRequest({ url: req.url, renderContext })

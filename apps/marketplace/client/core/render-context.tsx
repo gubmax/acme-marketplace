@@ -10,6 +10,7 @@ import { invariant } from 'client/common/helpers/invariant.js'
 import type { HtmlMetaDescriptor, LoaderDescriptor } from './page.js'
 
 export interface RenderContextType {
+	deviceType: string
 	links?: Array<LinkHTMLAttributes<HTMLLinkElement>>
 	styles?: Array<LinkHTMLAttributes<HTMLStyleElement>>
 	loader?: LoaderDescriptor

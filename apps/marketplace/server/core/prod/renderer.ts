@@ -4,6 +4,7 @@ import { resolve } from 'node:path'
 import type { ReactNode } from 'react'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { PassThrough } from 'stream'
+import UAParser from 'ua-parser-js'
 import type { ManifestRoute } from 'virtual:routes-manifest'
 import type { Manifest } from 'vite'
 
@@ -50,8 +51,16 @@ async function createRenderContext(
 	clientEntry: string,
 	entryModule: EntryModule,
 	moduleId?: string,
+	uaString?: string,
 ): Promise<RenderContext> {
-	const renderContext: RenderContext = { links: [], loader: {}, meta: {}, scripts: [], styles: [] }
+	const renderContext: RenderContext = {
+		deviceType: 'desktop',
+		links: [],
+		loader: {},
+		meta: {},
+		scripts: [],
+		styles: [],
+	}
 
 	if (moduleId) {
 		// Assets
@@ -65,8 +74,12 @@ async function createRenderContext(
 	const clientRenderContext = getClientRenderContext(renderContext)
 	renderContext.scripts.push({ content: clientRenderContext })
 
-	//Links
+	// Links
 	renderContext.links.push({ rel: 'manifest', href: '/manifest.webmanifest' })
+
+	// Device Type
+	const ua = UAParser(uaString)
+	if (ua.device.type) renderContext.deviceType = ua.device.type
 
 	return renderContext
 }
@@ -76,7 +89,14 @@ const render: Renderer['render'] = async (req, res, moduleId) => {
 	const serverEntry = 'server/entry.server.js'
 
 	const entryModule = await loadModule<EntryModule>(serverEntry)
-	const renderContext = await createRenderContext(clientEntry, entryModule, moduleId)
+
+	const renderContext = await createRenderContext(
+		clientEntry,
+		entryModule,
+		moduleId,
+		req.headers['user-agent'],
+	)
+
 	const node = entryModule.handleRequest({ url: req.url, renderContext })
 
 	return renderPage(req, res, node)
