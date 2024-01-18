@@ -1,4 +1,4 @@
-.m-base-layout {
+.m-base-layout-desktop {
 	display: grid;
 	min-width: 768px;
 	grid-gap: 0;
@@ -9,7 +9,7 @@
 	grid-template-columns: auto 1fr;
 }
 
-.m-base-layout__main {
+.m-base-layout-desktop__main {
 	min-height: 100vh;
 	grid-area: main;
 }

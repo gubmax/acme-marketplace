@@ -45,6 +45,10 @@ async function createRenderContext(
 	// Context
 	if (moduleId) await collectRouteContext(viteServer, renderContext, moduleId)
 
+	// Device Type
+	const ua = UAParser(uaString)
+	if (ua.device.type) renderContext.deviceType = ua.device.type
+
 	// Scripts
 	const clientRenderContext = getClientRenderContext(renderContext)
 	renderContext.scripts.push(
@@ -68,10 +72,6 @@ window.__vite_plugin_react_preamble_installed__ = true
 
 	// Styles
 	await collectRouteStyles(viteServer, renderContext, serverEntry)
-
-	// Device Type
-	const ua = UAParser(uaString)
-	if (ua.device.type) renderContext.deviceType = ua.device.type
 
 	return renderContext
 }

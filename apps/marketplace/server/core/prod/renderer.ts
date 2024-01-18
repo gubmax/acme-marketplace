@@ -70,16 +70,16 @@ async function createRenderContext(
 		await collectRouteContext(renderContext, entryModule, moduleId)
 	}
 
+	// Device Type
+	const ua = UAParser(uaString)
+	if (ua.device.type) renderContext.deviceType = ua.device.type
+
 	// Scripts
 	const clientRenderContext = getClientRenderContext(renderContext)
 	renderContext.scripts.push({ content: clientRenderContext })
 
 	// Links
 	renderContext.links.push({ rel: 'manifest', href: '/manifest.webmanifest' })
-
-	// Device Type
-	const ua = UAParser(uaString)
-	if (ua.device.type) renderContext.deviceType = ua.device.type
 
 	return renderContext
 }

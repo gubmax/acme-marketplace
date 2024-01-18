@@ -6,18 +6,20 @@ import { routeStore } from 'client/core/models/router-model.js'
 import Footer from './footer/footer.js'
 import Header from './header/header.js'
 import Sidebar from './sidebar/sidebar.js'
-import './base-layout.css'
+import './base-layout-desktop.css'
 
-function BaseLayout({ children }: ChildrenProp) {
+function BaseLayoutDesktop({ children }: ChildrenProp) {
 	const route = useStore(routeStore)
 	const { contentClassName } = route.loader
 
 	return (
-		<div className="m-base-layout">
+		<div className="m-base-layout-desktop">
 			<Sidebar />
 			<div className="w-full">
 				<Header />
-				<main className={cn('m-base-layout__main mx-auto px-10 pt-22 pb-20', contentClassName)}>
+				<main
+					className={cn('m-base-layout-desktop__main mx-auto px-10 pt-22 pb-20', contentClassName)}
+				>
 					{children}
 				</main>
 				<Footer />
@@ -26,4 +28,4 @@ function BaseLayout({ children }: ChildrenProp) {
 	)
 }
 
-export default BaseLayout
+export default BaseLayoutDesktop
