@@ -7,8 +7,8 @@ export const loader: LoaderFunction = () => ({ pageTitle: 'About' })
 export default function AboutPage() {
 	return (
 		<>
-			<div className="bg-outline rounded-lg h-40 mb-5" />
-			<div className="bg-outline rounded-lg h-60" />
+			<div className="bg-container rounded-lg h-40 mb-5" />
+			<div className="bg-container rounded-lg h-60" />
 		</>
 	)
 }

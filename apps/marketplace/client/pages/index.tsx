@@ -16,9 +16,9 @@ export default function DiscoverPage() {
 	return (
 		<>
 			<div className="mb-8 grid h-80 grid-cols-[1fr_1fr] gap-5">
-				<div className="bg-outline row-start-1 row-end-3 rounded-lg" />
-				<div className="bg-outline rounded-lg" />
-				<div className="bg-outline rounded-lg" />
+				<div className="bg-container row-start-1 row-end-3 rounded-lg" />
+				<div className="bg-container rounded-lg" />
+				<div className="bg-container rounded-lg" />
 			</div>
 			{isDesktop && (
 				<>
