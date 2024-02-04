@@ -1,5 +1,6 @@
+import { useMediaQuery } from '@acme/ui/hooks/use-media-query.js'
+
 import { useRenderer } from 'client/core/render-context.js'
-import { useMediaQuery } from './use-media-query.js'
 
 export function useDesktopView(): boolean {
 	const { deviceType } = useRenderer()

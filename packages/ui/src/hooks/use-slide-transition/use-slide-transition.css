@@ -1,0 +1,4 @@
+.ui-use-slide-transition {
+	transition: transform 250ms;
+	will-change: transform;
+}

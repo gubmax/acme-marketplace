@@ -1,8 +1,8 @@
 import { memo, useEffect, useState } from 'react'
 import { cn } from '@acme/ui/helpers/class-names.js'
+import { useMountedState } from '@acme/ui/hooks/use-mounted-state.js'
 import { debounce, of, timer } from 'rxjs'
 
-import { useMountedState } from 'client/common/hooks/use-mounted-state.js'
 import { preloadRouteObs } from 'client/core/models/router-model.js'
 import './progress-bar.css'
 

@@ -1,5 +1,6 @@
 import Loader from '@acme/ui/components/loader/loader.js'
 
+import GroupSlider from 'client/common/components/group-slider/group-slider.js'
 import { useDesktopView } from 'client/common/hooks/use-desktop-view.js'
 import { dynamic } from 'client/core/dynamic.js'
 import type { LoaderFunction, MetaFunction } from 'client/core/page.js'
@@ -20,6 +21,16 @@ export default function DiscoverPage() {
 				<div className="bg-container rounded-lg" />
 				<div className="bg-container rounded-lg" />
 			</div>
+			<GroupSlider className="mb-5" headerSlot={<h2 className="text-headline-lg">Slider</h2>}>
+				{Array.from({ length: 10 }).map((_, index) => (
+					<div
+						key={index}
+						className="h-[28rem] bg-container rounded-lg flex items-center justify-center"
+					>
+						<span className="text-secondary text-headline-lg">{index + 1}</span>
+					</div>
+				))}
+			</GroupSlider>
 			{isDesktop && (
 				<>
 					<h2 className="text-headline-lg mb-3">User data</h2>

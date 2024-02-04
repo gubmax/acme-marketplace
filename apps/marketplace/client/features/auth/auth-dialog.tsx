@@ -3,9 +3,9 @@ import { type LoginData, LoginSchema } from '@acme/shared/schemas/login-schema.j
 import Button from '@acme/ui/components/buttons/button/button.js'
 import Dialog from '@acme/ui/components/dialog/dialog.js'
 import TextField from '@acme/ui/components/form/text-field/text-field.js'
+import { noop } from '@acme/ui/helpers/noop.js'
 import { flatten, safeParse } from 'valibot'
 
-import { noop } from 'client/common/helpers/noop.js'
 import { useForm } from 'client/common/hooks/use-form.js'
 
 interface AuthDialogProps {

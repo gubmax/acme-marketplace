@@ -1,0 +1,21 @@
+.m-group-slider-desktop__wrapper {
+	overflow: auto hidden;
+}
+
+.m-group-slider-desktop__item {
+	min-width: 33.333%;
+
+	@media screen and (width <= 1024px) {
+		min-width: 50%;
+	}
+}
+
+.m-group-slider-desktop__header {
+	display: flex;
+	align-items: center;
+}
+
+.m-group-slider-desktop__buttons-group {
+	display: flex;
+	margin-left: auto;
+}

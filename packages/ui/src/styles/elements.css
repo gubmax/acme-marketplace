@@ -7,3 +7,11 @@
 .ui-inner-shadow {
 	box-shadow: var(--inner-shadow);
 }
+
+.no-scrollbar {
+	scrollbar-width: none; /* Firefox */
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}

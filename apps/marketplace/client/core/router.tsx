@@ -1,4 +1,5 @@
-import { noop } from 'client/common/helpers/noop.js'
+import { noop } from '@acme/ui/helpers/noop.js'
+
 import {
 	preloadRouteObs,
 	preloadStore,

@@ -1,0 +1,15 @@
+.m-group-slider-touch__wrapper {
+	display: flex;
+	margin: 0 -1.25rem;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scroll-behavior: smooth;
+	scroll-padding: 0;
+	scroll-snap-type: x mandatory;
+}
+
+.m-group-slider-touch__item {
+	min-width: 100%;
+	padding: 0 1.25rem;
+	scroll-snap-align: center;
+}
