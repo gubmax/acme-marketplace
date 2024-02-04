@@ -55,7 +55,7 @@ export default function requestLoggingHook(
 				statusCode: res.raw.statusCode,
 				method: req.method,
 				url: req.raw.url,
-				durationMs: res.getResponseTime(),
+				durationMs: res.elapsedTime,
 			},
 		}
 		logger.info(resPayload, 'Request completed')

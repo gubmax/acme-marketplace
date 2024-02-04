@@ -26,7 +26,7 @@ export function renderPage(
 				stream.pipe(body)
 			},
 			onShellError(err) {
-				reject(err)
+				reject(err instanceof Error ? err : new Error('Shell Error'))
 			},
 			onError(err) {
 				didError = true
