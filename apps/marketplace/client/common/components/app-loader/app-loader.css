@@ -1,0 +1,24 @@
+.m-app-loader__dots::before {
+	animation: m-dots 1s linear infinite;
+	content: '';
+}
+
+@keyframes m-dots {
+	0%,
+	20% {
+		content: '.';
+	}
+
+	40% {
+		content: '..';
+	}
+
+	60% {
+		content: '...';
+	}
+
+	90%,
+	100% {
+		content: '';
+	}
+}

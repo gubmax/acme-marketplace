@@ -4,6 +4,8 @@ import Modal from '@acme/ui/components/floating/modal/modal.js'
 import { toast } from '@acme/ui/components/toast/toast.js'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 
+import AppLoader from '../components/app-loader/app-loader.js'
+
 const ID_RELOAD_PROMT = 'sw-reload-promt'
 
 function ServiceWorker() {
@@ -51,12 +53,8 @@ function ServiceWorker() {
 	})
 
 	return (
-		<Modal
-			className="flex w-full h-full flex-col items-center justify-center"
-			open={showSplashScreen}
-		>
-			<img className="w-1/4 max-w-40 mb-5" src="/favicon.svg" alt="logo" />
-			<span className="text-title-lg">Loading...</span>
+		<Modal open={showSplashScreen}>
+			<AppLoader />
 		</Modal>
 	)
 }
