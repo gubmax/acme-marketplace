@@ -8,7 +8,7 @@ import ShoppingBagIcon from '@acme/ui/components/icons/shopping-bag-icon.js'
 import Navigation from '@acme/ui/components/navigation/navigation.js'
 
 import { useStore } from 'client/common/hooks/use-store.js'
-import { routeStore } from 'client/core/models/router-model.js'
+import { routerModel } from 'client/core/router.js'
 import CustomNavigationItem from './components/custom-navigation-item.js'
 import './sidebar.css'
 
@@ -22,7 +22,7 @@ const NAVIGATION_ITEMS = [
 ] as const
 
 function Sidebar() {
-	const { pathname } = useStore(routeStore)
+	const { pathname } = useStore(routerModel.routeStore)
 
 	return (
 		<aside className="m-sidebar flex flex-col bg-container px-3 pb-3">

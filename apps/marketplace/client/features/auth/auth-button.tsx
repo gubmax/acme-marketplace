@@ -4,14 +4,14 @@ import Modal from '@acme/ui/components/floating/modal/modal.js'
 import { produce } from 'immer'
 
 import { useStore } from 'client/common/hooks/use-store.js'
-import { openPage, routeStore } from 'client/core/models/router-model.js'
+import { routerModel } from 'client/core/router.js'
 import AuthDialog from './auth-dialog.js'
 
 const MODAL_PARAM = 'modal'
 const MODAL_VALUE = 'login'
 
 function AuthButton() {
-	const route = useStore(routeStore)
+	const route = useStore(routerModel.routeStore)
 
 	const modalHref = useMemo(() => {
 		const searchParams = new URLSearchParams(route.params)
@@ -20,10 +20,10 @@ function AuthButton() {
 	}, [route])
 
 	const hideModal = useCallback(() => {
-		const newParams = produce(route.params, (draft) => {
+		const nextParams = produce(route.params, (draft) => {
 			delete draft.modal
 		})
-		openPage(route.pathname, newParams)
+		routerModel.navigate(route.pathname, nextParams)
 	}, [route])
 
 	return (

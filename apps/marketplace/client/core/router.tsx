@@ -1,12 +1,9 @@
 import { noop } from '@acme/ui/helpers/noop.js'
 
-import {
-	preloadRouteObs,
-	preloadStore,
-	type RouteState,
-	routeStore,
-} from './models/router-model.js'
+import { RouterModel, type RouteState } from './models/router-model.js'
 import { getRelativeRouteURL, parsePath } from './path.js'
+
+export const routerModel = new RouterModel()
 
 function isRouterClick(event: MouseEvent, link: HTMLAnchorElement | null): boolean {
 	return (
@@ -31,10 +28,10 @@ export interface RouterOptions {
 
 export function initBrowserRouter({ onChange = noop }: RouterOptions): void {
 	// Handle route change
-	preloadRouteObs.subscribe((route) => {
+	routerModel.preloadObs.subscribe((route) => {
 		if (route.loading) return
 
-		routeStore.next(route.state)
+		routerModel.routeStore.next(route.state)
 		onChange(route.state)
 
 		const updateArgs = [{}, '', getRelativeRouteURL(route.state)] as const
@@ -44,7 +41,7 @@ export function initBrowserRouter({ onChange = noop }: RouterOptions): void {
 
 	// Handle history change
 	window.addEventListener('popstate', () => {
-		preloadStore.next({ type: 'popstate', href: getRelativeRouteURL(location) })
+		routerModel.preloadStore.next({ type: 'popstate', href: getRelativeRouteURL(location) })
 	})
 
 	/**
@@ -59,10 +56,10 @@ export function initBrowserRouter({ onChange = noop }: RouterOptions): void {
 
 		const path = parsePath(link.getAttribute('href') ?? '')
 		const nextHref = getRelativeRouteURL(path)
-		const prevHref = getRelativeRouteURL(routeStore.value)
+		const prevHref = getRelativeRouteURL(routerModel.routeStore.value)
 
 		if (nextHref !== prevHref) {
-			preloadStore.next({ type: 'push', href: nextHref })
+			routerModel.preloadStore.next({ type: 'push', href: nextHref })
 		}
 	})
 }

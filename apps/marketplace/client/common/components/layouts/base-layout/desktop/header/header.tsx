@@ -1,12 +1,12 @@
 import { memo } from 'react'
 
 import { useStore } from 'client/common/hooks/use-store.js'
-import { routeStore } from 'client/core/models/router-model.js'
+import { routerModel } from 'client/core/router.js'
 import AuthButton from 'client/features/auth/auth-button.js'
 import './header.css'
 
 function Header() {
-	const route = useStore(routeStore)
+	const route = useStore(routerModel.routeStore)
 	const { pageTitle } = route.loader
 
 	return (

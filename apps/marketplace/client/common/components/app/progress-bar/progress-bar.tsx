@@ -3,7 +3,7 @@ import { cn } from '@acme/ui/helpers/class-names.js'
 import { useMountedState } from '@acme/ui/hooks/use-mounted-state.js'
 import { debounce, of, timer } from 'rxjs'
 
-import { preloadRouteObs } from 'client/core/models/router-model.js'
+import { routerModel } from 'client/core/router.js'
 import './progress-bar.css'
 
 function ProgressBar() {
@@ -12,7 +12,7 @@ function ProgressBar() {
 
 	// Show loading status only if it is longer than 250ms
 	useEffect(() => {
-		const subscription = preloadRouteObs
+		const subscription = routerModel.preloadObs
 			.pipe(debounce((route) => (route.loading ? timer(250) : of(route))))
 			.subscribe((route) => {
 				setIsLoading(route.loading)

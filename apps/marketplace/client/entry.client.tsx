@@ -6,8 +6,7 @@ import { reportWebVitals } from 'client/common/utils/report-web-vitals.js'
 import ServiceWorker from 'client/common/utils/service-worker.js'
 import { getRelativeRouteURL } from 'client/core/path.js'
 import Document from 'client/document.js'
-import { setInitialPage } from './core/models/router-model.js'
-import { initBrowserRouter } from './core/router.js'
+import { initBrowserRouter, routerModel } from './core/router.js'
 import '@acme/ui/styles/index.css'
 import 'virtual:uno.css'
 
@@ -17,7 +16,7 @@ import 'client/common/utils/internet-connection.js'
 const renderContext = window.__RENDER_CONTEXT__
 
 const { loader, meta } = renderContext
-setInitialPage({ loader, meta, href: getRelativeRouteURL(location) })
+routerModel.setRoute({ loader, meta, href: getRelativeRouteURL(location) })
 
 hydrateRoot(
 	window.document,

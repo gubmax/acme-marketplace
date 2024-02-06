@@ -1,8 +1,8 @@
 import { useStore } from 'client/common/hooks/use-store.js'
-import { routeStore } from '../models/router-model.js'
+import { routerModel } from '../router.js'
 
 function Meta() {
-	const route = useStore(routeStore)
+	const route = useStore(routerModel.routeStore)
 
 	return (
 		<>

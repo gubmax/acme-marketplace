@@ -15,10 +15,14 @@ export type QueryAction<T> =
 	| { type: 'success'; payload: T }
 	| { type: 'failure'; payload: unknown }
 
-export function queryModel<R>(initialAction: QueryAction<R> = { type: 'idle' }) {
-	const store = new BehaviorSubject<QueryState<R>>(reduce(initialAction))
+export class QueryModel<R> {
+	store: BehaviorSubject<QueryState<R>>
 
-	function reduce(action: QueryAction<R>) {
+	constructor(initialAction: QueryAction<R> = { type: 'idle' }) {
+		this.store = new BehaviorSubject<QueryState<R>>(this.reduce(initialAction))
+	}
+
+	private reduce(action: QueryAction<R>) {
 		switch (action.type) {
 			case 'idle':
 				return { status: 'idle', loading: false, response: undefined, error: undefined } as const
@@ -31,27 +35,25 @@ export function queryModel<R>(initialAction: QueryAction<R> = { type: 'idle' }) 
 		}
 	}
 
-	function dispatch(action: QueryAction<R>): void {
-		store.next(reduce(action))
+	private dispatch(action: QueryAction<R>): void {
+		this.store.next(this.reduce(action))
 	}
 
-	// Public methods
+	// Actions
 
-	async function run(callback: () => Promise<R>): Promise<R> {
+	async run(callback: () => Promise<R>): Promise<R> {
 		try {
-			dispatch({ type: 'loading' })
+			this.dispatch({ type: 'loading' })
 			const res = await callback()
-			dispatch({ type: 'success', payload: res })
+			this.dispatch({ type: 'success', payload: res })
 			return res
 		} catch (error: unknown) {
-			dispatch({ type: 'failure', payload: error })
+			this.dispatch({ type: 'failure', payload: error })
 			throw error
 		}
 	}
 
-	function reset(): void {
-		dispatch({ type: 'idle' })
+	reset(): void {
+		this.dispatch({ type: 'idle' })
 	}
-
-	return { store, run, reset } as const
 }

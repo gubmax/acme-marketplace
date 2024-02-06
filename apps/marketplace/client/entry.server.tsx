@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import App from 'client/common/components/app/app.js'
 import type { RenderContextType } from 'client/core/render-context.js'
 import Document from 'client/document.js'
-import { setInitialPage } from './core/models/router-model.js'
+import { routerModel } from './core/router.js'
 import '@acme/ui/styles/index.css'
 import 'virtual:uno.css'
 
@@ -16,7 +16,7 @@ interface HandleRequestOptions {
 
 export function handleRequest({ url, renderContext }: HandleRequestOptions): ReactNode {
 	const { loader, meta } = renderContext
-	setInitialPage({ loader, meta, href: url })
+	routerModel.setRoute({ loader, meta, href: url })
 
 	return (
 		<Document renderContext={renderContext}>
